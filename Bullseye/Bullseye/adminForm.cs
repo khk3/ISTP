@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Bullseye
 {
-    public partial class adminForm : Form
+    public partial class AdminForm : Form
     {
-        public adminForm()
+        public AdminForm()
         {
             InitializeComponent();
         }

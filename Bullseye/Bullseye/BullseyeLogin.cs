@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
 
+//Kang Kwon
 namespace Bullseye
 {
     public partial class BullseyeLogin : Form
@@ -35,6 +36,7 @@ namespace Bullseye
             lblTime.Text = DateTime.Now.ToLongTimeString();
             OpenDb();
             RunScript();
+            LoadEmployees();
         }
 
         private void OpenDb()
@@ -86,11 +88,9 @@ namespace Bullseye
             // DataTable empTable = new DataTable();
             //need try catch
             try {
-                //  empTable.Load(cmd.ExecuteReader());
                 MySqlDataReader reader = sqlCmd.ExecuteReader();
                 if (reader.HasRows)
-                {
-                   
+                {           
                     while(reader.Read())
                     {
                         Employee employee = new Employee
@@ -124,9 +124,6 @@ namespace Bullseye
                 // Handle other general exceptions
                 MessageBox.Show("Exception: " + ex.Message, "Error - Cannot run script");
             }
-
-
-
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -155,8 +152,7 @@ namespace Bullseye
 
                 // string hashedPassword = HashPassword(password);
                 //bool userExists = employees.Any(emp => emp.FirstName == fName && emp.LastName == lName);
-                
-                LoadEmployees();
+       
                 Employee user = employees.FirstOrDefault(emp => emp.FirstName == fName && emp.LastName == lName);
 
                 if (user!= null)
@@ -167,11 +163,13 @@ namespace Bullseye
                             MessageBox.Show("User is not Active. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- user not active");
                         else
                         {
-                            if (user.Locked == false)
+                            if (user.Locked == false)  //If all correct
                             {
-                                MessageBox.Show("LOGGED ID");
-
-                            }                                                     
+                                MessageBox.Show("Welcome "+ fName, "Login Successful");
+                                AdminForm adminForm = new AdminForm();
+                                adminForm.ShowDialog();
+                            }
+                                                                                                            
                             else                            
                                 MessageBox.Show("Account is locked. Please contact your Administrator admin@bullseye.ca for assistance.", "Error - Account Locked");                      
                         }                                  
@@ -243,7 +241,6 @@ namespace Bullseye
         {
             //Close the connection
             conn.Close();
-
         }
     }
 }
