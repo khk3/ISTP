@@ -34,7 +34,7 @@ namespace Bullseye
             lblDate.Text = DateTime.Now.ToLongDateString();
             lblTime.Text = DateTime.Now.ToLongTimeString();
             OpenDb();
-      
+            RunScript();
         }
 
         private void OpenDb()
@@ -44,10 +44,7 @@ namespace Bullseye
             {
                 conn.Open();
                 //run the script
-                RunScript();
-
-                //load employees
-                LoadEmployees();
+         
             }
             catch (Exception ex)
             {
@@ -59,11 +56,12 @@ namespace Bullseye
 
         private void RunScript()
         {         
-            string script = System.IO.File.ReadAllText("bullseyedb2024.sql");
-            MySqlCommand cmd = new MySqlCommand(script, conn);
+           
             //need try catch
             try
             {
+                string script = System.IO.File.ReadAllText("Bullseye_DB2024_1.2.sql");
+                MySqlCommand cmd = new MySqlCommand(script, conn);
                 //Run the script
                 int num=cmd.ExecuteNonQuery();            
             }
@@ -105,13 +103,15 @@ namespace Bullseye
                             Active = reader.GetBoolean(reader.GetOrdinal("active")),
                             PositionID = reader.GetString(reader.GetOrdinal("PositionID")),
                             SiteID = reader.GetInt32(reader.GetOrdinal("siteID")),
+                            Locked=reader.GetBoolean(reader.GetOrdinal("locked")),
                             Notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes"))
                         };
 
                         // Add the Employee object to the list
                         employees.Add(employee);
 
-                    }
+                    }//end of while
+                    reader.Close();
 
                 }
             }
@@ -134,34 +134,101 @@ namespace Bullseye
             lblTime.Text= DateTime.Now.ToLongTimeString();
         }
 
+        int errorCount = 0;
+
         //Btn Login
         private void btnLogin_Click(object sender, EventArgs e)
         {
+           
+
             string fName= txtFName.Text;
             string lName= txtLName.Text;
             string password= txtPassword.Text;
 
             if(fName==""|| lName=="" || password=="")
             {
-                MessageBox.Show("Login and Password cannot be empty", "Error to Login");
+                MessageBox.Show("Fields cannot be empty", "Error to Login");
             }
             else
             {
-                //HASH THE PASSWORD
+                //HASH THE PASSWORD admin= P@ssw0rd-
+
                 // string hashedPassword = HashPassword(password);
-                bool userExists = employees.Any(emp => emp.FirstName == fName && emp.LastName == lName && emp.Password == password);
-                if(userExists)
-                {
-                    MessageBox.Show("LOGIN!");
+                //bool userExists = employees.Any(emp => emp.FirstName == fName && emp.LastName == lName);
+                
+                LoadEmployees();
+                Employee user = employees.FirstOrDefault(emp => emp.FirstName == fName && emp.LastName == lName);
+
+                if (user!= null)
+                {             
+                    if(user.Password == password)
+                    {
+                        if (!user.Active)
+                            MessageBox.Show("User is not Active. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- user not active");
+                        else
+                        {
+                            if (user.Locked == false)
+                            {
+                                MessageBox.Show("LOGGED ID");
+
+                            }                                                     
+                            else                            
+                                MessageBox.Show("Account is locked. Please contact your Administrator admin@bullseye.ca for assistance.", "Error - Account Locked");                      
+                        }                                  
+                    }
+                    else //if password does NOT match
+                    {
+                        if (errorCount < 2)
+                        {
+                            MessageBox.Show("Password Invalid", "Error- Password");
+                            errorCount++;
+                            txtPassword.Text = "";
+                        }
+                        else //change locked to 1
+                        {                 
+                            string checkLocked= "Select locked from employee where firstName ='"+fName+"' and lastName='"+lName+"'";
+                            MySqlCommand sqlCmd = new MySqlCommand(checkLocked, conn);
+                            try
+                            {
+                                MySqlDataReader reader = sqlCmd.ExecuteReader();
+                                reader.Read();
+
+                                bool isLocked = reader.GetBoolean(reader.GetOrdinal("locked"));
+                                reader.Close();
+                                if (isLocked)
+                                    MessageBox.Show("Account is locked. Please contact your Administrator admin@bullseye.ca for assistancer.", "Error - Account Locked"); 
+                                else
+                                {                                  
+                                    string cmd = "update employee set locked = 1 where firstname='" + fName + "' and lastname='" + lName +"'";
+                                    MySqlCommand sqlCommand = new MySqlCommand(cmd, conn);
+                                    int update = sqlCommand.ExecuteNonQuery();
+                                    
+                                    if (update > 0)
+                                        MessageBox.Show("You account has been locked because of too many incorrect login attempts. Please contact your Administrator at admin@bullseye.ca for assistance", "Error- User Locked");                            
+                                }
+                            }
+                            catch (SqlException sqlEx)
+                            {
+                                MessageBox.Show("Could not Lock the user. Error: " + sqlEx.Message, "Error- SQL Lock user");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Could not Lock the user. Error: " + ex.Message, "Error- Lock user");
+                            }        
+                        }
+                    }
+                  
                 }
                 else
                 {
-                    MessageBox.Show("Not exists");
+                    MessageBox.Show("This user dos not exists", "Error- User does not exists");  
+                
                 }
 
             }
         }//end of login event
 
+        //Function to encrypt password
         private string HashPassword(string input)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -171,5 +238,12 @@ namespace Bullseye
             }
         }
 
+        //Form Closing Event
+        private void BullseyeLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //Close the connection
+            conn.Close();
+
+        }
     }
 }

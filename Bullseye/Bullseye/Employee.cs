@@ -16,6 +16,7 @@ namespace Bullseye
         public bool Active { get; set; }
         public string PositionID { get; set; }
         public int SiteID { get; set; }
+        public bool Locked { get; set; }
         public string Notes { get; set; }
     }
 }

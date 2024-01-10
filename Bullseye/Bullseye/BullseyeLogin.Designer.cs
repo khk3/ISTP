@@ -198,6 +198,7 @@
             this.Name = "BullseyeLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bullseye";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BullseyeLogin_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

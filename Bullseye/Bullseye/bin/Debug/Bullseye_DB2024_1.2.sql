@@ -1,6 +1,6 @@
 -- Bullseye DB SQL Script 2024
--- version 1.0
--- November 15, 2023
+-- version 1.2
+-- January 10, 2024
 -- Chris London
 
 -- ********************************************
@@ -10,6 +10,7 @@
 drop database if exists bullseyedb2024;
 create database bullseyedb2024;
 use bullseyedb2024;
+SET SQL_SAFE_UPDATES = 0;
 
 -- ********************************************
 -- ****       Create lookup tables         ****
@@ -99,6 +100,7 @@ CREATE TABLE `employee` (
   `active` tinyint(1) NOT NULL,
   `PositionID` int NOT NULL,
   `siteID` int NOT NULL,
+  `locked` tinyint(1) NOT NULL,
   `notes` varchar(255) DEFAULT NULL,  
   FOREIGN KEY(`PositionID`) REFERENCES posn(`PositionID`),
   FOREIGN KEY(`siteID`) REFERENCES site(`siteID`)
@@ -305,23 +307,23 @@ INSERT INTO `site` (`siteID`, `name`, `provinceID`, `address`, `address2`, `city
 --
 -- Insert data for table `employee`
 --
-INSERT INTO `employee` (`employeeID`, `Password`, `FirstName`, `LastName`, `Email`, `active`, `siteID`, `PositionID`) VALUES
-(1, MD5('1'), 'admin', 'admin', 'noreply@bullseye.com', 1, 3, 99999999),
-(2, MD5('2'), 'acadia', 'acadia', 'info@acadiatrucking.ca', 1, 1, 5),
-(1000, MD5('1000'), 'Eduardo', 'Concepcion', 'econcepcion@bullseye.ca', 1, 3, 1),
-(1001, MD5('1001'), 'Monica', 'Munoz', 'mmunoz@bullseye.ca', 1, 3, 2),
-(1002, MD5('1002'), 'Jose', 'Perez', 'jperez@bullseye.ca', 1, 4, 3),
-(1003, MD5('1003'), 'Chris', 'Patstone', 'cpatstone@bullseye.ca', 1, 2, 4),
-(1004, MD5('1004'), 'Charles', 'Norris', 'cnorris@bullseye.ca', 1, 1, 5),
-(1005, MD5('1005'), 'Kevin', 'Blanche', 'kblanche@bullseye.ca', 1, 5, 3),
-(1006, MD5('1006'), 'Willow', 'Bray', 'wbray@bullseye.ca', 1, 6, 3),
-(1007, MD5('1007'), 'Tansy', 'Graupel', 'tgraupel@bullseye.ca', 1, 7, 3),
-(1008, MD5('1008'), 'Shuncho', 'Yuasa', 'syuasa@bullseye.ca', 1, 8, 3),
-(1009, MD5('1009'), 'Emi', 'Byron', 'ebyron@bullseye.ca', 1, 9, 3),
-(1010, MD5('1010'), 'Arabella', 'Bean', 'abean@bullseye.ca', 1, 10, 3),
-(1012, MD5('1012'), 'Hattie', 'Trent', 'htrent@bullseye.ca', 1, 3, 6),
-(1013, MD5('1013'), 'Berniece', 'Callan', 'bcallan@bullseye.ca', 1, 2, 6),
-(1014, MD5('1014'), 'Erika', 'Atherton', 'eatherton@bullseye.ca', 1, 3, 6);
+INSERT INTO `employee` (`employeeID`, `Password`, `FirstName`, `LastName`, `Email`, `active`, `siteID`, `locked`, `PositionID`) VALUES
+(1, 'P@ssw0rd-', 'admin', 'admin', 'noreply@bullseye.com', 1, 3, 0, 99999999),
+(2, 'P@ssw0rd-', 'acadia', 'acadia', 'info@acadiatrucking.ca', 1, 1, 0, 5),
+(1000, 'P@ssw0rd-', 'Eduardo', 'Concepcion', 'econcepcion@bullseye.ca', 1, 3, 0, 1),
+(1001, 'P@ssw0rd-', 'Monica', 'Munoz', 'mmunoz@bullseye.ca', 1, 3, 0, 2),
+(1002, 'P@ssw0rd-', 'Jose', 'Perez', 'jperez@bullseye.ca', 1, 4, 0, 3),
+(1003, 'P@ssw0rd-', 'Chris', 'Patstone', 'cpatstone@bullseye.ca', 1, 2, 0, 4),
+(1004, 'P@ssw0rd-', 'Charles', 'Norris', 'cnorris@bullseye.ca', 1, 1, 0, 5),
+(1005, 'P@ssw0rd-', 'Kevin', 'Blanche', 'kblanche@bullseye.ca', 1, 5, 0, 3),
+(1006, 'P@ssw0rd-', 'Willow', 'Bray', 'wbray@bullseye.ca', 1, 6, 0, 3),
+(1007, 'P@ssw0rd-', 'Tansy', 'Graupel', 'tgraupel@bullseye.ca', 1, 7, 0, 3),
+(1008, 'P@ssw0rd-', 'Shuncho', 'Yuasa', 'syuasa@bullseye.ca', 1, 8, 0, 3),
+(1009, 'P@ssw0rd-', 'Emi', 'Byron', 'ebyron@bullseye.ca', 1, 9, 0, 3),
+(1010, 'P@ssw0rd-', 'Arabella', 'Bean', 'abean@bullseye.ca', 1, 10, 0, 3),
+(1012, 'P@ssw0rd-', 'Hattie', 'Trent', 'htrent@bullseye.ca', 1, 3, 0, 6),
+(1013, 'P@ssw0rd-', 'Berniece', 'Callan', 'bcallan@bullseye.ca', 1, 2, 0, 6),
+(1014, 'P@ssw0rd-', 'Erika', 'Atherton', 'eatherton@bullseye.ca', 1, 3, 0, 6);
 
 
 --
