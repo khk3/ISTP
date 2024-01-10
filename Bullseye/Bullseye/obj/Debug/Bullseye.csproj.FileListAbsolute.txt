@@ -1,0 +1,11 @@
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\bin\Debug\Bullseye.exe.config
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\bin\Debug\Bullseye.exe
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\bin\Debug\Bullseye.pdb
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.csproj.AssemblyReference.cache
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.csproj.SuggestedBindingRedirects.cache
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.Form1.resources
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.Properties.Resources.resources
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.csproj.GenerateResource.cache
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.csproj.CoreCompileInputs.cache
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.exe
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.pdb
