@@ -32,8 +32,7 @@ namespace Bullseye
 
         private void Init()
         {
-            lblDate.Text = DateTime.Now.ToLongDateString();
-            lblTime.Text = DateTime.Now.ToLongTimeString();
+         
             OpenDb();
             RunScript();
             LoadEmployees();
@@ -84,9 +83,7 @@ namespace Bullseye
             //create script and command
             string cmd = "select * from employee ";
             MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
-            //create datatable and attempt to load
-            // DataTable empTable = new DataTable();
-            //need try catch
+           
             try {
                 MySqlDataReader reader = sqlCmd.ExecuteReader();
                 if (reader.HasRows)
@@ -128,7 +125,11 @@ namespace Bullseye
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            lblTime.Text= DateTime.Now.ToLongTimeString();
+            //lblTime.Text= DateTime.Now.ToLongTimeString();
+            this.Text = "";
+            timer1.Interval = 1000;
+            this.Text += " Bullseye - " + DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString();
+
         }
 
         int errorCount = 0;
@@ -165,9 +166,23 @@ namespace Bullseye
                         {
                             if (user.Locked == false)  //If all correct
                             {
-                                MessageBox.Show("Welcome "+ fName, "Login Successful");
-                                AdminForm adminForm = new AdminForm();
-                                adminForm.ShowDialog();
+                                switch (user.PositionID.ToString())
+                                {
+                                    //case 1: //Regional Manager
+                                    //case 2: Financial Manager
+                                    //case 3: Store Manager
+                                    //case 4://Warehouse Manager
+                                    //case 6 warehouse employee
+                                    case "99999999":
+                                        MessageBox.Show("Welcome " + fName, "Login Successful");
+                                        AdminForm adminForm = new AdminForm(user);
+                                        adminForm.ShowDialog();
+             
+                                        break;
+                                    default:
+                                        MessageBox.Show("Invalid positionID", "Error - PositionID");
+                                        break;
+                                }                            
                             }
                                                                                                             
                             else                            
@@ -241,6 +256,12 @@ namespace Bullseye
         {
             //Close the connection
             conn.Close();
+            timer1.Stop();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

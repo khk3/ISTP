@@ -43,3 +43,5 @@ C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\bin\Debug\System.Runtime.Compil
 C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.csproj.CopyComplete
 C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.BullseyeLogin.resources
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.AdminForm.resources
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.RecoverPasswordForm.resources
