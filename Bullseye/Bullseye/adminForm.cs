@@ -33,13 +33,14 @@ namespace Bullseye
         private void Init(string fName)
         {
             lblUser.Text = fName;
+
             timer2 = new Timer();
             timer2.Interval = 1000;
             timer2.Tick += timer2_Tick;
             timer2.Start();
             // this.Text = "Admin - " + DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString();
-            //tabAdmin.SelectedIndex = 0;
-            tabAdmin_SelectedIndexChanged
+            tabAdmin.SelectedIndex = 0;
+            btnRefresh.PerformClick();
 
         }
 
@@ -49,10 +50,7 @@ namespace Bullseye
             this.Close();
         }
 
-        private void tabAdmin_TabIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
+      
 
         private void timer2_Tick(object sender, EventArgs e)
         {
@@ -63,6 +61,14 @@ namespace Bullseye
         {
             if (tabAdmin.SelectedIndex == 0)
             {
+
+            }
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            if(tabAdmin.SelectedIndex == 0)
+            {
                 string cmd = "select * from employee";
                 try
                 {
@@ -71,6 +77,7 @@ namespace Bullseye
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
                     dgvEmployees.DataSource = dt;
+                    dgvEmployees.ReadOnly = true;
                 }
                 catch (SqlException sqlEx)
                 {
@@ -83,8 +90,8 @@ namespace Bullseye
 
                 }
 
-
             }
+           
         }
     }
 }

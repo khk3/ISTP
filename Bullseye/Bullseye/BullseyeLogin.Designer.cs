@@ -34,14 +34,14 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtFName = new System.Windows.Forms.TextBox();
+            this.txtUserName = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnRecoverPassword = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtLName = new System.Windows.Forms.TextBox();
+            this.lblWarnU = new System.Windows.Forms.Label();
+            this.lblWarnP = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,32 +66,32 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(87, 82);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(94, 20);
+            this.label4.Size = new System.Drawing.Size(91, 20);
             this.label4.TabIndex = 6;
-            this.label4.Text = "First Name: ";
+            this.label4.Text = "Username: ";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(96, 142);
+            this.label5.Location = new System.Drawing.Point(96, 108);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(82, 20);
             this.label5.TabIndex = 7;
             this.label5.Text = "Password:";
             // 
-            // txtFName
+            // txtUserName
             // 
-            this.txtFName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFName.Location = new System.Drawing.Point(184, 82);
-            this.txtFName.Name = "txtFName";
-            this.txtFName.Size = new System.Drawing.Size(130, 20);
-            this.txtFName.TabIndex = 0;
+            this.txtUserName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtUserName.Location = new System.Drawing.Point(184, 82);
+            this.txtUserName.Name = "txtUserName";
+            this.txtUserName.Size = new System.Drawing.Size(130, 20);
+            this.txtUserName.TabIndex = 0;
             // 
             // txtPassword
             // 
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPassword.Location = new System.Drawing.Point(184, 142);
+            this.txtPassword.Location = new System.Drawing.Point(184, 108);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(130, 20);
             this.txtPassword.TabIndex = 2;
@@ -108,7 +108,7 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(249, 180);
+            this.btnLogin.Location = new System.Drawing.Point(249, 147);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(65, 28);
             this.btnLogin.TabIndex = 3;
@@ -118,55 +118,64 @@
             // 
             // btnRecoverPassword
             // 
-            this.btnRecoverPassword.Location = new System.Drawing.Point(12, 253);
+            this.btnRecoverPassword.Location = new System.Drawing.Point(25, 184);
             this.btnRecoverPassword.Name = "btnRecoverPassword";
-            this.btnRecoverPassword.Size = new System.Drawing.Size(120, 23);
+            this.btnRecoverPassword.Size = new System.Drawing.Size(120, 27);
             this.btnRecoverPassword.TabIndex = 5;
             this.btnRecoverPassword.Text = "&Recover Password";
             this.btnRecoverPassword.UseVisualStyleBackColor = true;
+            this.btnRecoverPassword.Click += new System.EventHandler(this.btnRecoverPassword_Click);
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(249, 214);
+            this.btnExit.Location = new System.Drawing.Point(249, 181);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(65, 28);
+            this.btnExit.Size = new System.Drawing.Size(65, 30);
             this.btnExit.TabIndex = 4;
             this.btnExit.Text = "&Exit";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // label6
+            // lblWarnU
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(87, 108);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(94, 20);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Last Name: ";
+            this.lblWarnU.AutoSize = true;
+            this.lblWarnU.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWarnU.ForeColor = System.Drawing.Color.Red;
+            this.lblWarnU.Location = new System.Drawing.Point(321, 82);
+            this.lblWarnU.Name = "lblWarnU";
+            this.lblWarnU.Size = new System.Drawing.Size(11, 13);
+            this.lblWarnU.TabIndex = 11;
+            this.lblWarnU.Text = "!";
+            this.lblWarnU.Visible = false;
             // 
-            // txtLName
+            // lblWarnP
             // 
-            this.txtLName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtLName.Location = new System.Drawing.Point(184, 108);
-            this.txtLName.Name = "txtLName";
-            this.txtLName.Size = new System.Drawing.Size(130, 20);
-            this.txtLName.TabIndex = 1;
+            this.lblWarnP.AutoSize = true;
+            this.lblWarnP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWarnP.ForeColor = System.Drawing.Color.Red;
+            this.lblWarnP.Location = new System.Drawing.Point(321, 113);
+            this.lblWarnP.Name = "lblWarnP";
+            this.lblWarnP.Size = new System.Drawing.Size(11, 13);
+            this.lblWarnP.TabIndex = 12;
+            this.lblWarnP.Text = "!";
+            this.lblWarnP.Visible = false;
             // 
             // BullseyeLogin
             // 
             this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(368, 288);
-            this.Controls.Add(this.txtLName);
-            this.Controls.Add(this.label6);
+            this.CancelButton = this.btnExit;
+            this.ClientSize = new System.Drawing.Size(367, 234);
+            this.ControlBox = false;
+            this.Controls.Add(this.lblWarnP);
+            this.Controls.Add(this.lblWarnU);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnRecoverPassword);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.txtFName);
+            this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
@@ -186,14 +195,14 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtFName;
+        private System.Windows.Forms.TextBox txtUserName;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnRecoverPassword;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtLName;
+        private System.Windows.Forms.Label lblWarnU;
+        private System.Windows.Forms.Label lblWarnP;
     }
 }
 

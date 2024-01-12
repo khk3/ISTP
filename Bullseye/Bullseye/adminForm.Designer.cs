@@ -32,10 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminForm));
             this.label1 = new System.Windows.Forms.Label();
             this.lblUser = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lblDate = new System.Windows.Forms.Label();
-            this.lblTime = new System.Windows.Forms.Label();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.btnLogOut = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -44,6 +40,10 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dgvEmployees = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnAddUser = new System.Windows.Forms.Button();
+            this.btnEditUser = new System.Windows.Forms.Button();
+            this.btnDeleteUser = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabAdmin.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -65,53 +65,11 @@
             // 
             this.lblUser.AutoSize = true;
             this.lblUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUser.Location = new System.Drawing.Point(86, 98);
+            this.lblUser.Location = new System.Drawing.Point(74, 98);
             this.lblUser.Name = "lblUser";
             this.lblUser.Size = new System.Drawing.Size(44, 16);
             this.lblUser.TabIndex = 1;
             this.lblUser.Text = "label2";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(425, 22);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 16);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Day: ";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(425, 50);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(44, 16);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Time: ";
-            // 
-            // lblDate
-            // 
-            this.lblDate.AutoSize = true;
-            this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(468, 22);
-            this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(44, 16);
-            this.lblDate.TabIndex = 4;
-            this.lblDate.Text = "label4";
-            // 
-            // lblTime
-            // 
-            this.lblTime.AutoSize = true;
-            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTime.Location = new System.Drawing.Point(468, 50);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(44, 16);
-            this.lblTime.TabIndex = 5;
-            this.lblTime.Text = "label5";
             // 
             // timer2
             // 
@@ -119,7 +77,7 @@
             // 
             // btnLogOut
             // 
-            this.btnLogOut.Location = new System.Drawing.Point(39, 364);
+            this.btnLogOut.Location = new System.Drawing.Point(715, 415);
             this.btnLogOut.Name = "btnLogOut";
             this.btnLogOut.Size = new System.Drawing.Size(75, 26);
             this.btnLogOut.TabIndex = 6;
@@ -154,18 +112,20 @@
             this.tabAdmin.Location = new System.Drawing.Point(39, 132);
             this.tabAdmin.Name = "tabAdmin";
             this.tabAdmin.SelectedIndex = 0;
-            this.tabAdmin.Size = new System.Drawing.Size(570, 226);
+            this.tabAdmin.Size = new System.Drawing.Size(755, 265);
             this.tabAdmin.TabIndex = 16;
             this.tabAdmin.SelectedIndexChanged += new System.EventHandler(this.tabAdmin_SelectedIndexChanged);
-            this.tabAdmin.TabIndexChanged += new System.EventHandler(this.tabAdmin_TabIndexChanged);
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnDeleteUser);
+            this.tabPage1.Controls.Add(this.btnEditUser);
+            this.tabPage1.Controls.Add(this.btnAddUser);
             this.tabPage1.Controls.Add(this.dgvEmployees);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(562, 200);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Size = new System.Drawing.Size(747, 239);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Users";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -175,35 +135,72 @@
             this.dgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEmployees.Location = new System.Drawing.Point(0, 0);
             this.dgvEmployees.Name = "dgvEmployees";
-            this.dgvEmployees.Size = new System.Drawing.Size(562, 200);
+            this.dgvEmployees.RowHeadersWidth = 51;
+            this.dgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvEmployees.Size = new System.Drawing.Size(639, 243);
             this.dgvEmployees.TabIndex = 0;
             // 
             // tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
             this.tabPage2.Size = new System.Drawing.Size(562, 200);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Permissions";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(699, 122);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 26);
+            this.btnRefresh.TabIndex = 17;
+            this.btnRefresh.Text = "&Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // btnAddUser
+            // 
+            this.btnAddUser.Location = new System.Drawing.Point(656, 23);
+            this.btnAddUser.Name = "btnAddUser";
+            this.btnAddUser.Size = new System.Drawing.Size(75, 26);
+            this.btnAddUser.TabIndex = 18;
+            this.btnAddUser.Text = "&Add User";
+            this.btnAddUser.UseVisualStyleBackColor = true;
+            // 
+            // btnEditUser
+            // 
+            this.btnEditUser.Location = new System.Drawing.Point(656, 69);
+            this.btnEditUser.Name = "btnEditUser";
+            this.btnEditUser.Size = new System.Drawing.Size(75, 26);
+            this.btnEditUser.TabIndex = 19;
+            this.btnEditUser.Text = "&Edit User";
+            this.btnEditUser.UseVisualStyleBackColor = true;
+            // 
+            // btnDeleteUser
+            // 
+            this.btnDeleteUser.Location = new System.Drawing.Point(656, 118);
+            this.btnDeleteUser.Name = "btnDeleteUser";
+            this.btnDeleteUser.Size = new System.Drawing.Size(75, 26);
+            this.btnDeleteUser.TabIndex = 20;
+            this.btnDeleteUser.Text = "&Delete User";
+            this.btnDeleteUser.UseVisualStyleBackColor = true;
+            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(643, 405);
+            this.ClientSize = new System.Drawing.Size(806, 477);
+            this.ControlBox = false;
+            this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.tabAdmin);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnLogOut);
-            this.Controls.Add(this.lblTime);
-            this.Controls.Add(this.lblDate);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.lblUser);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "AdminForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AdminForm";
@@ -220,10 +217,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblUser;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label lblDate;
-        private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.Button btnLogOut;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -232,5 +225,9 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView dgvEmployees;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Button btnDeleteUser;
+        private System.Windows.Forms.Button btnEditUser;
+        private System.Windows.Forms.Button btnAddUser;
     }
 }
