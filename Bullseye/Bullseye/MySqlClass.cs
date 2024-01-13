@@ -71,25 +71,24 @@ namespace Bullseye
                 {
                     while (reader.Read())
                     {
-                        Employee employee = new Employee
-                        {
-                            EmployeeID = reader.GetInt32(reader.GetOrdinal("employeeID")),
-                            Password = reader.GetString(reader.GetOrdinal("password")),
-                            FirstName = reader.GetString(reader.GetOrdinal("firstName")),
-                            LastName = reader.GetString(reader.GetOrdinal("lastName")),
-                            Email = reader.GetString(reader.GetOrdinal("email")),
-                            Active = reader.GetBoolean(reader.GetOrdinal("active")),
-                            PositionID = reader.GetString(reader.GetOrdinal("PositionID")),
-                            SiteID = reader.GetInt32(reader.GetOrdinal("siteID")),
-                            Locked = reader.GetBoolean(reader.GetOrdinal("locked")),
-                            UserName = reader.GetString(reader.GetOrdinal("username")),
-                            Notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes"))
-                        };
+                        Employee employee = new Employee(
+                            reader.GetInt32(reader.GetOrdinal("employeeID")),
+                            reader.GetString(reader.GetOrdinal("password")),
+                            reader.GetString(reader.GetOrdinal("firstName")),
+                            reader.GetString(reader.GetOrdinal("lastName")),
+                            reader.GetString(reader.GetOrdinal("email")),
+                            reader.GetBoolean(reader.GetOrdinal("active")),
+                            reader.GetInt32(reader.GetOrdinal("PositionID")),
+                            reader.GetInt32(reader.GetOrdinal("siteID")),
+                            reader.GetBoolean(reader.GetOrdinal("locked")),
+                            reader.GetString(reader.GetOrdinal("username")),
+                            reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes"))
+                        );
 
                         // Add the Employee object to the list
                         employees.Add(employee);
+                    }
 
-                    }//end of while
                     reader.Close();
                    
                 }

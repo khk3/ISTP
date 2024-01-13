@@ -93,5 +93,41 @@ namespace Bullseye
             }
            
         }
+
+        private void btnAddUser_Click(object sender, EventArgs e)
+        {//Add new user
+            AddUpdateUserForm au= new AddUpdateUserForm("add");
+            au.ShowDialog();
+        }
+
+        private void btnEditUser_Click(object sender, EventArgs e)
+        {
+            if (dgvEmployees.DataSource != null)
+            {
+                if (dgvEmployees.SelectedRows.Count > 0)
+                {
+                    DataGridViewRow selectedRow = dgvEmployees.SelectedRows[0];
+
+                    int empID = Convert.ToInt32(selectedRow.Cells[0].Value);
+                    string pw= selectedRow.Cells[1].Value.ToString();
+                    string fn= selectedRow.Cells[2].Value.ToString();
+                    string ln= selectedRow.Cells[3].Value.ToString();
+                    string email= selectedRow.Cells[4].Value.ToString();
+                    bool active = Convert.ToBoolean(selectedRow.Cells[5].Value);
+                    int posn = Convert.ToInt32(selectedRow.Cells[6].Value);
+                    int site = Convert.ToInt32((selectedRow.Cells[7].Value));
+                    bool locked= Convert.ToBoolean((selectedRow.Cells[8].Value));
+                    string userName= selectedRow.Cells[9].Value.ToString();
+                    string notes= selectedRow.Cells[10].Value.ToString();
+
+                    Employee emp = new Employee(empID,pw,fn,ln,email,active,posn,site,locked,userName,notes);
+                    
+                    AddUpdateUserForm au= new AddUpdateUserForm(emp);                  
+                }
+                else//if no row selected                
+                    MessageBox.Show("Please select a user to update.", "Error - no user selection");            
+            }
+          
+        }
     }
 }

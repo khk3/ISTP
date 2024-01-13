@@ -71,6 +71,7 @@ namespace Bullseye
                 return true;
             else
             {
+                MessageBox.Show("The fields cannot be empty", "Error - Empty Fields");
                 if(txtNewPassWord.Text =="")
                     lblWarnNP.Visible = true;
                 if(txtConfirmPassword.Text=="")
