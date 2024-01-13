@@ -41,9 +41,6 @@
             this.dgvEmployees = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.btnAddUser = new System.Windows.Forms.Button();
-            this.btnEditUser = new System.Windows.Forms.Button();
-            this.btnDeleteUser = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabAdmin.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -77,7 +74,7 @@
             // 
             // btnLogOut
             // 
-            this.btnLogOut.Location = new System.Drawing.Point(715, 415);
+            this.btnLogOut.Location = new System.Drawing.Point(39, 364);
             this.btnLogOut.Name = "btnLogOut";
             this.btnLogOut.Size = new System.Drawing.Size(75, 26);
             this.btnLogOut.TabIndex = 6;
@@ -112,20 +109,17 @@
             this.tabAdmin.Location = new System.Drawing.Point(39, 132);
             this.tabAdmin.Name = "tabAdmin";
             this.tabAdmin.SelectedIndex = 0;
-            this.tabAdmin.Size = new System.Drawing.Size(755, 265);
+            this.tabAdmin.Size = new System.Drawing.Size(708, 226);
             this.tabAdmin.TabIndex = 16;
             this.tabAdmin.SelectedIndexChanged += new System.EventHandler(this.tabAdmin_SelectedIndexChanged);
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.btnDeleteUser);
-            this.tabPage1.Controls.Add(this.btnEditUser);
-            this.tabPage1.Controls.Add(this.btnAddUser);
             this.tabPage1.Controls.Add(this.dgvEmployees);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage1.Size = new System.Drawing.Size(747, 239);
+            this.tabPage1.Size = new System.Drawing.Size(700, 200);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Users";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -137,7 +131,7 @@
             this.dgvEmployees.Name = "dgvEmployees";
             this.dgvEmployees.RowHeadersWidth = 51;
             this.dgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEmployees.Size = new System.Drawing.Size(639, 243);
+            this.dgvEmployees.Size = new System.Drawing.Size(597, 200);
             this.dgvEmployees.TabIndex = 0;
             // 
             // tabPage2
@@ -152,7 +146,7 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(699, 122);
+            this.btnRefresh.Location = new System.Drawing.Point(716, 98);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 26);
             this.btnRefresh.TabIndex = 17;
@@ -160,39 +154,11 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
-            // btnAddUser
-            // 
-            this.btnAddUser.Location = new System.Drawing.Point(656, 23);
-            this.btnAddUser.Name = "btnAddUser";
-            this.btnAddUser.Size = new System.Drawing.Size(75, 26);
-            this.btnAddUser.TabIndex = 18;
-            this.btnAddUser.Text = "&Add User";
-            this.btnAddUser.UseVisualStyleBackColor = true;
-            // 
-            // btnEditUser
-            // 
-            this.btnEditUser.Location = new System.Drawing.Point(656, 69);
-            this.btnEditUser.Name = "btnEditUser";
-            this.btnEditUser.Size = new System.Drawing.Size(75, 26);
-            this.btnEditUser.TabIndex = 19;
-            this.btnEditUser.Text = "&Edit User";
-            this.btnEditUser.UseVisualStyleBackColor = true;
-            // 
-            // btnDeleteUser
-            // 
-            this.btnDeleteUser.Location = new System.Drawing.Point(656, 118);
-            this.btnDeleteUser.Name = "btnDeleteUser";
-            this.btnDeleteUser.Size = new System.Drawing.Size(75, 26);
-            this.btnDeleteUser.TabIndex = 20;
-            this.btnDeleteUser.Text = "&Delete User";
-            this.btnDeleteUser.UseVisualStyleBackColor = true;
-            // 
             // AdminForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(806, 477);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(801, 477);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.tabAdmin);
             this.Controls.Add(this.label4);
@@ -226,8 +192,5 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView dgvEmployees;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Button btnDeleteUser;
-        private System.Windows.Forms.Button btnEditUser;
-        private System.Windows.Forms.Button btnAddUser;
     }
 }

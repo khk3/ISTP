@@ -61,15 +61,9 @@ namespace Bullseye
         {
             txtNewPassWord.Text = "";
             txtConfirmPassword.Text = "";
+            txtNewPassWord.Focus();
         }
-
-        private bool ValidadePassword(string password)
-        {
-            string pattern = @"^(?=.*[A-Z])(?=.*[!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=/\\]{8,}$";
-            return Regex.IsMatch(password, pattern);
-      
-        }
-         
+  
 
         private bool CheckEmptyFields()
         {
@@ -91,7 +85,9 @@ namespace Bullseye
             if (CheckEmptyFields())
             {
                 string password = txtNewPassWord.Text;
-                if (ValidadePassword(password)){ //password valid
+
+                Validation v = new Validation();
+                if (v.ValidadePassword(password)){ //password valid
 
                     string confirmPassword=txtConfirmPassword.Text;
                     if (password == confirmPassword)

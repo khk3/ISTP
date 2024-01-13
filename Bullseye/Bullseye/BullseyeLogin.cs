@@ -32,10 +32,13 @@ namespace Bullseye
 
         private void Init()
         {
-         
-            OpenDb();
-            RunScript();
-            LoadEmployees();
+            MySqlClass m= new MySqlClass();
+            //OpenDb();
+            m.OpenDb();
+            //RunScript();
+            m.RunScript();
+            //LoadEmployees();
+            employees=m.LoadEmployees();
 
             lblWarnP.Visible= false;
             lblWarnU.Visible=false;
@@ -74,7 +77,7 @@ namespace Bullseye
                 //Run the script
                 int num=cmd.ExecuteNonQuery();            
             }
-            catch (MySqlException sqlEx)
+            catch (SqlException sqlEx)
             {
                 // Handle SQL-related exceptions
                 MessageBox.Show("SQL Exception: " + sqlEx.Message, "Error - Cannot run script");
@@ -121,7 +124,7 @@ namespace Bullseye
 
                 }
             }
-            catch (MySqlException  sqlEx)
+            catch (SqlException  sqlEx)
             {
                 MessageBox.Show("Could not find Employees. System Error: " + sqlEx.Message, "Error - could not find Employees");
             }
@@ -135,6 +138,8 @@ namespace Bullseye
         private void timer1_Tick(object sender, EventArgs e)
         {
             //lblTime.Text= DateTime.Now.ToLongTimeString();
+            //this.Text = "";
+            
             this.Text = " Bullseye - " + DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString();
 
         }
@@ -203,38 +208,23 @@ namespace Bullseye
                         }
                         else //change locked to 1
                         {
-                            string checkLocked = "Select locked from employee where username ='" + userName + "'";
-                            MySqlCommand sqlCmd = new MySqlCommand(checkLocked, conn);
-                            try
+                            MySqlClass m= new MySqlClass();
+         
+                            bool isLocked=m.CheckLocked(userName);
+                            if (!isLocked)
                             {
-                                MySqlDataReader reader = sqlCmd.ExecuteReader();
-                                reader.Read();
+                                int update=m.UpdateEmployee(userName);
+                                if (update > 0)
+                                    MessageBox.Show("Your account has been locked because of too many incorrect login attempts. Please contact your Administrator at admin@bullseye.ca for assistance", "Error- User Locked");
 
-                                bool isLocked = reader.GetBoolean(reader.GetOrdinal("locked"));
-                                reader.Close();
-                                if (isLocked)
-                                    MessageBox.Show("Account is locked. Please contact your Administrator admin@bullseye.ca for assistancer.", "Error - Account Locked");
-                                else
-                                {
-                                    string cmd = "update employee set locked = 1 where username ='" + userName + "'";
-                                    MySqlCommand sqlCommand = new MySqlCommand(cmd, conn);
-                                    int update = sqlCommand.ExecuteNonQuery();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Account is locked. Please contact your Administrator admin@bullseye.ca for assistancer.", "Error - Account Locked");
 
-                                    if (update > 0)
-                                        MessageBox.Show("You account has been locked because of too many incorrect login attempts. Please contact your Administrator at admin@bullseye.ca for assistance", "Error- User Locked");
-                                }
-                            }
-                            catch (MySqlException sqlEx)
-                            {
-                                MessageBox.Show("Could not Lock the user. Error: " + sqlEx.Message, "Error- SQL Lock user");
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Could not Lock the user. Error: " + ex.Message, "Error- Lock user");
                             }
                         }
                     }
-
                 }
                 else
                 {
@@ -258,7 +248,7 @@ namespace Bullseye
         {
             //Close the connection
             conn.Close();
-          //  timer1.Stop();
+            timer1.Stop();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -270,26 +260,38 @@ namespace Bullseye
 
         private void btnRecoverPassword_Click(object sender, EventArgs e)
         {
-           
-            if (CheckEmptyFields("password"))
-            {
-                Employee emp= employees.FirstOrDefault(em => em.UserName == txtUserName.Text);
+            lblWarnP.Visible = false;
+            string userName= txtUserName.Text;
 
-                if (emp!=null)
+            MySqlClass m = new MySqlClass();
+            bool isLocked = m.CheckLocked(userName); 
+            if (!isLocked)
+            {
+                if (CheckEmptyFields("password"))
                 {
-                    RecoverPasswordForm rPassForm = new RecoverPasswordForm(emp);
-                    rPassForm.ShowDialog();
+                    Employee emp = employees.FirstOrDefault(em => em.UserName == txtUserName.Text);
+
+                    if (emp != null)
+                    {
+                        RecoverPasswordForm rPassForm = new RecoverPasswordForm(emp);
+                        rPassForm.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("User not found", " Error - Invalid User");
+                        txtUserName.Text = "";
+                        txtUserName.Focus();
+                    }
+
                 }
                 else
-                {
-                    MessageBox.Show("User not found", " Error - Invalid User");
-                    txtUserName.Text = "";
                     txtUserName.Focus();
-                }
-               
             }
-            else
-                txtUserName.Focus();
+            else //if user locked
+            {
+                MessageBox.Show("Cannot Recover Password. User is Locked. Please contact your Administrator at admin@bullseye.ca for assistance", "Error- Recover Password" );
+            }
+          
             
            
         }
@@ -299,8 +301,7 @@ namespace Bullseye
             if(txtUserName.Text!=""&&txtPassword.Text!="")
                 return true;
             else
-            {
-                
+            {               
                 if (btn == "password")
                 {
                     if (txtUserName.Text == "")
@@ -311,9 +312,7 @@ namespace Bullseye
                         return false;
                     }
                     else
-                        return true;
-
-                   
+                        return true;   
                 }                  
                 else
                 {
@@ -326,9 +325,7 @@ namespace Bullseye
                         lblWarnP.Visible = true;
                     else
                         lblWarnP.Visible = false;
-                }
-
-                
+                }    
                 return false;
             }
                 
