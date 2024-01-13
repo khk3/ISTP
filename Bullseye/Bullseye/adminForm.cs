@@ -18,10 +18,12 @@ namespace Bullseye
     {
         public AdminForm() { }
 
+
         public AdminForm(Employee user)
         {
             InitializeComponent();
             Init(user.FirstName);
+            userLogged = user;
         }
 
         //class=level config to connection string
@@ -30,6 +32,8 @@ namespace Bullseye
         //create connection
         MySqlConnection conn = new MySqlConnection(connStr);
 
+
+        Employee userLogged = null;
         private void Init(string fName)
         {
             lblUser.Text = fName;
@@ -96,7 +100,8 @@ namespace Bullseye
 
         private void btnAddUser_Click(object sender, EventArgs e)
         {//Add new user
-            AddUpdateUserForm au= new AddUpdateUserForm("add");
+
+            AddUpdateUserForm au= new AddUpdateUserForm("add", userLogged);
             au.ShowDialog();
         }
 

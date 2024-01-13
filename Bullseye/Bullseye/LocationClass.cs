@@ -9,6 +9,7 @@ namespace Bullseye
 {
     public class LocationClass
     {
+
         public int SiteID { get; set; }
         public string Name { get; set; }
         public string Province { get; set; }

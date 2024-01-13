@@ -140,11 +140,59 @@ namespace Bullseye
             string cmd = "update employee set locked = 1 where username ='" + userName + "'";
             MySqlCommand sqlCommand = new MySqlCommand(cmd, conn);
 
-
-            int update = sqlCommand.ExecuteNonQuery();
+            try
+            {
+                int update = sqlCommand.ExecuteNonQuery();
+                conn.Close();
+                return update;
+            }
+            catch(MySqlException sqlEx) 
+            {
+                MessageBox.Show("Could not Update Employee. Error: "+sqlEx.Message, " Error - MySQL");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Could not Update Employee. Error: " + ex.Message, " Error - Exception");
+            }
             conn.Close();
-            return update;
+            return 0;
         }
 
+        public bool isUserNameDuplicated(string userName)
+        {
+            OpenDb();
+            string cmd= "select * from employee where username='"+userName + "'";
+            MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
+
+            bool isDuplicate = false;
+            try
+            {
+                MySqlDataReader reader = sqlCmd.ExecuteReader();
+                if (reader.HasRows)
+                {             
+                    isDuplicate= true;
+                }
+                else
+                {               
+                    isDuplicate= false;
+                }
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not Update Employee. Error: " + sqlEx.Message, " Error - MySQL");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not Update Employee. Error: " + ex.Message, " Error - Exception");
+            }
+            conn.Close();
+            return isDuplicate;
+        }
+
+
+        public void AddUser(string userName)
+        {
+
+        }
     }//end of class
 }

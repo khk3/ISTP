@@ -16,5 +16,7 @@ namespace Bullseye
             string pattern = @"^(?=.*[A-Z])(?=.*[!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=/\\]{8,}$";
             return Regex.IsMatch(password, pattern);           
         }
+
+    
     }
 }
