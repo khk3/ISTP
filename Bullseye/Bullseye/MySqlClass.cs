@@ -72,7 +72,7 @@ namespace Bullseye
                     while (reader.Read())
                     {
                         Employee employee = new Employee(
-                            reader.GetInt32(reader.GetOrdinal("employeeID")),
+                            //reader.GetInt32(reader.GetOrdinal("employeeID")),
                             reader.GetString(reader.GetOrdinal("password")),
                             reader.GetString(reader.GetOrdinal("firstName")),
                             reader.GetString(reader.GetOrdinal("lastName")),
@@ -134,11 +134,13 @@ namespace Bullseye
             return false;
         }
 
-        public int UpdateEmployee(string userName)
+        public int LockUser(string userName)
         {
             OpenDb();
-            string cmd = "update employee set locked = 1 where username ='" + userName + "'";
+            string cmd = "update employee set locked = 1 where username = @userName";
+
             MySqlCommand sqlCommand = new MySqlCommand(cmd, conn);
+            sqlCommand.Parameters.AddWithValue("@userName", userName);
 
             try
             {
@@ -146,18 +148,17 @@ namespace Bullseye
                 conn.Close();
                 return update;
             }
-            catch(MySqlException sqlEx) 
+            catch (MySqlException sqlEx)
             {
-                MessageBox.Show("Could not Update Employee. Error: "+sqlEx.Message, " Error - MySQL");
+                MessageBox.Show("Could not Lock Employee. Error: " + sqlEx.Message, " Error - MySQL");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Could not Update Employee. Error: " + ex.Message, " Error - Exception");
+                MessageBox.Show("Could not Lock Employee. Error: " + ex.Message, " Error - Exception");
             }
             conn.Close();
             return 0;
         }
-
         public bool isUserNameDuplicated(string userName)
         {
             OpenDb();
@@ -190,9 +191,93 @@ namespace Bullseye
         }
 
 
-        public void AddUser(string userName)
+        public int AddUser(Employee emp)
         {
+            string addUserQuery = $"INSERT INTO employee (Password, FirstName, LastName, Email, active, PositionID, siteID, locked, username, notes) VALUES " +
+                   $"('{emp.Password}', '{emp.FirstName}', '{emp.LastName}', '{emp.Email}', {Convert.ToInt32(emp.Active)}, {emp.PositionID}, {emp.SiteID}, {Convert.ToInt32(emp.Locked)}, '{emp.UserName}', '{emp.Notes}')";
+            OpenDb();
+            MySqlCommand cmd = new MySqlCommand(addUserQuery, conn);
+            int result = 0;
+            try
+            {
+                result = cmd.ExecuteNonQuery();
+
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not Add Employee. Error: " + sqlEx.Message, " Error - MySQL");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not Add Employee. Error: " + ex.Message, " Error - Exception");
+            }
+            return result;
 
         }
+
+        public int UpdateUser(Employee emp) {
+            OpenDb();
+            string updateQuery = "UPDATE employee SET Password = @Password, FirstName = @FirstName, LastName = @LastName, Email = @Email, active = @Active, PositionID = @PositionID, " +
+                         "siteID = @SiteID, locked = @Locked, username = @UserName, notes = @Notes WHERE employeeID = @EmployeeID";
+            MySqlCommand sqlCommand = new MySqlCommand(updateQuery, conn);
+            sqlCommand.Parameters.AddWithValue("@Password", emp.Password);
+            sqlCommand.Parameters.AddWithValue("@FirstName", emp.FirstName);
+            sqlCommand.Parameters.AddWithValue("@LastName", emp.LastName);
+            sqlCommand.Parameters.AddWithValue("@Email", emp.Email);
+            sqlCommand.Parameters.AddWithValue("@Active", emp.Active ? 1 : 0);
+            sqlCommand.Parameters.AddWithValue("@PositionID", emp.PositionID);
+            sqlCommand.Parameters.AddWithValue("@SiteID", emp.SiteID);
+            sqlCommand.Parameters.AddWithValue("@Locked", emp.Locked ? 1 : 0);
+            sqlCommand.Parameters.AddWithValue("@UserName", emp.UserName);
+            sqlCommand.Parameters.AddWithValue("@Notes", emp.Notes);
+            sqlCommand.Parameters.AddWithValue("@EmployeeID", emp.EmployeeID);
+            try
+            {
+                int update = sqlCommand.ExecuteNonQuery();
+                conn.Close();
+                return update;
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not Update Employee. Error: " + sqlEx.Message, " Error - MySQL");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not Update Employee. Error: " + ex.Message, " Error - Exception");
+            }
+            conn.Close();
+            return 0;
+
+        }
+
+        public int DeleteUser(int empId)
+        {
+            OpenDb();
+            string cmd = "DELETE from employee where employeeID=@empId";
+
+            MySqlCommand sqlCommand = new MySqlCommand(cmd, conn);
+            sqlCommand.Parameters.AddWithValue("@empId", empId);
+
+            try
+            {
+                int delete = sqlCommand.ExecuteNonQuery();
+                conn.Close();
+                return delete;
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not Delete Employee. Error: " + sqlEx.Message, " Error - MySQL");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not Delete Employee. Error: " + ex.Message, " Error - Exception");
+            }
+            conn.Close();
+            return 0;
+
+        }
+
+
+
     }//end of class
 }

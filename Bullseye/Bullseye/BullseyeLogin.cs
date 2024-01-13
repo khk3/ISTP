@@ -127,7 +127,8 @@ namespace Bullseye
                             bool isLocked=m.CheckLocked(userName);
                             if (!isLocked)
                             {
-                                int update=m.UpdateEmployee(userName);
+                                
+                                int update=m.LockUser(userName);
                                 if (update > 0)
                                     MessageBox.Show("Your account has been locked because of too many incorrect login attempts. Please contact your Administrator at admin@bullseye.ca for assistance", "Error- User Locked");
 

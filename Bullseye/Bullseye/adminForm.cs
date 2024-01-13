@@ -24,6 +24,8 @@ namespace Bullseye
             InitializeComponent();
             Init(user.FirstName);
             userLogged = user;
+
+
         }
 
         //class=level config to connection string
@@ -82,6 +84,7 @@ namespace Bullseye
                     adapter.Fill(dt);
                     dgvEmployees.DataSource = dt;
                     dgvEmployees.ReadOnly = true;
+                    dgvEmployees.ClearSelection();
                 }
                 catch (SqlException sqlEx)
                 {
@@ -101,7 +104,7 @@ namespace Bullseye
         private void btnAddUser_Click(object sender, EventArgs e)
         {//Add new user
 
-            AddUpdateUserForm au= new AddUpdateUserForm("add", userLogged);
+            AddUpdateUserForm au= new AddUpdateUserForm("add",userLogged);
             au.ShowDialog();
         }
 
@@ -113,7 +116,7 @@ namespace Bullseye
                 {
                     DataGridViewRow selectedRow = dgvEmployees.SelectedRows[0];
 
-                    int empID = Convert.ToInt32(selectedRow.Cells[0].Value);
+                    int empId = Convert.ToInt32(selectedRow.Cells[0].Value);
                     string pw= selectedRow.Cells[1].Value.ToString();
                     string fn= selectedRow.Cells[2].Value.ToString();
                     string ln= selectedRow.Cells[3].Value.ToString();
@@ -125,14 +128,48 @@ namespace Bullseye
                     string userName= selectedRow.Cells[9].Value.ToString();
                     string notes= selectedRow.Cells[10].Value.ToString();
 
-                    Employee emp = new Employee(empID,pw,fn,ln,email,active,posn,site,locked,userName,notes);
+                    Employee empl = new Employee(empId,pw,fn,ln,email,active,posn,site,locked,userName,notes);
                     
-                    AddUpdateUserForm au= new AddUpdateUserForm(emp);                  
+                    AddUpdateUserForm au= new AddUpdateUserForm("edit",empl); 
+                    au.ShowDialog();
                 }
                 else//if no row selected                
                     MessageBox.Show("Please select a user to update.", "Error - no user selection");            
             }
+            else
+            {
+                MessageBox.Show("To Update a user please, refresh the table and select a user first.", "Error - Update User.");
+            }
           
+          
+        }
+
+        private void btnDeleteUser_Click(object sender, EventArgs e)
+        {
+            if (dgvEmployees.DataSource != null)
+            {
+                if (dgvEmployees.SelectedRows.Count > 0)
+                {
+                    DataGridViewRow selectedRow = dgvEmployees.SelectedRows[0];
+
+                    int empId = Convert.ToInt32(selectedRow.Cells[0].Value);
+
+                   // string cmd = "DELETE employee where employeeID=@empId;
+                    MySqlClass m = new MySqlClass();
+                    int success=m.DeleteUser(empId);
+                    if (success == 1)
+                    {
+                        MessageBox.Show("User deleted successfully", "Delete user");
+                    }
+                    
+                }
+                else//if no row selected                
+                    MessageBox.Show("Please select a user to update.", "Error - no user selection");
+            }
+            else
+            {
+                MessageBox.Show("To Delete a user please, refresh the table and select a user first.", "Error - Delete User.");
+            }
         }
     }
 }
