@@ -480,7 +480,6 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(708, 707);
-            this.ControlBox = false;
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txtAreaNotes);
             this.Controls.Add(this.warnLoc);
@@ -520,6 +519,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.Name = "AddUpdateUserForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bullseye ";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

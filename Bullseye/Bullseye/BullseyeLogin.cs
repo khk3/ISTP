@@ -79,7 +79,7 @@ namespace Bullseye
                 Employee user = employees.FirstOrDefault(emp => emp.UserName == userName);
 
                 if (user!=null)
-                {
+                {      
                     if (user.Password == password)
                     {
                         if (!user.Active)
@@ -131,7 +131,6 @@ namespace Bullseye
                                 int update=m.LockUser(userName);
                                 if (update > 0)
                                     MessageBox.Show("Your account has been locked because of too many incorrect login attempts. Please contact your Administrator at admin@bullseye.ca for assistance", "Error- User Locked");
-
                             }
                             else
                             {

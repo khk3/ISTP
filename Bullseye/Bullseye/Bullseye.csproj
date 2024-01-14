@@ -134,6 +134,7 @@
     <Compile Include="BullseyeLogin.Designer.cs">
       <DependentUpon>BullseyeLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConstantsClass.cs" />
     <Compile Include="DateTimeClass.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="LocationClass.cs" />

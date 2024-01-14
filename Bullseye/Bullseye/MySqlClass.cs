@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,7 +18,7 @@ namespace Bullseye
         public MySqlClass() { }
 
         //class=level config to connection string
-        static string connStr = ConfigurationManager.ConnectionStrings["bullseyedb"].ConnectionString;
+        static string connStr = ConfigurationManager.ConnectionStrings[ConstantsClass.DatabaseName].ConnectionString;
 
         //create connection
         MySqlConnection conn = new MySqlConnection(connStr);
@@ -40,7 +42,7 @@ namespace Bullseye
             //
             try
             {
-                string script = System.IO.File.ReadAllText("Bullseye_DB2024_1.3.sql");
+                string script = System.IO.File.ReadAllText(ConstantsClass.ScriptName);
                 MySqlCommand cmd = new MySqlCommand(script, conn);
                 //Run the script
                 int num = cmd.ExecuteNonQuery();
@@ -71,20 +73,21 @@ namespace Bullseye
                 {
                     while (reader.Read())
                     {
-                        Employee employee = new Employee(
-                            //reader.GetInt32(reader.GetOrdinal("employeeID")),
-                            reader.GetString(reader.GetOrdinal("password")),
-                            reader.GetString(reader.GetOrdinal("firstName")),
-                            reader.GetString(reader.GetOrdinal("lastName")),
-                            reader.GetString(reader.GetOrdinal("email")),
-                            reader.GetBoolean(reader.GetOrdinal("active")),
-                            reader.GetInt32(reader.GetOrdinal("PositionID")),
-                            reader.GetInt32(reader.GetOrdinal("siteID")),
-                            reader.GetBoolean(reader.GetOrdinal("locked")),
-                            reader.GetString(reader.GetOrdinal("username")),
-                            reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes"))
-                        );
+                        int employeeID = reader.GetInt32(reader.GetOrdinal("employeeID"));
+                        string password = reader.GetString(reader.GetOrdinal("password"));
+                        //string asteriskPassword = new string('*', password.Length);
 
+                        string firstName = reader.GetString(reader.GetOrdinal("firstName"));
+                        string lastName = reader.GetString(reader.GetOrdinal("lastName"));
+                        string email = reader.GetString(reader.GetOrdinal("email"));
+                        bool active = reader.GetBoolean(reader.GetOrdinal("active"));
+                        int positionID = reader.GetInt32(reader.GetOrdinal("PositionID"));
+                        int siteID = reader.GetInt32(reader.GetOrdinal("siteID"));
+                        bool locked = reader.GetBoolean(reader.GetOrdinal("locked"));
+                        string username = reader.GetString(reader.GetOrdinal("username"));
+                        string notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes"));
+                        
+                        Employee employee = new Employee(employeeID,password,firstName,lastName,email,active,positionID,siteID,locked,username,notes);
                         // Add the Employee object to the list
                         employees.Add(employee);
                     }
@@ -159,6 +162,41 @@ namespace Bullseye
             conn.Close();
             return 0;
         }
+
+        public DataTable RefreshDgv()
+        {
+            string cmd = "select * from employee";
+            try
+            {
+                MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(sqlCmd);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    if (dt.Columns.Contains("password"))
+                    {
+                        string password = row["password"].ToString();
+                        int passwordLength = password.Length;
+                        row["password"] = new string('*', passwordLength);
+                    }
+                }
+
+
+                return dt;
+            }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show("Could not retrieve employees. Error: " + sqlEx.Message, "Error - SQL Exception");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not retrieve employees. Error: " + ex.Message, "Error");
+            }
+            return null;
+        }
+
         public bool isUserNameDuplicated(string userName)
         {
             OpenDb();
@@ -250,34 +288,122 @@ namespace Bullseye
 
         }
 
-        public int DeleteUser(int empId)
+        public int InactiveUser(int empId)
         {
             OpenDb();
-            string cmd = "DELETE from employee where employeeID=@empId";
+            string cmd = "Update employee set active=0 where employeeID=@empId";
 
             MySqlCommand sqlCommand = new MySqlCommand(cmd, conn);
             sqlCommand.Parameters.AddWithValue("@empId", empId);
 
             try
             {
-                int delete = sqlCommand.ExecuteNonQuery();
+                int inactive = sqlCommand.ExecuteNonQuery();
                 conn.Close();
-                return delete;
+                return inactive;
             }
             catch (MySqlException sqlEx)
             {
-                MessageBox.Show("Could not Delete Employee. Error: " + sqlEx.Message, " Error - MySQL");
+                MessageBox.Show("Could not Inactivate Employee. Error: " + sqlEx.Message, " Error - MySQL");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Could not Delete Employee. Error: " + ex.Message, " Error - Exception");
+                MessageBox.Show("Could not Inactivate Employee. Error: " + ex.Message, " Error - Exception");
             }
             conn.Close();
             return 0;
 
         }
 
+        public LocationClass[] GetLocations()
+        {
+            OpenDb();
 
+            //create script and command
+            string cmd = "select * from site;";
+            MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
 
+            List<LocationClass> locationsList = new List<LocationClass>();
+            try
+            {
+                MySqlDataReader reader = sqlCmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader != null && reader.Read())
+                    {
+                        int siteID = reader.GetInt32(reader.GetOrdinal("siteID"));
+                        string name = reader.IsDBNull(reader.GetOrdinal("name")) ? null : reader.GetString(reader.GetOrdinal("name"));
+                        string provinceID = reader.IsDBNull(reader.GetOrdinal("provinceID")) ? null : reader.GetString(reader.GetOrdinal("provinceID"));
+                        string address = reader.IsDBNull(reader.GetOrdinal("address")) ? null : reader.GetString(reader.GetOrdinal("address"));
+                        string address2 = reader.IsDBNull(reader.GetOrdinal("address2")) ? null : reader.GetString(reader.GetOrdinal("address2"));
+                        string city = reader.IsDBNull(reader.GetOrdinal("city")) ? null : reader.GetString(reader.GetOrdinal("city"));
+                        string country = reader.IsDBNull(reader.GetOrdinal("country")) ? null : reader.GetString(reader.GetOrdinal("country"));
+                        string postalCode = reader.IsDBNull(reader.GetOrdinal("postalCode")) ? null : reader.GetString(reader.GetOrdinal("postalCode"));
+                        string phone = reader.IsDBNull(reader.GetOrdinal("phone")) ? null : reader.GetString(reader.GetOrdinal("phone"));
+                        string dayOfWeek = reader.IsDBNull(reader.GetOrdinal("dayOfWeek")) ? null : reader.GetString(reader.GetOrdinal("dayOfWeek"));
+                        int distanceFromWH = reader.GetInt32(reader.GetOrdinal("distanceFromWH"));
+                        string notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes"));
+
+                        LocationClass location = new LocationClass(siteID, name, provinceID, address, address2, city, country, postalCode, phone, dayOfWeek, distanceFromWH, notes);
+
+                        locationsList.Add(location);    
+                    }
+                    reader.Close();
+                }
+                LocationClass[] locationsArray = locationsList.ToArray();
+                conn.Close();
+                return locationsArray;
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not find Locations. System Error: " + sqlEx.Message, "Error - could not find Locations");
+            }
+            catch (Exception ex)
+            {
+                // Handle other general exceptions
+                MessageBox.Show("Exception: " + ex.Message, "Error - Cannot find Locations");
+            }
+            conn.Close ();
+            return null;
+        }
+
+        public PositionClass[] GetPositions()
+        {
+            OpenDb();
+            //create script and command
+            string cmd = "select * from posn;";
+            MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
+
+            List<PositionClass> positionsList = new List<PositionClass>();
+            try
+            {
+                MySqlDataReader reader = sqlCmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader != null && reader.Read())
+                    {
+                        int positionID = reader.GetInt32(reader.GetOrdinal("positionID"));
+                        string permissionLevel = reader.GetString(reader.GetOrdinal("permissionLevel"));                   
+                        PositionClass position = new PositionClass(positionID, permissionLevel);
+                        positionsList.Add(position);
+                    }
+                    reader.Close();
+                }
+                PositionClass[] positionsArray = positionsList.ToArray();
+                conn.Close();
+                return positionsArray;
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not find Positions. System Error: " + sqlEx.Message, "Error - could not find Positions");
+            }
+            catch (Exception ex)
+            {
+                // Handle other general exceptions
+                MessageBox.Show("Exception: " + ex.Message, "Error - Cannot find Positions");
+            }
+            conn.Close();
+            return null;
+        }
     }//end of class
 }

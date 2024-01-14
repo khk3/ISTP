@@ -138,7 +138,7 @@
             this.label5.Location = new System.Drawing.Point(177, 24);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(224, 57);
+            this.label5.Size = new System.Drawing.Size(217, 56);
             this.label5.TabIndex = 8;
             this.label5.Text = "Bullseye";
             // 
@@ -220,7 +220,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(553, 398);
-            this.ControlBox = false;
             this.Controls.Add(this.lblWarnC);
             this.Controls.Add(this.lblWarnNP);
             this.Controls.Add(this.lblQuestion);

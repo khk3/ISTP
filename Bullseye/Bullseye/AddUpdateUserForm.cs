@@ -13,6 +13,7 @@ namespace Bullseye
     public partial class AddUpdateUserForm : Form
     {
         LocationClass[] locationsArray = null;
+        PositionClass[] positionArray = null;
 
         public AddUpdateUserForm() { }
 
@@ -28,12 +29,19 @@ namespace Bullseye
             timer1.Start();
 
             lblUserName.Text = emp.UserName;
-            locationsArray = new LocationClass().Locations;
+
+            MySqlClass m=new MySqlClass();
+
+            locationsArray = m.GetLocations();
             //user location
             lblLocation.Text = locationsArray.FirstOrDefault(loc => loc.SiteID == emp.SiteID).Name;
+            
+            positionArray = m.GetPositions();
             LoadComboboxes();
 
             addOrDelete = action;
+
+            //if update user
             if (addOrDelete == "edit")
             {
                 lblEmpID.Text = emp.EmployeeID.ToString();
@@ -47,7 +55,11 @@ namespace Bullseye
                 cboPosn.SelectedIndex = emp.PositionID;
                 cboLocation.SelectedIndex = emp.SiteID;
                 ckbActive.Checked = emp.Active;
-
+            }
+            else //if add
+            {
+                txtPassword.Text = ConstantsClass.DefaultPassword;
+                txtConfirmPassword.Text= ConstantsClass.DefaultPassword;
             }
 
 
@@ -57,9 +69,9 @@ namespace Bullseye
         {
             try
             {
-                cboPosn.DataSource = new BindingSource(PositionClass.PositionNames, null);
-                cboPosn.DisplayMember = "Value";
-                cboPosn.ValueMember = "Key";
+                cboPosn.DataSource = new BindingSource(positionArray, null);
+                cboPosn.DisplayMember = "PermissionLevel";
+                cboPosn.ValueMember = "PositionID";
                 cboPosn.SelectedIndex = -1;
             }
             catch (Exception ex1)
@@ -147,9 +159,18 @@ namespace Bullseye
                                 count++;
                             }
                             string email = finalUserName + "@bullseye.ca";
-                            Employee emp = new Employee(password, firstName, lastName, email, active, position, location, false, finalUserName, notes);
 
-                            m.AddUser(emp);
+                            
+                            Employee emp = new Employee(password, firstName, lastName, email, active, position, location, false, finalUserName, notes);
+                            bool confirmAddUser = MessageBox.Show("Confirm Add User?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes;
+                            if (confirmAddUser)
+                            {
+                                int added= m.AddUser(emp);
+                                if (added == 1)
+                                    MessageBox.Show("Your Username is: " + finalUserName + " , your email is : " + email,"SAVE YOUR USERNAME PASSWORD AND EMAIL");
+
+                            }
+                               
                         }
                         else //update
                         {

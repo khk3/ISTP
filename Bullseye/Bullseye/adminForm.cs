@@ -18,6 +18,7 @@ namespace Bullseye
     {
         public AdminForm() { }
 
+        DateTime loginTime;
 
         public AdminForm(Employee user)
         {
@@ -25,7 +26,8 @@ namespace Bullseye
             Init(user.FirstName);
             userLogged = user;
 
-
+            //Time of login
+            loginTime = DateTime.Now;
         }
 
         //class=level config to connection string
@@ -33,7 +35,6 @@ namespace Bullseye
 
         //create connection
         MySqlConnection conn = new MySqlConnection(connStr);
-
 
         Employee userLogged = null;
         private void Init(string fName)
@@ -56,11 +57,21 @@ namespace Bullseye
             this.Close();
         }
 
-      
+
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            this.Text = "Admin - " + DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString();
+            DateTime now = DateTime.Now;
+            TimeSpan elapsed = now - loginTime;
+            TimeSpan remainingTime = ConstantsClass.TimeToAutoLogout - elapsed;
+
+            if (remainingTime <= TimeSpan.Zero)
+            {
+                btnLogOut.PerformClick();
+                return;
+            }
+
+            this.Text = "Bullseye - "+ now.ToShortDateString() +" - " + now.ToLongTimeString()+" | Time to Auto Logout: "+ remainingTime.ToString(@"hh\:mm\:ss");
         }
 
         private void tabAdmin_SelectedIndexChanged(object sender, EventArgs e)
@@ -74,31 +85,13 @@ namespace Bullseye
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             if(tabAdmin.SelectedIndex == 0)
-            {
-                string cmd = "select * from employee";
-                try
-                {
-                    MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
-                    MySqlDataAdapter adapter = new MySqlDataAdapter(sqlCmd);
-                    DataTable dt = new DataTable();
-                    adapter.Fill(dt);
+            {                         
+                    MySqlClass m= new MySqlClass();
+                    DataTable dt = m.RefreshDgv();
                     dgvEmployees.DataSource = dt;
                     dgvEmployees.ReadOnly = true;
-                    dgvEmployees.ClearSelection();
-                }
-                catch (SqlException sqlEx)
-                {
-                    MessageBox.Show("Could not retrieve employees. Error: " + sqlEx.Message, "Error - SQL Exception");
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Could not retrieve employees. Error: " + ex.Message, "Error");
-
-                }
-
+                    dgvEmployees.ClearSelection();         
             }
-           
         }
 
         private void btnAddUser_Click(object sender, EventArgs e)
@@ -144,7 +137,7 @@ namespace Bullseye
           
         }
 
-        private void btnDeleteUser_Click(object sender, EventArgs e)
+        private void btnInactivateUser_Click(object sender, EventArgs e)
         {
             if (dgvEmployees.DataSource != null)
             {
@@ -156,19 +149,26 @@ namespace Bullseye
 
                    // string cmd = "DELETE employee where employeeID=@empId;
                     MySqlClass m = new MySqlClass();
-                    int success=m.DeleteUser(empId);
-                    if (success == 1)
+
+                    bool confirmUpdate = MessageBox.Show("Confirm Inactivate User?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes;
+                    if (confirmUpdate)
                     {
-                        MessageBox.Show("User deleted successfully", "Delete user");
+                        int success = m.InactiveUser(empId);
+                        if (success == 1)
+                        {
+                            MessageBox.Show("User Inactivated successfully", "Inactive user");
+                            btnRefresh.PerformClick();
+                        }
                     }
+                   
                     
                 }
                 else//if no row selected                
-                    MessageBox.Show("Please select a user to update.", "Error - no user selection");
+                    MessageBox.Show("Please select a user to Inanctivate.", "Error - no user selection");
             }
             else
             {
-                MessageBox.Show("To Delete a user please, refresh the table and select a user first.", "Error - Delete User.");
+                MessageBox.Show("To Inactivate a user please, refresh the table and select a user first.", "Error - Inactivate User.");
             }
         }
     }

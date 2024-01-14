@@ -38,7 +38,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tabAdmin = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnDeleteUser = new System.Windows.Forms.Button();
+            this.btnInactivateUser = new System.Windows.Forms.Button();
             this.btnEditUser = new System.Windows.Forms.Button();
             this.btnAddUser = new System.Windows.Forms.Button();
             this.dgvEmployees = new System.Windows.Forms.DataGridView();
@@ -124,7 +124,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.btnDeleteUser);
+            this.tabPage1.Controls.Add(this.btnInactivateUser);
             this.tabPage1.Controls.Add(this.btnEditUser);
             this.tabPage1.Controls.Add(this.btnAddUser);
             this.tabPage1.Controls.Add(this.dgvEmployees);
@@ -137,17 +137,17 @@
             this.tabPage1.Text = "Users";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // btnDeleteUser
+            // btnInactivateUser
             // 
-            this.btnDeleteUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDeleteUser.Location = new System.Drawing.Point(804, 129);
-            this.btnDeleteUser.Margin = new System.Windows.Forms.Padding(4);
-            this.btnDeleteUser.Name = "btnDeleteUser";
-            this.btnDeleteUser.Size = new System.Drawing.Size(116, 32);
-            this.btnDeleteUser.TabIndex = 20;
-            this.btnDeleteUser.Text = "&Delete User";
-            this.btnDeleteUser.UseVisualStyleBackColor = true;
-            this.btnDeleteUser.Click += new System.EventHandler(this.btnDeleteUser_Click);
+            this.btnInactivateUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInactivateUser.Location = new System.Drawing.Point(804, 129);
+            this.btnInactivateUser.Margin = new System.Windows.Forms.Padding(4);
+            this.btnInactivateUser.Name = "btnInactivateUser";
+            this.btnInactivateUser.Size = new System.Drawing.Size(116, 32);
+            this.btnInactivateUser.TabIndex = 20;
+            this.btnInactivateUser.Text = "&Inactivate User";
+            this.btnInactivateUser.UseVisualStyleBackColor = true;
+            this.btnInactivateUser.Click += new System.EventHandler(this.btnInactivateUser_Click);
             // 
             // btnEditUser
             // 
@@ -214,7 +214,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnLogOut;
             this.ClientSize = new System.Drawing.Size(1068, 524);
-            this.ControlBox = false;
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.tabAdmin);
             this.Controls.Add(this.label4);
@@ -248,7 +247,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView dgvEmployees;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Button btnDeleteUser;
+        private System.Windows.Forms.Button btnInactivateUser;
         private System.Windows.Forms.Button btnEditUser;
         private System.Windows.Forms.Button btnAddUser;
     }
