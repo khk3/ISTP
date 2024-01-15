@@ -163,17 +163,44 @@ namespace Bullseye
             return 0;
         }
 
-        public DataTable RefreshDgv()
+        public Employee[] GetEmployees()
         {
+            OpenDb();
             string cmd = "select * from employee";
-            try
-            {
+         
                 MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(sqlCmd);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
+                List<Employee> employeesList = new List<Employee>();
+                try
+                {
+                    MySqlDataReader reader = sqlCmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader != null && reader.Read())
+                    {
+                        int employeeID = reader.GetInt32(reader.GetOrdinal("employeeID"));
+                        string password = reader.GetString(reader.GetOrdinal("password"));
+                        string firstName = reader.GetString(reader.GetOrdinal("firstName"));
+                        string lastName = reader.GetString(reader.GetOrdinal("lastName"));
+                        string email = reader.GetString(reader.GetOrdinal("email"));
+                        bool active = reader.GetBoolean(reader.GetOrdinal("active"));
+                        int position = reader.GetInt32(reader.GetOrdinal("positionID"));
+                        int site = reader.GetInt32(reader.GetOrdinal("siteID"));
+                        bool locked = reader.GetBoolean(reader.GetOrdinal("locked"));
+                        string userName = reader.GetString(reader.GetOrdinal("username"));
+                        string notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes"));
 
-                foreach (DataRow row in dt.Rows)
+                        Employee emp = new Employee(employeeID, password, firstName, lastName, email, active, position, site, locked, userName, notes);
+                        employeesList.Add(emp);
+                    }
+                }
+                //MySqlDataAdapter adapter = new MySqlDataAdapter(sqlCmd);
+                //DataTable dt = new DataTable();
+                // adapter.Fill(dt);
+
+
+
+
+                /*foreach (DataRow row in dt.Rows)
                 {
                     if (dt.Columns.Contains("password"))
                     {
@@ -181,10 +208,10 @@ namespace Bullseye
                         int passwordLength = password.Length;
                         row["password"] = new string('*', passwordLength);
                     }
-                }
-
-
-                return dt;
+                }*/
+                Employee[] empArray= employeesList.ToArray();
+                conn.Close();
+                        return empArray;
             }
             catch (SqlException sqlEx)
             {
@@ -194,6 +221,7 @@ namespace Bullseye
             {
                 MessageBox.Show("Could not retrieve employees. Error: " + ex.Message, "Error");
             }
+            conn.Close ();
             return null;
         }
 
@@ -318,8 +346,7 @@ namespace Bullseye
         public LocationClass[] GetLocations()
         {
             OpenDb();
-
-            //create script and command
+         
             string cmd = "select * from site;";
             MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
 
@@ -332,15 +359,15 @@ namespace Bullseye
                     while (reader != null && reader.Read())
                     {
                         int siteID = reader.GetInt32(reader.GetOrdinal("siteID"));
-                        string name = reader.IsDBNull(reader.GetOrdinal("name")) ? null : reader.GetString(reader.GetOrdinal("name"));
-                        string provinceID = reader.IsDBNull(reader.GetOrdinal("provinceID")) ? null : reader.GetString(reader.GetOrdinal("provinceID"));
-                        string address = reader.IsDBNull(reader.GetOrdinal("address")) ? null : reader.GetString(reader.GetOrdinal("address"));
+                        string name = reader.GetString(reader.GetOrdinal("name"));
+                        string provinceID = reader.GetString(reader.GetOrdinal("provinceID"));
+                        string address = reader.GetString(reader.GetOrdinal("address"));
                         string address2 = reader.IsDBNull(reader.GetOrdinal("address2")) ? null : reader.GetString(reader.GetOrdinal("address2"));
-                        string city = reader.IsDBNull(reader.GetOrdinal("city")) ? null : reader.GetString(reader.GetOrdinal("city"));
-                        string country = reader.IsDBNull(reader.GetOrdinal("country")) ? null : reader.GetString(reader.GetOrdinal("country"));
-                        string postalCode = reader.IsDBNull(reader.GetOrdinal("postalCode")) ? null : reader.GetString(reader.GetOrdinal("postalCode"));
-                        string phone = reader.IsDBNull(reader.GetOrdinal("phone")) ? null : reader.GetString(reader.GetOrdinal("phone"));
-                        string dayOfWeek = reader.IsDBNull(reader.GetOrdinal("dayOfWeek")) ? null : reader.GetString(reader.GetOrdinal("dayOfWeek"));
+                        string city = reader.GetString(reader.GetOrdinal("city"));
+                        string country = reader.GetString(reader.GetOrdinal("country"));
+                        string postalCode = reader.GetString(reader.GetOrdinal("postalCode"));
+                        string phone = reader.GetString(reader.GetOrdinal("phone"));
+                        string dayOfWeek = reader.GetString(reader.GetOrdinal("dayOfWeek"));
                         int distanceFromWH = reader.GetInt32(reader.GetOrdinal("distanceFromWH"));
                         string notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes"));
 
@@ -401,6 +428,56 @@ namespace Bullseye
             {
                 // Handle other general exceptions
                 MessageBox.Show("Exception: " + ex.Message, "Error - Cannot find Positions");
+            }
+            conn.Close();
+            return null;
+        }
+
+        public ItemClass[] GetItems()
+        {
+            OpenDb();
+            string cmd = "select * from item;";
+            MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
+
+            List<ItemClass> itemsList = new List<ItemClass>();
+            try
+            {
+                MySqlDataReader reader = sqlCmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader != null && reader.Read())
+                    {
+                        int siteID = reader.GetInt32(reader.GetOrdinal("itemID"));
+                        string name = reader.GetString(reader.GetOrdinal("name"));
+                        int sku = reader.GetInt32(reader.GetOrdinal("sku"));
+                        string description = reader.GetString(reader.GetOrdinal("description"));
+                        string category = reader.GetString(reader.GetOrdinal("category"));
+                        double weight = reader.GetDouble(reader.GetOrdinal("weight"));
+                        int caseSize = reader.GetInt32(reader.GetOrdinal("caseSize"));
+                        double costPrice = reader.GetDouble(reader.GetOrdinal("costPrice"));
+                        double retailPrice = reader.GetDouble(reader.GetOrdinal("retailPrice"));
+                        int supplierID = reader.GetInt32(reader.GetOrdinal("supplierID"));
+                        int active = reader.GetInt32(reader.GetOrdinal("active"));                
+                        string notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes"));
+
+                        ItemClass item= new ItemClass(siteID, name, sku, description, category, weight, caseSize, costPrice, retailPrice,supplierID, active, notes);
+
+                        itemsList.Add(item);
+                    }
+                    reader.Close();
+                }
+                ItemClass[] ItemsArray = itemsList.ToArray();
+                conn.Close();
+                return ItemsArray;
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not find Items. System Error: " + sqlEx.Message, "Error - could not find Items");
+            }
+            catch (Exception ex)
+            {
+                // Handle other general exceptions
+                MessageBox.Show("Exception: " + ex.Message, "Error - Cannot find Items");
             }
             conn.Close();
             return null;

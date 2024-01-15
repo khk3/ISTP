@@ -191,7 +191,7 @@
             this.txtPassword.Location = new System.Drawing.Point(255, 229);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(166, 27);
-            this.txtPassword.TabIndex = 12;
+            this.txtPassword.TabIndex = 0;
             // 
             // txtFName
             // 
@@ -200,7 +200,7 @@
             this.txtFName.Location = new System.Drawing.Point(255, 297);
             this.txtFName.Name = "txtFName";
             this.txtFName.Size = new System.Drawing.Size(166, 27);
-            this.txtFName.TabIndex = 13;
+            this.txtFName.TabIndex = 2;
             // 
             // txtLName
             // 
@@ -209,7 +209,7 @@
             this.txtLName.Location = new System.Drawing.Point(255, 331);
             this.txtLName.Name = "txtLName";
             this.txtLName.Size = new System.Drawing.Size(166, 27);
-            this.txtLName.TabIndex = 14;
+            this.txtLName.TabIndex = 3;
             // 
             // label10
             // 
@@ -259,7 +259,7 @@
             this.cboPosn.Location = new System.Drawing.Point(255, 405);
             this.cboPosn.Name = "cboPosn";
             this.cboPosn.Size = new System.Drawing.Size(166, 28);
-            this.cboPosn.TabIndex = 22;
+            this.cboPosn.TabIndex = 4;
             // 
             // cboLocation
             // 
@@ -269,7 +269,7 @@
             this.cboLocation.Location = new System.Drawing.Point(255, 439);
             this.cboLocation.Name = "cboLocation";
             this.cboLocation.Size = new System.Drawing.Size(166, 28);
-            this.cboLocation.TabIndex = 23;
+            this.cboLocation.TabIndex = 5;
             // 
             // ckbActive
             // 
@@ -277,7 +277,7 @@
             this.ckbActive.Location = new System.Drawing.Point(255, 482);
             this.ckbActive.Name = "ckbActive";
             this.ckbActive.Size = new System.Drawing.Size(66, 20);
-            this.ckbActive.TabIndex = 24;
+            this.ckbActive.TabIndex = 6;
             this.ckbActive.Text = "Active";
             this.ckbActive.UseVisualStyleBackColor = true;
             // 
@@ -287,7 +287,7 @@
             this.btnReset.Location = new System.Drawing.Point(181, 632);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(81, 41);
-            this.btnReset.TabIndex = 25;
+            this.btnReset.TabIndex = 8;
             this.btnReset.Text = "&Reset";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
@@ -298,7 +298,7 @@
             this.btnSave.Location = new System.Drawing.Point(292, 632);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(81, 41);
-            this.btnSave.TabIndex = 26;
+            this.btnSave.TabIndex = 9;
             this.btnSave.Text = "&Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -310,7 +310,7 @@
             this.btnExit.Location = new System.Drawing.Point(416, 632);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(81, 41);
-            this.btnExit.TabIndex = 27;
+            this.btnExit.TabIndex = 10;
             this.btnExit.Text = "&Exit";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -380,7 +380,7 @@
             this.txtConfirmPassword.Location = new System.Drawing.Point(255, 262);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
             this.txtConfirmPassword.Size = new System.Drawing.Size(166, 27);
-            this.txtConfirmPassword.TabIndex = 36;
+            this.txtConfirmPassword.TabIndex = 1;
             // 
             // label11
             // 
@@ -445,7 +445,7 @@
             this.txtAreaNotes.Location = new System.Drawing.Point(252, 518);
             this.txtAreaNotes.Name = "txtAreaNotes";
             this.txtAreaNotes.Size = new System.Drawing.Size(346, 96);
-            this.txtAreaNotes.TabIndex = 41;
+            this.txtAreaNotes.TabIndex = 7;
             this.txtAreaNotes.Text = "";
             // 
             // label13

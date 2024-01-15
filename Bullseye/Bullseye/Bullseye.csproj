@@ -128,6 +128,12 @@
     <Compile Include="AdminForm.Designer.cs">
       <DependentUpon>AdminForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BullseyeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BullseyeForm.Designer.cs">
+      <DependentUpon>BullseyeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="BullseyeLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +143,7 @@
     <Compile Include="ConstantsClass.cs" />
     <Compile Include="DateTimeClass.cs" />
     <Compile Include="Employee.cs" />
+    <Compile Include="ItemClass.cs" />
     <Compile Include="LocationClass.cs" />
     <Compile Include="PositionClass.cs" />
     <Compile Include="Program.cs" />
@@ -154,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdminForm.resx">
       <DependentUpon>AdminForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BullseyeForm.resx">
+      <DependentUpon>BullseyeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BullseyeLogin.resx">
       <DependentUpon>BullseyeLogin.cs</DependentUpon>

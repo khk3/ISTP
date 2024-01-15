@@ -87,10 +87,10 @@ namespace Bullseye
             if(tabAdmin.SelectedIndex == 0)
             {                         
                     MySqlClass m= new MySqlClass();
-                    DataTable dt = m.RefreshDgv();
-                    dgvEmployees.DataSource = dt;
-                    dgvEmployees.ReadOnly = true;
-                    dgvEmployees.ClearSelection();         
+                Employee[] employeesArr = m.GetEmployees();
+                dgvEmployees.DataSource = employeesArr;
+                dgvEmployees.ReadOnly = true;
+                dgvEmployees.ClearSelection();         
             }
         }
 
@@ -119,7 +119,7 @@ namespace Bullseye
                     int site = Convert.ToInt32((selectedRow.Cells[7].Value));
                     bool locked= Convert.ToBoolean((selectedRow.Cells[8].Value));
                     string userName= selectedRow.Cells[9].Value.ToString();
-                    string notes= selectedRow.Cells[10].Value.ToString();
+                    string notes = selectedRow.Cells[10].Value?.ToString();
 
                     Employee empl = new Employee(empId,pw,fn,ln,email,active,posn,site,locked,userName,notes);
                     

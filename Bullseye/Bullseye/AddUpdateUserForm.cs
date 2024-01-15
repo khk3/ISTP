@@ -161,7 +161,7 @@ namespace Bullseye
                             string email = finalUserName + "@bullseye.ca";
 
                             
-                            Employee emp = new Employee(password, firstName, lastName, email, active, position, location, false, finalUserName, notes);
+                            Employee emp = new Employee(0,password, firstName, lastName, email, active, position, location, false, finalUserName, notes);
                             bool confirmAddUser = MessageBox.Show("Confirm Add User?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes;
                             if (confirmAddUser)
                             {
