@@ -20,6 +20,15 @@ namespace Bullseye
             PositionID = positionID;
             PermissionLevel = permissionLevel;
         }
+
+        public bool CheckUser(int positionID)
+        {
+            MySqlClass m=new MySqlClass();
+            PositionClass[] positionArr= m.GetLLPositions();
+            
+            if positionArr
+            
+        }
   
     }
 

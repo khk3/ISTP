@@ -88,7 +88,17 @@ namespace Bullseye
                         else
                         {
                             if (user.Locked == false)  //If all correct
-                            {                              
+                            {                  
+                                //if firstTime login
+                                if(user.Password == ConstantsClass.DefaultPassword)
+                                {
+                                    RecoverPasswordForm rf= new RecoverPasswordForm(user);
+                                    rf.ShowDialog();
+                                }
+                                else
+                                {
+
+                                }
                                 switch (user.PositionID)
                                 {
                                     case 1: //Regional Manager
@@ -182,45 +192,43 @@ namespace Bullseye
             string userName= txtUserName.Text;
 
             MySqlClass m = new MySqlClass();
-            bool isLocked = m.CheckLocked(userName); 
-            if (!isLocked)
-            {
-                if (CheckEmptyFields("password"))
-                {
-                    Employee emp = employees.FirstOrDefault(em => em.UserName == txtUserName.Text);
 
-                    if (emp != null)
+            if (CheckEmptyFields("recoverPassword")) //ad else to focus
+            {          
+                    bool isLocked = m.CheckLocked(userName);
+                    if (!isLocked)
                     {
-                        RecoverPasswordForm rPassForm = new RecoverPasswordForm(emp);
-                        rPassForm.ShowDialog();
-                    }
-                    else
-                    {
-                        MessageBox.Show("User not found", " Error - Invalid User");
-                        txtUserName.Text = "";
-                        txtUserName.Focus();
-                    }
+                        Employee emp = employees.FirstOrDefault(em => em.UserName == txtUserName.Text);
 
-                }
-                else
-                    txtUserName.Focus();
+                        if (emp != null)
+                        {
+                            RecoverPasswordForm rPassForm = new RecoverPasswordForm(emp);
+                            rPassForm.ShowDialog();
+                        }
+                        else
+                        {
+                            MessageBox.Show("User not found", " Error - Invalid User");
+                            txtUserName.Text = "";
+                            txtUserName.Focus();
+                        }
+                    }
             }
-            else //if user locked
-            {
-                MessageBox.Show("Cannot Recover Password. User is Locked. Please contact your Administrator at admin@bullseye.ca for assistance", "Error- Recover Password" );
-            }
+            else
+                txtUserName.Focus();
+          
           
             
            
         }
 
+        //return false if empty
         private bool CheckEmptyFields(string btn)
         {
             if(txtUserName.Text!=""&&txtPassword.Text!="")
                 return true;
             else
             {               
-                if (btn == "password")
+                if (btn == "recoverPassword")
                 {
                     if (txtUserName.Text == "")
                     {

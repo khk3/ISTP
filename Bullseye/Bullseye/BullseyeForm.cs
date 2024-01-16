@@ -12,11 +12,15 @@ namespace Bullseye
 {
     public partial class BullseyeForm : Form
     {
+        Employee user= null;
+        MySqlClass m = new MySqlClass();
+
         public BullseyeForm(Employee emp)
         {
             InitializeComponent();
             Init();
             lblUserHeader.Text = emp.FirstName;
+            user = emp;
         }
 
         private void Init()
@@ -28,6 +32,8 @@ namespace Bullseye
             timer1.Tick += timer1_Tick;
             timer1.Start();
         }
+        //GLOBAL array of items. When click Refresh loads items
+        ItemClass[] itemsArray = null;
 
         private void tabMain_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -55,14 +61,17 @@ namespace Bullseye
         {
             this.Text = " Bullseye - " + DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString();
         }
-        ItemClass[] itemsArray = null;
+        
+        
+
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            MySqlClass m = new MySqlClass();
+            txtSearch.Text = "";
+           
             
             if (tabMain.SelectedIndex == 1)//Inventory
             {
-                itemsArray = m.GetItems();                
+                itemsArray = m.GetAllItems();                
                 dgvInventory.DataSource = itemsArray;
             }
         }
@@ -71,11 +80,27 @@ namespace Bullseye
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             if (dgvInventory.DataSource != null)
-            {
+            {          
                 string searchText = txtSearch.Text;
                 //TODO - CREATE A METHOD TO DO DYNAMIC SEARCH
+               ItemClass[] filteredItems = itemsArray.Where(item => item.Name.Contains(searchText)).ToArray();
+                dgvInventory.DataSource = filteredItems;
             }
 
+        }
+
+        //Edit Item
+        private void btnEditItem_Click(object sender, EventArgs e)
+        {
+            string role = m.GetPosition(user.PositionID);
+            if (role == "Warehouse Manager")
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("Permission Denied. Only Warehouse Manager can Edit Items", "Permission Denied");
+            }
         }
     }
 }

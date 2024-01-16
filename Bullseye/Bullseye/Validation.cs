@@ -17,6 +17,7 @@ namespace Bullseye
             return Regex.IsMatch(password, pattern);           
         }
 
+       
     
     }
 }

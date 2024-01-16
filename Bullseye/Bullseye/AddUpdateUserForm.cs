@@ -32,11 +32,11 @@ namespace Bullseye
 
             MySqlClass m=new MySqlClass();
 
-            locationsArray = m.GetLocations();
+            locationsArray = m.GetAllLocations();
             //user location
             lblLocation.Text = locationsArray.FirstOrDefault(loc => loc.SiteID == emp.SiteID).Name;
             
-            positionArray = m.GetPositions();
+            positionArray = m.GetLLPositions();
             LoadComboboxes();
 
             addOrDelete = action;
@@ -52,14 +52,18 @@ namespace Bullseye
                 txtConfirmPassword.Text = emp.Password.ToString();
                 lblEmail.Text = emp.Email;
 
-                cboPosn.SelectedIndex = emp.PositionID;
+                cboPosn.SelectedValue= emp.PositionID;
                 cboLocation.SelectedIndex = emp.SiteID;
                 ckbActive.Checked = emp.Active;
+                ckbActive.Enabled = true;
             }
             else //if add
             {
                 txtPassword.Text = ConstantsClass.DefaultPassword;
                 txtConfirmPassword.Text= ConstantsClass.DefaultPassword;
+                ckbActive.Checked = ConstantsClass.Active;
+                ckbActive.Enabled = false;
+
             }
 
 
@@ -161,7 +165,7 @@ namespace Bullseye
                             string email = finalUserName + "@bullseye.ca";
 
                             
-                            Employee emp = new Employee(0,password, firstName, lastName, email, active, position, location, false, finalUserName, notes);
+                            Employee emp = new Employee(0,password, firstName, lastName, email, ConstantsClass.Active, position, location, ConstantsClass.Locked, finalUserName, notes);
                             bool confirmAddUser = MessageBox.Show("Confirm Add User?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes;
                             if (confirmAddUser)
                             {

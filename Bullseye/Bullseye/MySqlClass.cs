@@ -112,7 +112,7 @@ namespace Bullseye
         public bool CheckLocked(string userName)
         {
             OpenDb();
-            string cmd = "Select locked from employee where username ='" + userName + "'";
+            string cmd = "Select locked from employee where username ='" + userName + "';";
             MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
             try
             {
@@ -127,11 +127,11 @@ namespace Bullseye
             }
             catch (SqlException sqlEx)
             {
-                MessageBox.Show("Could not Lock the user. Error: " + sqlEx.Message, "Error- SQL Lock user");
+                MessageBox.Show("Could not Check if user is locked. Error: " + sqlEx.Message, "Error- SQL Lock user");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Could not Lock the user. Error: " + ex.Message, "Error- Lock user");
+                MessageBox.Show("Could not Check uf user is locked. Error: " + ex.Message, "Error- Lock user");
             }
             conn.Close();
             return false;
@@ -163,7 +163,7 @@ namespace Bullseye
             return 0;
         }
 
-        public Employee[] GetEmployees()
+        public Employee[] GetAllEmployees()
         {
             OpenDb();
             string cmd = "select * from employee";
@@ -343,7 +343,7 @@ namespace Bullseye
 
         }
 
-        public LocationClass[] GetLocations()
+        public LocationClass[] GetAllLocations()
         {
             OpenDb();
          
@@ -394,7 +394,7 @@ namespace Bullseye
             return null;
         }
 
-        public PositionClass[] GetPositions()
+        public PositionClass[] GetAllPositions()
         {
             OpenDb();
             //create script and command
@@ -433,7 +433,45 @@ namespace Bullseye
             return null;
         }
 
-        public ItemClass[] GetItems()
+        public string GetPosition(int positionID)
+        {
+            string permissionLevel = null;
+            string getPositionQuery = "SELECT permissionLevel FROM posn WHERE positionID = @positionID";
+
+            try
+            {
+                OpenDb();
+                using (MySqlCommand cmd = new MySqlCommand(getPositionQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@positionID", positionID);
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    
+                    if (reader.Read()) 
+                    {
+                        permissionLevel = reader.GetString(reader.GetOrdinal("permissionLevel"));
+                    }
+                    
+                }
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not get position. Error: " + sqlEx.Message, "Error - MySQL");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not get position. Error: " + ex.Message, "Error - Exception");
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return permissionLevel;
+        }
+
+
+        public ItemClass[] GetAllItems()
         {
             OpenDb();
             string cmd = "select * from item;";

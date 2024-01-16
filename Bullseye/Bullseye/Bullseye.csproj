@@ -116,6 +116,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddEditItemsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddEditItemsForm.Designer.cs">
+      <DependentUpon>AddEditItemsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddUpdateUserForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,6 +162,9 @@
       <DependentUpon>RecoverPasswordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Validation.cs" />
+    <EmbeddedResource Include="AddEditItemsForm.resx">
+      <DependentUpon>AddEditItemsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AddUpdateUserForm.resx">
       <DependentUpon>AddUpdateUserForm.cs</DependentUpon>
     </EmbeddedResource>

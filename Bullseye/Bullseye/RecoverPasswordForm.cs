@@ -87,48 +87,64 @@ namespace Bullseye
             {
                 string password = txtNewPassWord.Text;
 
-                Validation v = new Validation();
-                if (v.ValidadePassword(password)){ //password valid
-
-                    string confirmPassword=txtConfirmPassword.Text;
-                    if (password == confirmPassword)
-                    {
-                        string cmd="update employee set password='"+ password +"' where username='"+ lblUserName.Text+"'";
-                        MySqlCommand sqlCommand = new MySqlCommand(cmd, conn);
-                        try 
-                        {
-                            int update = sqlCommand.ExecuteNonQuery();
-                            if(update > 0)
-                            {
-                                MessageBox.Show("Password updated Successfully", "Update Password");
-                                btnExit.PerformClick(); //close the form after updating the password
-                            }
-                        } 
-                        catch(MySqlException sqlEx)
-                        {
-                            MessageBox.Show("Could not update password. Error: " + sqlEx.Message, "Error - MySQL error");
-
-                        }
-                        catch(Exception ex)
-                        {
-                            MessageBox.Show("Could not update password. Error: " + ex.Message, "Error - Exception");
-                        }
-
-                    }
-                    else //if confirm password does not match
-                    {
-                        MessageBox.Show("Confirm Password does no match with the Password", "Error - Confirm Password does not match");
-                        txtConfirmPassword.Text = "";
-                    }
-                }
-                else //if password not valid
+                if(password != ConstantsClass.DefaultPassword)
                 {
-                    MessageBox.Show("Password invalid. Must contain at least 8 characters, 1 uppercase letter and 1 special character.", "Error - Invalid Password");
-                    btnReset.PerformClick();
+                    Validation v = new Validation();
+                    if (v.ValidadePassword(password))
+                    { //password valid
+
+                        string confirmPassword = txtConfirmPassword.Text;
+                        if (password == confirmPassword)
+                        {
+                            string cmd = "update employee set password='" + password + "' where username='" + lblUserName.Text + "'";
+                            MySqlCommand sqlCommand = new MySqlCommand(cmd, conn);
+                            try
+                            {
+                                int update = sqlCommand.ExecuteNonQuery();
+                                if (update > 0)
+                                {
+                                    MessageBox.Show("Password updated Successfully", "Update Password");
+                                    btnExit.PerformClick(); //close the form after updating the password
+                                }
+                            }
+                            catch (MySqlException sqlEx)
+                            {
+                                MessageBox.Show("Could not update password. Error: " + sqlEx.Message, "Error - MySQL error");
+
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Could not update password. Error: " + ex.Message, "Error - Exception");
+                            }
+
+                        }
+                        else //if confirm password does not match
+                        {
+                            MessageBox.Show("Confirm Password does no match with the Password", "Error - Confirm Password does not match");
+                            txtConfirmPassword.Text = "";
+                        }
+                    }
+                    else //if password not valid
+                    {
+                        MessageBox.Show("Password invalid. Must contain at least 8 characters, 1 uppercase letter and 1 special character.", "Error - Invalid Password");
+                        btnReset.PerformClick();
+                    }
                 }
+                else //if password === Default Password 
+                {
+                    MessageBox.Show("Please select a different password. Password cannot be the same as default", "Choose different Password");
+                    ClearFields();
+                }
+               
             }
         }
 
+        private void ClearFields()
+        {
+            txtNewPassWord.Text = "";
+            txtConfirmPassword.Text = "";
+            txtNewPassWord.Focus();
+        }
         private void ClearWarns()
         {
             lblWarnNP.Visible=false;

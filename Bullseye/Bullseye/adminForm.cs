@@ -87,7 +87,7 @@ namespace Bullseye
             if(tabAdmin.SelectedIndex == 0)
             {                         
                     MySqlClass m= new MySqlClass();
-                Employee[] employeesArr = m.GetEmployees();
+                Employee[] employeesArr = m.GetAllEmployees();
                 dgvEmployees.DataSource = employeesArr;
                 dgvEmployees.ReadOnly = true;
                 dgvEmployees.ClearSelection();         
