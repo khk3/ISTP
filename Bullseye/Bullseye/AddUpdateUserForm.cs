@@ -36,7 +36,7 @@ namespace Bullseye
             //user location
             lblLocation.Text = locationsArray.FirstOrDefault(loc => loc.SiteID == emp.SiteID).Name;
             
-            positionArray = m.GetLLPositions();
+            positionArray = m.GetAllPositions();
             LoadComboboxes();
 
             addOrDelete = action;

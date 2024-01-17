@@ -24,9 +24,9 @@ namespace Bullseye
         public bool CheckUser(int positionID)
         {
             MySqlClass m=new MySqlClass();
-            PositionClass[] positionArr= m.GetLLPositions();
-            
-            if positionArr
+            PositionClass[] positionArr= m.GetAllPositions();
+
+            return true;
             
         }
   

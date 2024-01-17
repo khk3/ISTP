@@ -47,3 +47,4 @@ C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.AdminForm.re
 C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.RecoverPasswordForm.resources
 C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.AddUpdateUserForm.resources
 C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.BullseyeForm.resources
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.AddEditItemsForm.resources

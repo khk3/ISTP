@@ -47,6 +47,10 @@
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblUserHeader = new System.Windows.Forms.Label();
+            this.lblLocationHeader = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.tabMain.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -228,12 +232,56 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 20);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "User: ";
+            // 
+            // lblUserHeader
+            // 
+            this.lblUserHeader.AutoSize = true;
+            this.lblUserHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserHeader.Location = new System.Drawing.Point(63, 9);
+            this.lblUserHeader.Name = "lblUserHeader";
+            this.lblUserHeader.Size = new System.Drawing.Size(55, 20);
+            this.lblUserHeader.TabIndex = 10;
+            this.lblUserHeader.Text = "User: ";
+            // 
+            // lblLocationHeader
+            // 
+            this.lblLocationHeader.AutoSize = true;
+            this.lblLocationHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLocationHeader.Location = new System.Drawing.Point(726, 9);
+            this.lblLocationHeader.Name = "lblLocationHeader";
+            this.lblLocationHeader.Size = new System.Drawing.Size(53, 20);
+            this.lblLocationHeader.TabIndex = 12;
+            this.lblLocationHeader.Text = "label1";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(650, 9);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(88, 20);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Location:  ";
+            // 
             // BullseyeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1207, 730);
+            this.Controls.Add(this.lblLocationHeader);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblUserHeader);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.tabMain);
@@ -250,6 +298,7 @@
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -271,5 +320,9 @@
         private System.Windows.Forms.Button btnAddItem;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblUserHeader;
+        private System.Windows.Forms.Label lblLocationHeader;
+        private System.Windows.Forms.Label label4;
     }
 }

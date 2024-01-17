@@ -97,28 +97,30 @@ namespace Bullseye
                                 }
                                 else
                                 {
+                                    BullseyeForm bullseyeForm = new BullseyeForm(user);
+                                    switch (user.PositionID)
+                                    {                                        
+                                        case 99999999:
+                                            //MessageBox.Show("Welcome " + user.FirstName, " Login Successful");
+                                            DialogResult result = MessageBox.Show("Welcome " + user.FirstName + ". Do you want to open the Admin Form?", "Login Successful", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                            if (result == DialogResult.Yes)
+                                            {
+                                                AdminForm adminForm = new AdminForm(user);
+                                                adminForm.ShowDialog();
+                                            }
+                                            else
+                                            {
+                                                bullseyeForm.ShowDialog();
+                                            }
+                                            break;
+                                        default:
+                                            MessageBox.Show("Welcome "+user.FirstName, "Login Successful");
+                                            bullseyeForm.ShowDialog();
+                                            break;
+                                    }
 
                                 }
-                                switch (user.PositionID)
-                                {
-                                    case 1: //Regional Manager
-                                    case 2: //Financial Manager
-                                    case 3: //Store Manager:                                                                           
-                                    case 4://Warehouse Manager:
-                                    case 6: //warehouse employee:
-                                        MessageBox.Show("Welcome "+ user.FirstName, " Login Successful");
-                                        BullseyeForm bullseyeForm = new BullseyeForm(user);
-                                        bullseyeForm.ShowDialog();
-                                        break;
-                                    case 99999999:
-                                        MessageBox.Show("Welcome " + user.FirstName, " Login Successful");
-                                        AdminForm adminForm = new AdminForm(user);
-                                        adminForm.ShowDialog();
-                                        break;
-                                    default:
-                                        MessageBox.Show("Invalid positionID", "Error - PositionID");
-                                        break;
-                                }
+                               
                             }
 
                             else

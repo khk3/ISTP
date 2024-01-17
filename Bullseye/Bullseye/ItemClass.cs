@@ -34,8 +34,8 @@ namespace Bullseye
             Category = category;
             Weight = weight;
             CaseSize = caseSize;
-            RetailPrice = retailPrice;
             CostPrice = costPrice;
+            RetailPrice = retailPrice;
             SupplierID = supplierID;
             Active = active;
             Notes = notes;

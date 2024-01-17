@@ -435,7 +435,7 @@ namespace Bullseye
 
         public string GetPosition(int positionID)
         {
-            string permissionLevel = null;
+            string permissionLevel = "";
             string getPositionQuery = "SELECT permissionLevel FROM posn WHERE positionID = @positionID";
 
             try
@@ -468,6 +468,44 @@ namespace Bullseye
             }
 
             return permissionLevel;
+        }
+
+
+        public string GetLocation(int siteID)
+        {
+            string location = "";
+            string getPositionQuery = "SELECT name FROM site WHERE siteID = @siteID";
+
+            try
+            {
+                OpenDb();
+                using (MySqlCommand cmd = new MySqlCommand(getPositionQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@siteID", siteID);
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        location = reader.GetString(reader.GetOrdinal("name"));
+                    }
+
+                }
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not get location. Error: " + sqlEx.Message, "Error - MySQL");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not get location. Error: " + ex.Message, "Error - Exception");
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return location;
         }
 
 
