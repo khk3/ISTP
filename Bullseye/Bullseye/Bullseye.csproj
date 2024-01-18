@@ -161,6 +161,7 @@
     <Compile Include="RecoverPasswordForm.Designer.cs">
       <DependentUpon>RecoverPasswordForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SupplierClass.cs" />
     <Compile Include="Validation.cs" />
     <EmbeddedResource Include="AddEditItemsForm.resx">
       <DependentUpon>AddEditItemsForm.cs</DependentUpon>

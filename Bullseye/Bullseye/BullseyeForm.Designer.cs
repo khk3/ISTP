@@ -51,12 +51,15 @@
             this.lblUserHeader = new System.Windows.Forms.Label();
             this.lblLocationHeader = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabMain.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventory)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabMain
@@ -126,10 +129,11 @@
             this.btnAddItem.TabIndex = 3;
             this.btnAddItem.Text = "Add ItemClass";
             this.btnAddItem.UseVisualStyleBackColor = true;
+            this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
             // 
             // btnEditItem
             // 
-            this.btnEditItem.Location = new System.Drawing.Point(938, 230);
+            this.btnEditItem.Location = new System.Drawing.Point(938, 239);
             this.btnEditItem.Name = "btnEditItem";
             this.btnEditItem.Size = new System.Drawing.Size(118, 35);
             this.btnEditItem.TabIndex = 2;
@@ -159,6 +163,8 @@
             this.dgvInventory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvInventory.Size = new System.Drawing.Size(851, 314);
             this.dgvInventory.TabIndex = 0;
+            this.dgvInventory.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvInventory_Scroll);
+            this.dgvInventory.SelectionChanged += new System.EventHandler(this.dgvInventory_SelectionChanged);
             // 
             // tabPage3
             // 
@@ -272,12 +278,34 @@
             this.label4.TabIndex = 11;
             this.label4.Text = "Location:  ";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(189, 42);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(90, 65);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Lucida Handwriting", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(313, 50);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(224, 57);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Bullseye";
+            // 
             // BullseyeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(1207, 730);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lblLocationHeader);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.lblUserHeader);
@@ -297,6 +325,7 @@
             this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -324,5 +353,7 @@
         private System.Windows.Forms.Label lblUserHeader;
         private System.Windows.Forms.Label lblLocationHeader;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label2;
     }
 }

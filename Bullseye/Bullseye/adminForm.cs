@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -18,20 +19,19 @@ namespace Bullseye
     {
         public AdminForm() { }
 
-        DateTime loginTime;
+        private DateTime lastActivityTime;
+       // int inactivityLogout = ConstantsClass.TimeToAutoLogout; //20 min of inactivity
+
 
         public AdminForm(Employee user)
         {
             InitializeComponent();
             Init(user.FirstName);
-            userLogged = user;
-
-            //Time of login
-            loginTime = DateTime.Now;
+            userLogged = user;      
         }
 
         //class=level config to connection string
-        static string connStr = ConfigurationManager.ConnectionStrings["bullseyedb"].ConnectionString;
+        static string connStr = ConfigurationManager.ConnectionStrings[ConstantsClass.DatabaseName].ConnectionString;
 
         //create connection
         MySqlConnection conn = new MySqlConnection(connStr);
@@ -40,6 +40,9 @@ namespace Bullseye
         private void Init(string fName)
         {
             lblUser.Text = fName;
+
+            lastActivityTime = DateTime.Now;
+            Application.Idle += Application_Idle;
 
             timer2 = new Timer();
             timer2.Interval = 1000;
@@ -57,21 +60,29 @@ namespace Bullseye
             this.Close();
         }
 
+        private void Application_Idle(object sender, EventArgs e)
+        {
 
+            TimeSpan idleTime = DateTime.Now - lastActivityTime;
+
+            if (idleTime >= ConstantsClass.TimeToAutoLogout)
+            {
+                Application.Idle -= Application_Idle;
+                this.Close();
+                MessageBox.Show("Auto Logout due to inactivity","User Inactive");
+                
+            }
+        }
+
+        private void ResetLastActivity()
+        {
+            lastActivityTime = DateTime.Now;
+        }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
             DateTime now = DateTime.Now;
-            TimeSpan elapsed = now - loginTime;
-            TimeSpan remainingTime = ConstantsClass.TimeToAutoLogout - elapsed;
-
-            if (remainingTime <= TimeSpan.Zero)
-            {
-                btnLogOut.PerformClick();
-                return;
-            }
-
-            this.Text = "Bullseye - "+ now.ToShortDateString() +" - " + now.ToLongTimeString()+" | Time to Auto Logout: "+ remainingTime.ToString(@"hh\:mm\:ss");
+            this.Text = "Bullseye - "+ now.ToShortDateString() +" - " + now.ToLongTimeString();
         }
 
         private void tabAdmin_SelectedIndexChanged(object sender, EventArgs e)
@@ -84,11 +95,15 @@ namespace Bullseye
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            if(tabAdmin.SelectedIndex == 0)
+            ResetLastActivity();
+            if (tabAdmin.SelectedIndex == 0)
             {                         
                     MySqlClass m= new MySqlClass();
                 Employee[] employeesArr = m.GetAllEmployees();
+                
                 dgvEmployees.DataSource = employeesArr;
+
+
                 dgvEmployees.ReadOnly = true;
                 dgvEmployees.ClearSelection();         
             }
@@ -96,7 +111,7 @@ namespace Bullseye
 
         private void btnAddUser_Click(object sender, EventArgs e)
         {//Add new user
-
+            ResetLastActivity();
             AddUpdateUserForm au= new AddUpdateUserForm("add",userLogged);
             au.ShowDialog();
         }
@@ -170,6 +185,28 @@ namespace Bullseye
             {
                 MessageBox.Show("To Inactivate a user please, refresh the table and select a user first.", "Error - Inactivate User.");
             }
+        }
+
+        
+        private void dgvEmployees_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+           /* if (e.ColumnIndex == 1 && e.Value != null)
+            {
+                string originalValue = e.Value.ToString();
+                string maskedValue = new string('*', originalValue.Length);      
+                e.Value = maskedValue;
+                e.FormattingApplied = true; 
+            }*/
+        }
+
+        private void dgvEmployees_Scroll(object sender, ScrollEventArgs e)
+        {
+            ResetLastActivity();
+        }
+
+        private void dgvEmployees_SelectionChanged(object sender, EventArgs e)
+        {
+            ResetLastActivity();
         }
     }
 }

@@ -109,7 +109,7 @@
             this.lblEmpID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmpID.Location = new System.Drawing.Point(255, 163);
             this.lblEmpID.Name = "lblEmpID";
-            this.lblEmpID.Size = new System.Drawing.Size(166, 27);
+            this.lblEmpID.Size = new System.Drawing.Size(242, 27);
             this.lblEmpID.TabIndex = 3;
             this.lblEmpID.Text = "Auto Generated";
             this.lblEmpID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -190,7 +190,7 @@
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPassword.Location = new System.Drawing.Point(255, 229);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(166, 27);
+            this.txtPassword.Size = new System.Drawing.Size(242, 27);
             this.txtPassword.TabIndex = 0;
             // 
             // txtFName
@@ -199,7 +199,7 @@
             this.txtFName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFName.Location = new System.Drawing.Point(255, 297);
             this.txtFName.Name = "txtFName";
-            this.txtFName.Size = new System.Drawing.Size(166, 27);
+            this.txtFName.Size = new System.Drawing.Size(242, 27);
             this.txtFName.TabIndex = 2;
             // 
             // txtLName
@@ -208,7 +208,7 @@
             this.txtLName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLName.Location = new System.Drawing.Point(255, 331);
             this.txtLName.Name = "txtLName";
-            this.txtLName.Size = new System.Drawing.Size(166, 27);
+            this.txtLName.Size = new System.Drawing.Size(242, 27);
             this.txtLName.TabIndex = 3;
             // 
             // label10
@@ -258,7 +258,7 @@
             this.cboPosn.FormattingEnabled = true;
             this.cboPosn.Location = new System.Drawing.Point(255, 405);
             this.cboPosn.Name = "cboPosn";
-            this.cboPosn.Size = new System.Drawing.Size(166, 28);
+            this.cboPosn.Size = new System.Drawing.Size(242, 28);
             this.cboPosn.TabIndex = 4;
             // 
             // cboLocation
@@ -268,7 +268,7 @@
             this.cboLocation.FormattingEnabled = true;
             this.cboLocation.Location = new System.Drawing.Point(255, 439);
             this.cboLocation.Name = "cboLocation";
-            this.cboLocation.Size = new System.Drawing.Size(166, 28);
+            this.cboLocation.Size = new System.Drawing.Size(242, 28);
             this.cboLocation.TabIndex = 5;
             // 
             // ckbActive
@@ -331,7 +331,7 @@
             this.warnPw.AutoSize = true;
             this.warnPw.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.warnPw.ForeColor = System.Drawing.Color.Red;
-            this.warnPw.Location = new System.Drawing.Point(427, 229);
+            this.warnPw.Location = new System.Drawing.Point(507, 229);
             this.warnPw.Name = "warnPw";
             this.warnPw.Size = new System.Drawing.Size(14, 20);
             this.warnPw.TabIndex = 29;
@@ -343,7 +343,7 @@
             this.warnFn.AutoSize = true;
             this.warnFn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.warnFn.ForeColor = System.Drawing.Color.Red;
-            this.warnFn.Location = new System.Drawing.Point(424, 294);
+            this.warnFn.Location = new System.Drawing.Point(504, 294);
             this.warnFn.Name = "warnFn";
             this.warnFn.Size = new System.Drawing.Size(14, 20);
             this.warnFn.TabIndex = 30;
@@ -355,7 +355,7 @@
             this.warnLn.AutoSize = true;
             this.warnLn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.warnLn.ForeColor = System.Drawing.Color.Red;
-            this.warnLn.Location = new System.Drawing.Point(424, 326);
+            this.warnLn.Location = new System.Drawing.Point(504, 326);
             this.warnLn.Name = "warnLn";
             this.warnLn.Size = new System.Drawing.Size(14, 20);
             this.warnLn.TabIndex = 31;
@@ -368,7 +368,7 @@
             this.lblUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUser.Location = new System.Drawing.Point(255, 194);
             this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(166, 27);
+            this.lblUser.Size = new System.Drawing.Size(242, 27);
             this.lblUser.TabIndex = 33;
             this.lblUser.Text = "Auto Generated";
             this.lblUser.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -379,7 +379,7 @@
             this.txtConfirmPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtConfirmPassword.Location = new System.Drawing.Point(255, 262);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
-            this.txtConfirmPassword.Size = new System.Drawing.Size(166, 27);
+            this.txtConfirmPassword.Size = new System.Drawing.Size(242, 27);
             this.txtConfirmPassword.TabIndex = 1;
             // 
             // label11
@@ -397,7 +397,7 @@
             this.warnCP.AutoSize = true;
             this.warnCP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.warnCP.ForeColor = System.Drawing.Color.Red;
-            this.warnCP.Location = new System.Drawing.Point(427, 264);
+            this.warnCP.Location = new System.Drawing.Point(507, 264);
             this.warnCP.Name = "warnCP";
             this.warnCP.Size = new System.Drawing.Size(14, 20);
             this.warnCP.TabIndex = 37;
@@ -409,7 +409,7 @@
             this.lblQuestion.AutoSize = true;
             this.lblQuestion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lblQuestion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblQuestion.Location = new System.Drawing.Point(447, 231);
+            this.lblQuestion.Location = new System.Drawing.Point(527, 231);
             this.lblQuestion.Name = "lblQuestion";
             this.lblQuestion.Size = new System.Drawing.Size(20, 22);
             this.lblQuestion.TabIndex = 38;
@@ -421,7 +421,7 @@
             this.warnPosn.AutoSize = true;
             this.warnPosn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.warnPosn.ForeColor = System.Drawing.Color.Red;
-            this.warnPosn.Location = new System.Drawing.Point(427, 408);
+            this.warnPosn.Location = new System.Drawing.Point(507, 408);
             this.warnPosn.Name = "warnPosn";
             this.warnPosn.Size = new System.Drawing.Size(14, 20);
             this.warnPosn.TabIndex = 39;
@@ -433,7 +433,7 @@
             this.warnLoc.AutoSize = true;
             this.warnLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.warnLoc.ForeColor = System.Drawing.Color.Red;
-            this.warnLoc.Location = new System.Drawing.Point(427, 442);
+            this.warnLoc.Location = new System.Drawing.Point(507, 442);
             this.warnLoc.Name = "warnLoc";
             this.warnLoc.Size = new System.Drawing.Size(14, 20);
             this.warnLoc.TabIndex = 40;
@@ -464,7 +464,7 @@
             this.lblEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmail.Location = new System.Drawing.Point(255, 366);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(166, 27);
+            this.lblEmail.Size = new System.Drawing.Size(242, 27);
             this.lblEmail.TabIndex = 34;
             this.lblEmail.Text = "Auto Generated";
             this.lblEmail.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -520,7 +520,7 @@
             this.Controls.Add(this.label1);
             this.Name = "AddUpdateUserForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Bullseye ";
+            this.Text = "`";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

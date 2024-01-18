@@ -32,14 +32,13 @@ namespace Bullseye
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error - Closing form");               
+                MessageBox.Show(ex.Message, "Error - Closing form");
             }
 
         }//end of OpenDB
 
         public void RunScript()
         {
-            //
             try
             {
                 string script = System.IO.File.ReadAllText(ConstantsClass.ScriptName);
@@ -86,14 +85,14 @@ namespace Bullseye
                         bool locked = reader.GetBoolean(reader.GetOrdinal("locked"));
                         string username = reader.GetString(reader.GetOrdinal("username"));
                         string notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes"));
-                        
-                        Employee employee = new Employee(employeeID,password,firstName,lastName,email,active,positionID,siteID,locked,username,notes);
+
+                        Employee employee = new Employee(employeeID, password, firstName, lastName, email, active, positionID, siteID, locked, username, notes);
                         // Add the Employee object to the list
                         employees.Add(employee);
                     }
 
                     reader.Close();
-                   
+
                 }
                 return employees;
             }
@@ -121,7 +120,7 @@ namespace Bullseye
 
                 bool isLocked = reader.GetBoolean(reader.GetOrdinal("locked"));
                 reader.Close();
-              
+
                 conn.Close();
                 return isLocked;
             }
@@ -167,12 +166,12 @@ namespace Bullseye
         {
             OpenDb();
             string cmd = "select * from employee";
-         
-                MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
-                List<Employee> employeesList = new List<Employee>();
-                try
-                {
-                    MySqlDataReader reader = sqlCmd.ExecuteReader();
+
+            MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
+            List<Employee> employeesList = new List<Employee>();
+            try
+            {
+                MySqlDataReader reader = sqlCmd.ExecuteReader();
                 if (reader.HasRows)
                 {
                     while (reader != null && reader.Read())
@@ -209,9 +208,9 @@ namespace Bullseye
                         row["password"] = new string('*', passwordLength);
                     }
                 }*/
-                Employee[] empArray= employeesList.ToArray();
+                Employee[] empArray = employeesList.ToArray();
                 conn.Close();
-                        return empArray;
+                return empArray;
             }
             catch (SqlException sqlEx)
             {
@@ -221,14 +220,14 @@ namespace Bullseye
             {
                 MessageBox.Show("Could not retrieve employees. Error: " + ex.Message, "Error");
             }
-            conn.Close ();
+            conn.Close();
             return null;
         }
 
         public bool isUserNameDuplicated(string userName)
         {
             OpenDb();
-            string cmd= "select * from employee where username='"+userName + "'";
+            string cmd = "select * from employee where username='" + userName + "'";
             MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
 
             bool isDuplicate = false;
@@ -236,12 +235,12 @@ namespace Bullseye
             {
                 MySqlDataReader reader = sqlCmd.ExecuteReader();
                 if (reader.HasRows)
-                {             
-                    isDuplicate= true;
+                {
+                    isDuplicate = true;
                 }
                 else
-                {               
-                    isDuplicate= false;
+                {
+                    isDuplicate = false;
                 }
             }
             catch (MySqlException sqlEx)
@@ -281,7 +280,8 @@ namespace Bullseye
 
         }
 
-        public int UpdateUser(Employee emp) {
+        public int UpdateUser(Employee emp)
+        {
             OpenDb();
             string updateQuery = "UPDATE employee SET Password = @Password, FirstName = @FirstName, LastName = @LastName, Email = @Email, active = @Active, PositionID = @PositionID, " +
                          "siteID = @SiteID, locked = @Locked, username = @UserName, notes = @Notes WHERE employeeID = @EmployeeID";
@@ -316,6 +316,34 @@ namespace Bullseye
 
         }
 
+        //RECOVER PASSWORD BTN
+        public int UpdatePassword(string hashedPassword, string userName)
+        {
+            OpenDb();
+            string updateQuery = "update employee set password = @password where username = @userName";
+            MySqlCommand sqlCommand = new MySqlCommand(updateQuery, conn);
+            sqlCommand.Parameters.AddWithValue("@Password", hashedPassword);
+
+            sqlCommand.Parameters.AddWithValue("@UserName", userName);
+
+            try
+            {
+                int update = sqlCommand.ExecuteNonQuery();
+                conn.Close();
+                return update;
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not Update Employee. Error: " + sqlEx.Message, " Error - MySQL");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not Update Employee. Error: " + ex.Message, " Error - Exception");
+            }
+            conn.Close();
+            return 0;
+        }
+
         public int InactiveUser(int empId)
         {
             OpenDb();
@@ -346,7 +374,7 @@ namespace Bullseye
         public LocationClass[] GetAllLocations()
         {
             OpenDb();
-         
+
             string cmd = "select * from site;";
             MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
 
@@ -373,7 +401,7 @@ namespace Bullseye
 
                         LocationClass location = new LocationClass(siteID, name, provinceID, address, address2, city, country, postalCode, phone, dayOfWeek, distanceFromWH, notes);
 
-                        locationsList.Add(location);    
+                        locationsList.Add(location);
                     }
                     reader.Close();
                 }
@@ -390,7 +418,7 @@ namespace Bullseye
                 // Handle other general exceptions
                 MessageBox.Show("Exception: " + ex.Message, "Error - Cannot find Locations");
             }
-            conn.Close ();
+            conn.Close();
             return null;
         }
 
@@ -410,7 +438,7 @@ namespace Bullseye
                     while (reader != null && reader.Read())
                     {
                         int positionID = reader.GetInt32(reader.GetOrdinal("positionID"));
-                        string permissionLevel = reader.GetString(reader.GetOrdinal("permissionLevel"));                   
+                        string permissionLevel = reader.GetString(reader.GetOrdinal("permissionLevel"));
                         PositionClass position = new PositionClass(positionID, permissionLevel);
                         positionsList.Add(position);
                     }
@@ -446,12 +474,12 @@ namespace Bullseye
                     cmd.Parameters.AddWithValue("@positionID", positionID);
 
                     MySqlDataReader reader = cmd.ExecuteReader();
-                    
-                    if (reader.Read()) 
+
+                    if (reader.Read())
                     {
                         permissionLevel = reader.GetString(reader.GetOrdinal("permissionLevel"));
                     }
-                    
+
                 }
             }
             catch (MySqlException sqlEx)
@@ -533,10 +561,9 @@ namespace Bullseye
                         double costPrice = reader.GetDouble(reader.GetOrdinal("costPrice"));
                         double retailPrice = reader.GetDouble(reader.GetOrdinal("retailPrice"));
                         int supplierID = reader.GetInt32(reader.GetOrdinal("supplierID"));
-                        int active = reader.GetInt32(reader.GetOrdinal("active"));                
-                        string notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes"));
-
-                        ItemClass item= new ItemClass(siteID, name, sku, description, category, weight, caseSize, costPrice, retailPrice,supplierID, active, notes);
+                        int active = reader.GetInt32(reader.GetOrdinal("active"));
+                        string notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetValue(reader.GetOrdinal("notes")).ToString();
+                        ItemClass item = new ItemClass(siteID, name, sku, description, category, weight, caseSize, costPrice, retailPrice, supplierID, active, notes);
 
                         itemsList.Add(item);
                     }
@@ -558,5 +585,174 @@ namespace Bullseye
             conn.Close();
             return null;
         }
-    }//end of class
+
+        public string[] GetItemCategories()
+        {
+            OpenDb();
+            string cmd = "select * from category";
+            MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
+            try
+            {
+                MySqlDataReader reader = sqlCmd.ExecuteReader();
+                List<string> categoriesList = new List<string>();
+                if (reader.HasRows)
+                {
+                    while (reader != null && reader.Read())
+                    {
+
+                        string category = reader.GetString(reader.GetOrdinal("categoryName"));
+                        categoriesList.Add(category);
+
+                    }
+                    reader.Close();
+                }
+                string[] categoriesArray = categoriesList.ToArray();
+                conn.Close();
+                return categoriesArray;
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not find Items. System Error: " + sqlEx.Message, "Error - could not find Items");
+            }
+            catch (Exception ex)
+            {
+                // Handle other general exceptions
+                MessageBox.Show("Exception: " + ex.Message, "Error - Cannot find Items");
+            }
+            conn.Close();
+            return null;
+
+        }
+
+        public int AddItem(ItemClass item)
+        {
+            string addItemQuery = "Insert into item values (@name, @sku, @desciption, @category, @weight," +
+                " @caseSize,@costPrice, @retailPrice,@supplier,@active,@notes)";
+            OpenDb();
+            MySqlCommand cmd = new MySqlCommand(addItemQuery, conn);
+            //cmd.Parameters.AddWithValue("@itemID", item.ItemID);
+            cmd.Parameters.AddWithValue("@name", item.Name);
+            cmd.Parameters.AddWithValue("@sku", item.Sku);
+            cmd.Parameters.AddWithValue("@description", item.Description);
+            cmd.Parameters.AddWithValue("@category", item.Category);
+            cmd.Parameters.AddWithValue("@weight", item.Weight);
+            cmd.Parameters.AddWithValue("@caseSize", item.CaseSize);
+            cmd.Parameters.AddWithValue("@costPrice", item.CostPrice);
+            cmd.Parameters.AddWithValue("@retailPrice", item.RetailPrice);
+            cmd.Parameters.AddWithValue("@supplier", item.SupplierID);
+            cmd.Parameters.AddWithValue("@active", item.Active);
+            cmd.Parameters.AddWithValue("@notes", item.Notes);
+
+
+            int result = 0;
+            try
+            {
+                result = cmd.ExecuteNonQuery();
+                conn.Close();
+                return result;
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not Add Item. Error: " + sqlEx.Message, " Error - MySQL");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not Add Item. Error: " + ex.Message, " Error - Exception");
+            }
+            conn.Close();
+            return result;
+
+        }
+
+        public int EditItem(ItemClass item)
+        {
+            string addItemQuery = "Update item set name= @name, sku=@sku, description=@description, category=@category, weight=@weight," +
+                " caseSize=@caseSize,costPrice=@costPrice, retailPrice=@retailPrice,supplierID=@supplier,active=@active,notes=@notes where itemID= @itemID";
+            OpenDb();
+            MySqlCommand cmd = new MySqlCommand(addItemQuery, conn);
+            cmd.Parameters.AddWithValue("@itemID", item.ItemID);
+            cmd.Parameters.AddWithValue("@name", item.Name);
+            cmd.Parameters.AddWithValue("@sku", item.Sku);
+            cmd.Parameters.AddWithValue("@description", item.Description);
+            cmd.Parameters.AddWithValue("@category", item.Category);
+            cmd.Parameters.AddWithValue("@weight", item.Weight);
+            cmd.Parameters.AddWithValue("@caseSize", item.CaseSize);
+            cmd.Parameters.AddWithValue("@costPrice", item.CostPrice);
+            cmd.Parameters.AddWithValue("@retailPrice", item.RetailPrice);
+            cmd.Parameters.AddWithValue("@supplier", item.SupplierID);
+            cmd.Parameters.AddWithValue("@active", item.Active);
+            cmd.Parameters.AddWithValue("@notes", item.Notes);
+
+
+            int result = 0;
+            try
+            {
+                result = cmd.ExecuteNonQuery();
+                conn.Close();
+                return result;
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not Update Item. Error: " + sqlEx.Message, " Error - MySQL");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not Update Item. Error: " + ex.Message, " Error - Exception");
+            }
+            conn.Close();
+            return result;
+        }
+
+        public SupplierClass[] GetAllSuppliers()
+        {
+            OpenDb();
+            string cmd = "select * from supplier";
+            MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
+
+            List<SupplierClass> suppliersList = new List<SupplierClass>();
+            try
+            {
+                MySqlDataReader reader = sqlCmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader != null && reader.Read())
+                    {
+                        int supplierID = reader.GetInt32(reader.GetOrdinal("supplierID"));
+                        string name = reader.GetString(reader.GetOrdinal("name"));
+                        string address1 = reader.GetString(reader.GetOrdinal("address1"));
+                        string address2 = reader.IsDBNull(reader.GetOrdinal("address2")) ? null : reader.GetValue(reader.GetOrdinal("address2")).ToString();
+
+                        string city = reader.GetString(reader.GetOrdinal("city"));
+                        string country = reader.GetString(reader.GetOrdinal("country"));
+                        string province = reader.GetString(reader.GetOrdinal("province"));
+                        string postalCode = reader.GetString(reader.GetOrdinal("postalcode"));
+                        string phone = reader.GetString(reader.GetOrdinal("phone"));
+                        string contact = reader.GetString(reader.GetOrdinal("contact"));
+                        string notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetValue(reader.GetOrdinal("notes")).ToString();
+
+                        SupplierClass supplier = new SupplierClass(supplierID, name, address1, address2, city, country, province, postalCode, phone, contact, notes);
+
+
+                        suppliersList.Add(supplier);
+                    }
+                    reader.Close();
+                }
+                SupplierClass[] suppliersArray = suppliersList.ToArray();
+                conn.Close();
+                return suppliersArray;
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not find Items. System Error: " + sqlEx.Message, "Error - could not find Items");
+            }
+            catch (Exception ex)
+            {
+                // Handle other general exceptions
+                MessageBox.Show("Exception: " + ex.Message, "Error - Cannot find Items");
+            }
+            conn.Close();
+            return null;
+
+        }//end of class
+    }
 }

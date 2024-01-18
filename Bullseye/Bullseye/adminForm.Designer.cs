@@ -42,7 +42,6 @@
             this.btnEditUser = new System.Windows.Forms.Button();
             this.btnAddUser = new System.Windows.Forms.Button();
             this.dgvEmployees = new System.Windows.Forms.DataGridView();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabAdmin.SuspendLayout();
@@ -113,7 +112,6 @@
             // tabAdmin
             // 
             this.tabAdmin.Controls.Add(this.tabPage1);
-            this.tabAdmin.Controls.Add(this.tabPage2);
             this.tabAdmin.Location = new System.Drawing.Point(52, 162);
             this.tabAdmin.Margin = new System.Windows.Forms.Padding(4);
             this.tabAdmin.Name = "tabAdmin";
@@ -184,17 +182,9 @@
             this.dgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvEmployees.Size = new System.Drawing.Size(796, 246);
             this.dgvEmployees.TabIndex = 0;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(936, 249);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Permissions";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.dgvEmployees.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvEmployees_CellFormatting);
+            this.dgvEmployees.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvEmployees_Scroll);
+            this.dgvEmployees.SelectionChanged += new System.EventHandler(this.dgvEmployees_SelectionChanged);
             // 
             // btnRefresh
             // 
@@ -244,7 +234,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TabControl tabAdmin;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView dgvEmployees;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnInactivateUser;

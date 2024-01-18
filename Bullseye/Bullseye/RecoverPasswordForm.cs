@@ -17,20 +17,23 @@ namespace Bullseye
     {
         public RecoverPasswordForm() { }
 
+        MySqlClass m= new MySqlClass();
+        Employee user = null;
 
-        public RecoverPasswordForm(Employee user)
+        public RecoverPasswordForm(Employee emp)
         {
             InitializeComponent();
-            OpenDb();
+            user = emp;
+           // OpenDb();
             lblUserName.Text = user.UserName;
         }
         //class=level config to connection string
-        static string connStr = ConfigurationManager.ConnectionStrings["bullseyedb"].ConnectionString;
+        //static string connStr = ConfigurationManager.ConnectionStrings[Con].ConnectionString;
 
         //create connection
-        MySqlConnection conn = new MySqlConnection(connStr);
+        //MySqlConnection conn = new MySqlConnection(connStr);
 
-        private void OpenDb()
+        /*private void OpenDb()
         {
             //open the connection - needs a try catch
             try
@@ -45,7 +48,7 @@ namespace Bullseye
             }
 
         }//end of OpenDB
-
+        */
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -96,11 +99,13 @@ namespace Bullseye
                         string confirmPassword = txtConfirmPassword.Text;
                         if (password == confirmPassword)
                         {
-                            string cmd = "update employee set password='" + password + "' where username='" + lblUserName.Text + "'";
-                            MySqlCommand sqlCommand = new MySqlCommand(cmd, conn);
+                            string hashedPassword = Validation.HashPassword(password);
+                            //string cmd = "update employee set password='" + password + "' where username='" + lblUserName.Text + "'";
+                            // MySqlCommand sqlCommand = new MySqlCommand(cmd, conn);
                             try
                             {
-                                int update = sqlCommand.ExecuteNonQuery();
+                                
+                                int update = m.UpdatePassword(hashedPassword, user.UserName);
                                 if (update > 0)
                                 {
                                     MessageBox.Show("Password updated Successfully", "Update Password");
@@ -153,7 +158,28 @@ namespace Bullseye
 
         private void RecoverPasswordForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            conn.Close(); //close connection
+            //conn.Close(); //close connection
+            
+        }
+
+        private void txtNewPassWord_TextChanged(object sender, EventArgs e)
+        {
+            txtNewPassWord.PasswordChar = '*';
+        }
+
+        private void picEye_MouseEnter(object sender, EventArgs e)
+        {
+            txtNewPassWord.PasswordChar = '\0';
+        }
+
+        private void picEye_MouseLeave(object sender, EventArgs e)
+        {
+            txtNewPassWord.PasswordChar = '*';
+        }
+
+        private void txtConfirmPassword_TextChanged(object sender, EventArgs e)
+        {
+            txtConfirmPassword.PasswordChar = '*';
         }
     }
 }

@@ -42,7 +42,10 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.lblWarnU = new System.Windows.Forms.Label();
             this.lblWarnP = new System.Windows.Forms.Label();
+            this.picEye = new System.Windows.Forms.PictureBox();
+            this.btnRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picEye)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -65,7 +68,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(116, 101);
+            this.label4.Location = new System.Drawing.Point(97, 93);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(113, 25);
@@ -76,7 +79,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(128, 133);
+            this.label5.Location = new System.Drawing.Point(110, 128);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(104, 25);
@@ -86,20 +89,23 @@
             // txtUserName
             // 
             this.txtUserName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtUserName.Location = new System.Drawing.Point(245, 101);
+            this.txtUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUserName.Location = new System.Drawing.Point(218, 93);
             this.txtUserName.Margin = new System.Windows.Forms.Padding(4);
             this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(173, 22);
+            this.txtUserName.Size = new System.Drawing.Size(173, 27);
             this.txtUserName.TabIndex = 0;
             // 
             // txtPassword
             // 
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPassword.Location = new System.Drawing.Point(245, 133);
+            this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPassword.Location = new System.Drawing.Point(219, 128);
             this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(173, 22);
+            this.txtPassword.Size = new System.Drawing.Size(173, 27);
             this.txtPassword.TabIndex = 2;
+            this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             // 
             // pictureBox1
             // 
@@ -151,7 +157,7 @@
             this.lblWarnU.AutoSize = true;
             this.lblWarnU.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWarnU.ForeColor = System.Drawing.Color.Red;
-            this.lblWarnU.Location = new System.Drawing.Point(428, 101);
+            this.lblWarnU.Location = new System.Drawing.Point(399, 93);
             this.lblWarnU.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblWarnU.Name = "lblWarnU";
             this.lblWarnU.Size = new System.Drawing.Size(12, 17);
@@ -164,13 +170,36 @@
             this.lblWarnP.AutoSize = true;
             this.lblWarnP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWarnP.ForeColor = System.Drawing.Color.Red;
-            this.lblWarnP.Location = new System.Drawing.Point(428, 139);
+            this.lblWarnP.Location = new System.Drawing.Point(399, 126);
             this.lblWarnP.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblWarnP.Name = "lblWarnP";
             this.lblWarnP.Size = new System.Drawing.Size(12, 17);
             this.lblWarnP.TabIndex = 12;
             this.lblWarnP.Text = "!";
             this.lblWarnP.Visible = false;
+            // 
+            // picEye
+            // 
+            this.picEye.Image = ((System.Drawing.Image)(resources.GetObject("picEye.Image")));
+            this.picEye.Location = new System.Drawing.Point(361, 131);
+            this.picEye.Name = "picEye";
+            this.picEye.Size = new System.Drawing.Size(30, 19);
+            this.picEye.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picEye.TabIndex = 13;
+            this.picEye.TabStop = false;
+            this.picEye.MouseEnter += new System.EventHandler(this.picEye_MouseEnter);
+            this.picEye.MouseLeave += new System.EventHandler(this.picEye_MouseLeave);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(389, 13);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(87, 34);
+            this.btnRefresh.TabIndex = 14;
+            this.btnRefresh.Text = "Re&fresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // BullseyeLogin
             // 
@@ -180,6 +209,8 @@
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(489, 288);
             this.ControlBox = false;
+            this.Controls.Add(this.btnRefresh);
+            this.Controls.Add(this.picEye);
             this.Controls.Add(this.lblWarnP);
             this.Controls.Add(this.lblWarnU);
             this.Controls.Add(this.btnExit);
@@ -197,6 +228,7 @@
             this.Text = "Bullseye";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BullseyeLogin_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picEye)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -216,6 +248,8 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label lblWarnU;
         private System.Windows.Forms.Label lblWarnP;
+        private System.Windows.Forms.PictureBox picEye;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }
 

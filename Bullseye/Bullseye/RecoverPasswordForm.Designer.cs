@@ -46,7 +46,9 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.lblWarnNP = new System.Windows.Forms.Label();
             this.lblWarnC = new System.Windows.Forms.Label();
+            this.picEye = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picEye)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -95,19 +97,25 @@
             // 
             // txtNewPassWord
             // 
+            this.txtNewPassWord.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNewPassWord.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNewPassWord.Location = new System.Drawing.Point(252, 199);
             this.txtNewPassWord.Margin = new System.Windows.Forms.Padding(4);
             this.txtNewPassWord.Name = "txtNewPassWord";
-            this.txtNewPassWord.Size = new System.Drawing.Size(181, 22);
+            this.txtNewPassWord.Size = new System.Drawing.Size(181, 27);
             this.txtNewPassWord.TabIndex = 0;
+            this.txtNewPassWord.TextChanged += new System.EventHandler(this.txtNewPassWord_TextChanged);
             // 
             // txtConfirmPassword
             // 
+            this.txtConfirmPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtConfirmPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtConfirmPassword.Location = new System.Drawing.Point(252, 231);
             this.txtConfirmPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
-            this.txtConfirmPassword.Size = new System.Drawing.Size(181, 22);
+            this.txtConfirmPassword.Size = new System.Drawing.Size(181, 27);
             this.txtConfirmPassword.TabIndex = 1;
+            this.txtConfirmPassword.TextChanged += new System.EventHandler(this.txtConfirmPassword_TextChanged);
             // 
             // pictureBox1
             // 
@@ -166,6 +174,7 @@
             // 
             // btnExit
             // 
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.Location = new System.Drawing.Point(405, 318);
             this.btnExit.Margin = new System.Windows.Forms.Padding(4);
             this.btnExit.Name = "btnExit";
@@ -215,11 +224,26 @@
             this.lblWarnC.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblWarnC.Visible = false;
             // 
+            // picEye
+            // 
+            this.picEye.Image = ((System.Drawing.Image)(resources.GetObject("picEye.Image")));
+            this.picEye.Location = new System.Drawing.Point(403, 203);
+            this.picEye.Name = "picEye";
+            this.picEye.Size = new System.Drawing.Size(30, 19);
+            this.picEye.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picEye.TabIndex = 15;
+            this.picEye.TabStop = false;
+            this.picEye.MouseEnter += new System.EventHandler(this.picEye_MouseEnter);
+            this.picEye.MouseLeave += new System.EventHandler(this.picEye_MouseLeave);
+            // 
             // RecoverPasswordForm
             // 
+            this.AcceptButton = this.btnConfirm;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(553, 398);
+            this.Controls.Add(this.picEye);
             this.Controls.Add(this.lblWarnC);
             this.Controls.Add(this.lblWarnNP);
             this.Controls.Add(this.lblQuestion);
@@ -241,6 +265,7 @@
             this.Text = "Bullseye- Reset Password";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RecoverPasswordForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picEye)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,5 +289,6 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label lblWarnNP;
         private System.Windows.Forms.Label lblWarnC;
+        private System.Windows.Forms.PictureBox picEye;
     }
 }

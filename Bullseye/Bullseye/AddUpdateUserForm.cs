@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,8 +15,8 @@ namespace Bullseye
     public partial class AddUpdateUserForm : Form
     {
         LocationClass[] locationsArray = null;
-        PositionClass[] positionArray = null;
-
+        //PositionClass[] positionArray = null;
+        DateTime loginTime;
         public AddUpdateUserForm() { }
 
         string addOrDelete = "";
@@ -23,6 +25,8 @@ namespace Bullseye
             InitializeComponent();
             ClearWarnings();
 
+            //Time of login
+            loginTime = DateTime.Now;
             timer1 = new Timer();
             timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
@@ -36,8 +40,8 @@ namespace Bullseye
             //user location
             lblLocation.Text = locationsArray.FirstOrDefault(loc => loc.SiteID == emp.SiteID).Name;
             
-            positionArray = m.GetAllPositions();
-            LoadComboboxes();
+            PositionClass[] positionArray = m.GetAllPositions();
+            LoadComboboxes(positionArray);
 
             addOrDelete = action;
 
@@ -69,7 +73,7 @@ namespace Bullseye
 
         }
 
-        private void LoadComboboxes()
+        private void LoadComboboxes(PositionClass[] positionArray)
         {
             try
             {
@@ -116,15 +120,19 @@ namespace Bullseye
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (CheckEmptyFields())//if any field empty
+            {
+
                 MessageBox.Show("All fields must be filled to add new user", "Error - Empty Field(s)");
+            }
             else //all fields filled
             {
                 Validation v = new Validation();
+                
                 if (!v.ValidadePassword(txtPassword.Text))
                 {
                     MessageBox.Show("Password invalid. Must contain at least 8 characters, 1 uppercase letter and 1 special character.", "Error - Invalid Password");
-                    txtPassword.Text = "";
-                    txtConfirmPassword.Text = "";
+                    //txtPassword.Text = "";
+                    //txtConfirmPassword.Text = "";
                     txtPassword.Focus();
                 }
                 else
@@ -133,14 +141,13 @@ namespace Bullseye
                     if (!isPasswordEqual)
                     {
                         MessageBox.Show("Password does not match with the confirm password", "Error Confirm Password");
-                        txtConfirmPassword.Text = "";
+                        //txtConfirmPassword.Text = "";
                         txtConfirmPassword.Focus();
                     }
                     else //Password VALID AND SAME
-                    {
-
-                        string password = txtPassword.Text;
-
+                    {                     
+                        string password ="";
+                        
                         string firstName = txtFName.Text.ToLower();
                         string lastName = txtLName.Text.ToLower();
                         bool active = ckbActive.Checked;
@@ -152,6 +159,8 @@ namespace Bullseye
 
                         if (addOrDelete == "add")
                         {
+                            txtPassword.Text = ConstantsClass.DefaultPassword;
+                            password = ConstantsClass.DefaultPassword;             
                             string userNameForm = firstName.Substring(0, 1) + lastName;
                             //string userNameDuplicate = userNameForm;
                             int count = 1;
@@ -164,28 +173,23 @@ namespace Bullseye
                             }
                             string email = finalUserName + "@bullseye.ca";
 
-                            
-                            Employee emp = new Employee(0,password, firstName, lastName, email, ConstantsClass.Active, position, location, ConstantsClass.Locked, finalUserName, notes);
+                            Employee emp = new Employee(0, password, firstName, lastName, email, ConstantsClass.Active, position, location, ConstantsClass.Locked, finalUserName, notes);
                             bool confirmAddUser = MessageBox.Show("Confirm Add User?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes;
                             if (confirmAddUser)
                             {
-                                int added= m.AddUser(emp);
+                                int added = m.AddUser(emp);
                                 if (added == 1)
-                                    MessageBox.Show("Your Username is: " + finalUserName + " , your email is : " + email,"SAVE YOUR USERNAME PASSWORD AND EMAIL");
-
+                                    MessageBox.Show("Your Username is: " + finalUserName + " , your email is : " + email, "SAVE YOUR USERNAME PASSWORD AND EMAIL");
                             }
-                               
                         }
                         else //update
                         {
+                            password= txtPassword.Text;
+                            string hashedPassword = Validation.HashPassword(password);
                             int empID = Convert.ToInt32(lblEmpID.Text);
                             string email = lblEmail.Text;
                             string userName = lblUser.Text;
-
-
-                            Employee emp = new Employee(empID, password, firstName, lastName, email, active, position, location, active, userName, notes);
-
-                            //
+                            Employee emp = new Employee(empID, hashedPassword, firstName, lastName, email, active, position, location, active, userName, notes);
 
                             int success = m.UpdateUser(emp);
                             if (success == 1)
@@ -198,11 +202,15 @@ namespace Bullseye
                     }
 
                 }
-
-
+                BullseyeLogin bullseyeLogin = new BullseyeLogin();
+               // bullseyeLogin.Cont
+                this.Close();
 
             }
         }
+
+     
+
 
         private bool CheckEmptyFields()
         {
@@ -249,7 +257,17 @@ namespace Bullseye
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            this.Text = " Bullseye - " + DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString();
+            DateTime now = DateTime.Now;
+            TimeSpan elapsed = now - loginTime;
+            TimeSpan remainingTime = ConstantsClass.TimeToAutoLogout - elapsed;
+
+            if (remainingTime <= TimeSpan.Zero)
+            {
+               btnExit.PerformClick();
+                return;
+            }
+
+            this.Text = "Bullseye - " + now.ToShortDateString() + " - " + now.ToLongTimeString() + " | Time to Auto Logout: " + remainingTime.ToString(@"hh\:mm\:ss");
         }
     }
 }

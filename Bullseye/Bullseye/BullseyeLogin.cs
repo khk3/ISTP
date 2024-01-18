@@ -22,24 +22,23 @@ namespace Bullseye
         }
 
         //class=level config to connection string
-        static string connStr = ConfigurationManager.ConnectionStrings["bullseyedb"].ConnectionString;
+        static string connStr = ConfigurationManager.ConnectionStrings[ConstantsClass.DatabaseName].ConnectionString;
 
         //create connection
         MySqlConnection conn = new MySqlConnection(connStr);
 
         //Class Level of Employees
         List<Employee> employees = new List<Employee>();
+        MySqlClass m = new MySqlClass();
 
-        
         private void Init()
         {
-            MySqlClass m = new MySqlClass();
-            //OpenDb();
+            
             m.OpenDb();
-            //RunScript();
-            m.RunScript();
-            //LoadEmployees();
-            employees=m.LoadEmployees();
+
+            // m.RunScript();   //DEFAULT DATABASE
+
+            RefreshEmployees();
 
             lblWarnP.Visible= false;
             lblWarnU.Visible=false;
@@ -52,13 +51,13 @@ namespace Bullseye
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //lblTime.Text= DateTime.Now.ToLongTimeString();
-            //this.Text = "";
-            
             this.Text = " Bullseye - " + DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString();
 
         }
-
+        public void RefreshEmployees()
+        {
+            employees = m.LoadEmployees();
+        }
         int errorCount = 0;
 
         //Btn Login
@@ -66,8 +65,6 @@ namespace Bullseye
         {
            
             string userName= txtUserName.Text;
-            //string fName= txtLogin.Text;
-            //string lName= txtLName.Text;
             string password= txtPassword.Text;
 
             if(CheckEmptyFields("login"))
@@ -81,7 +78,21 @@ namespace Bullseye
 
                 if (user!=null)
                 {      
-                    if (user.Password == password)
+                   
+
+                    bool access = false;
+                    if (user.Password == ConstantsClass.DefaultPassword)
+                    {
+                        access = true;                      
+                    }
+                    else
+                    {
+                        bool verifyPassword = Validation.VerifyPassword(password, user.Password);
+                        if (verifyPassword)
+                           access = true;
+                    }
+
+                    if (access)
                     {
                         if (!user.Active)
                             MessageBox.Show("User is not Active. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- user not active");
@@ -257,6 +268,28 @@ namespace Bullseye
                 return false;
             }
                 
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+            txtPassword.PasswordChar = '*';
+        }
+
+    
+        private void picEye_MouseEnter(object sender, EventArgs e)
+        {
+            txtPassword.PasswordChar = '\0';
+        }
+
+        private void picEye_MouseLeave(object sender, EventArgs e)
+        {
+            txtPassword.PasswordChar = '*';
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshEmployees();
+            txtPassword.Text = "";
         }
     }
 }

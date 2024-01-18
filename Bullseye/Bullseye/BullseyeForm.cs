@@ -14,6 +14,8 @@ namespace Bullseye
     {
         Employee user= null;
         MySqlClass m = new MySqlClass();
+      
+        private DateTime lastActivityTime;
 
         public BullseyeForm(Employee emp)
         {
@@ -24,8 +26,12 @@ namespace Bullseye
 
         private void Init()
         {
+            lastActivityTime = DateTime.Now;
+            Application.Idle += Application_Idle;
+
             lblUserHeader.Text = user.FirstName;
             lblLocationHeader.Text = m.GetLocation(user.SiteID);
+           
             timer1 = new Timer();
             timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
@@ -34,37 +40,35 @@ namespace Bullseye
         //GLOBAL array of items. When click Refresh loads items
         ItemClass[] itemsArray = null;
 
-        private void tabMain_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            MySqlClass m= new MySqlClass();
-            if(tabMain.SelectedIndex == 0) // Tab Order
-            {
-              
-
-            }
-            else if(tabMain.SelectedIndex == 1) //Tag Inventory
-            {
-               
-            }
-            else if(tabMain.SelectedIndex == 2)//Tab Loss/Return
-            {
-                
-            }
-            else //Tab Reports
-            {
-                //ShowTab(tabMain.SelectedIndex);
-            }
-        }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            this.Text = " Bullseye - " + DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString();
+            DateTime now = DateTime.Now;
+            this.Text = "Bullseye - " + now.ToShortDateString() + " - " + now.ToLongTimeString();
         }
-        
-        
+
+        private void Application_Idle(object sender, EventArgs e)
+        {
+
+            TimeSpan idleTime = DateTime.Now - lastActivityTime;
+
+            if (idleTime >= ConstantsClass.TimeToAutoLogout)
+            {
+                Application.Idle -= Application_Idle;
+                this.Close();
+                MessageBox.Show("Auto Logout due to inactivity", "User Inactive");
+
+            }
+        }
+
+        private void ResetLastActivity()
+        {
+            lastActivityTime = DateTime.Now;
+        }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            ResetLastActivity();
             txtSearch.Text = "";
            
             
@@ -78,13 +82,14 @@ namespace Bullseye
         //Event for synamic research
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
+            ResetLastActivity();
             if (dgvInventory.DataSource != null)
             {          
-                string searchText = txtSearch.Text;
-                //TODO - CREATE A METHOD TO DO DYNAMIC SEARCH
-               ItemClass[] filteredItems = itemsArray.Where(item => item.Name.Contains(searchText)).ToArray();
+                string searchText = txtSearch.Text.ToLower();
+                ItemClass[] filteredItems = itemsArray.Where(item =>
+                item.Name.ToLower().Contains(searchText) || item.ItemID.ToString().Contains(searchText)).ToArray();
                 dgvInventory.DataSource = filteredItems;
-            }
+            }   
 
         }
 
@@ -97,6 +102,7 @@ namespace Bullseye
                 if(dgvInventory.SelectedRows.Count > 0)
                 {
                     DataGridViewRow selectedRow = dgvInventory.SelectedRows[0];
+
                     int itemID= Convert.ToInt32(selectedRow.Cells[0].Value);
                     string name= selectedRow.Cells[1].Value.ToString();
                     int sku = Convert.ToInt32(selectedRow.Cells[2].Value);
@@ -108,12 +114,13 @@ namespace Bullseye
                     double retailPrice= Convert.ToDouble(selectedRow.Cells[8].Value);
                     int supplierID = Convert.ToInt32(selectedRow.Cells[9].Value);
                     int active= Convert.ToInt32(selectedRow.Cells[10].Value);
-                    string notes = selectedRow.Cells[10].Value == null ? null : selectedRow.Cells[10].Value.ToString();
+                    string notes = selectedRow.Cells[11].Value == null ? null : selectedRow.Cells[10].Value.ToString();
 
-                    ItemClass item= new ItemClass(itemID,name,sku,desc,
-                        categ,weight,caseSize,costPrice,retailPrice,supplierID,active,notes);
-                
-                    AddEditItemsForm itemsForm = new AddEditItemsForm("edit",item);
+                    ItemClass item = new ItemClass(itemID,name, sku, desc,
+                    categ, weight, caseSize, costPrice, retailPrice, supplierID, active, notes);
+
+                    AddEditItemsForm itemsForm = new AddEditItemsForm("edit", item);                                  
+                    itemsForm.ShowDialog();
                 }
                
             }
@@ -121,6 +128,27 @@ namespace Bullseye
             {
                 MessageBox.Show("Permission Denied. Only Warehouse Manager can Edit Items", "Permission Denied");
             }
+        }
+
+        private void tabMain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ResetLastActivity();
+        }
+
+        private void dgvInventory_Scroll(object sender, ScrollEventArgs e)
+        {
+            ResetLastActivity();
+        }
+
+        private void dgvInventory_SelectionChanged(object sender, EventArgs e)
+        {
+            ResetLastActivity();
+        }
+
+        private void btnAddItem_Click(object sender, EventArgs e)
+        {
+            AddEditItemsForm addEditItemsForm = new AddEditItemsForm("add");
+            addEditItemsForm.ShowDialog();
         }
     }
 }

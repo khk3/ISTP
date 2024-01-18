@@ -23,9 +23,27 @@ namespace Bullseye
         public int Active { get; set; }
         public string Notes { get; set; }
 
-        public ItemClass(int itemID, string name, int sku, string description, string category, 
+        public ItemClass(string name, int sku, string description, string category, 
             double weight, int caseSize, double costPrice, double retailPrice, int supplierID, 
             int active, string notes) 
+        {
+            //ItemID = itemID;
+            Name = name;
+            Sku = sku;
+            Description = description;
+            Category = category;
+            Weight = weight;
+            CaseSize = caseSize;
+            CostPrice = costPrice;
+            RetailPrice = retailPrice;
+            SupplierID = supplierID;
+            Active = active;
+            Notes = notes;
+        }
+
+        public ItemClass(int itemID,string name, int sku, string description, string category,
+          double weight, int caseSize, double costPrice, double retailPrice, int supplierID,
+          int active, string notes)
         {
             ItemID = itemID;
             Name = name;
@@ -39,6 +57,7 @@ namespace Bullseye
             SupplierID = supplierID;
             Active = active;
             Notes = notes;
-        }   
+        }
+
     }
 }
