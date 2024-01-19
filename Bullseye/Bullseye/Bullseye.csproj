@@ -149,6 +149,12 @@
     <Compile Include="ConstantsClass.cs" />
     <Compile Include="DateTimeClass.cs" />
     <Compile Include="Employee.cs" />
+    <Compile Include="FilterOrdersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FilterOrdersForm.Designer.cs">
+      <DependentUpon>FilterOrdersForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ItemClass.cs" />
     <Compile Include="LocationClass.cs" />
     <Compile Include="PositionClass.cs" />
@@ -162,6 +168,7 @@
       <DependentUpon>RecoverPasswordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SupplierClass.cs" />
+    <Compile Include="TransactionClass.cs" />
     <Compile Include="Validation.cs" />
     <EmbeddedResource Include="AddEditItemsForm.resx">
       <DependentUpon>AddEditItemsForm.cs</DependentUpon>
@@ -177,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BullseyeLogin.resx">
       <DependentUpon>BullseyeLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterOrdersForm.resx">
+      <DependentUpon>FilterOrdersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
