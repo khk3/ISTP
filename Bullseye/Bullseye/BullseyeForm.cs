@@ -16,6 +16,13 @@ namespace Bullseye
         MySqlClass m = new MySqlClass();
       
         private DateTime lastActivityTime;
+        //public TransactionClass[] FilteredTransactions { get; set; }
+        
+        
+        //Global arrays - TO be used in dynamic search;
+        ItemClass[] itemsArray = null;
+        TransactionClass[] transactionsArray= null;
+
 
         public BullseyeForm(Employee emp)
         {
@@ -37,8 +44,7 @@ namespace Bullseye
             timer1.Tick += timer1_Tick;
             timer1.Start();
         }
-        //GLOBAL array of items. When click Refresh loads items
-        ItemClass[] itemsArray = null;
+       
 
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -69,28 +75,46 @@ namespace Bullseye
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             ResetLastActivity();
-            txtSearch.Text = "";
-           
-            
+            txtSearchInventory.Text = "";
+        
             if (tabMain.SelectedIndex == 1)//Inventory
+            {  
+                itemsArray=m.GetAllItems();
+                 dgvInventory.DataSource = itemsArray;
+                //DynamicSearch(dgvInventory, txtSearchInventory);
+            }
+            else if(tabMain.SelectedIndex ==0) //Orders
             {
-                itemsArray = m.GetAllItems();                
-                dgvInventory.DataSource = itemsArray;
+                transactionsArray= m.GetAllTransactions();
+                dgvOrders.DataSource= transactionsArray;
+               //DynamicSearch(dgvOrders, txtSearchOrders);
             }
         }
 
         //Event for synamic research
-        private void txtSearch_TextChanged(object sender, EventArgs e)
+        private void DynamicSearch(DataGridView dataGridView, TextBox textBox)
         {
             ResetLastActivity();
-            if (dgvInventory.DataSource != null)
-            {          
-                string searchText = txtSearch.Text.ToLower();
-                ItemClass[] filteredItems = itemsArray.Where(item =>
-                item.Name.ToLower().Contains(searchText) || item.ItemID.ToString().Contains(searchText)).ToArray();
-                dgvInventory.DataSource = filteredItems;
-            }   
 
+            if (dataGridView.DataSource != null)
+            {
+                string searchText = textBox.Text.ToLower();
+                if (dataGridView== dgvInventory)
+                {
+                    ItemClass[] filteredItems = itemsArray.Where(item =>
+                        item.Name.ToLower().Contains(searchText) || item.ItemID.ToString().Contains(searchText)).ToArray();
+
+                    dataGridView.DataSource = filteredItems;
+                }
+                else if(dataGridView== dgvOrders)
+                {
+                    TransactionClass[] filteredTransactions =transactionsArray.Where(txn =>
+                      txn.TxnID.ToString().Contains(searchText)).ToArray();
+
+                    dataGridView.DataSource = filteredTransactions;
+                }
+              
+            }
         }
 
         //Edit Item
@@ -149,6 +173,33 @@ namespace Bullseye
         {
             AddEditItemsForm addEditItemsForm = new AddEditItemsForm("add");
             addEditItemsForm.ShowDialog();
+        }
+
+        private void txtSearchOrders_TextChanged(object sender, EventArgs e)
+        {
+            DynamicSearch(dgvOrders, txtSearchOrders);
+        }
+
+        private void txtSearchInventory_TextChanged(object sender, EventArgs e)
+        {
+            DynamicSearch(dgvInventory, txtSearchInventory);
+        }
+
+        private void picFilterOrders_Click(object sender, EventArgs e)
+        {
+            if (dgvOrders.DataBindings != null)
+            {
+                FilterOrdersForm filterOrdersForm = new FilterOrdersForm();
+                filterOrdersForm.ShowDialog();
+
+                DateTime fromDate = filterOrdersForm.FromDate;
+                DateTime toDate = filterOrdersForm.ToDate;
+                int eOrders = filterOrdersForm.EmergencyOrder;
+                TransactionClass[] filteredArray = m.GetTransactionsFiltered(fromDate, toDate, eOrders);
+                
+                dgvOrders.DataSource = filteredArray;
+            }
+            
         }
     }
 }

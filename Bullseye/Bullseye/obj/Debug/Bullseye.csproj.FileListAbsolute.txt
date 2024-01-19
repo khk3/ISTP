@@ -48,3 +48,4 @@ C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.RecoverPassw
 C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.AddUpdateUserForm.resources
 C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.BullseyeForm.resources
 C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.AddEditItemsForm.resources
+C:\Users\Kng\Desktop\ISTP\ISTP\Bullseye\Bullseye\obj\Debug\Bullseye.FilterOrdersForm.resources

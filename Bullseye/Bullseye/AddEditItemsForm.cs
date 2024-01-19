@@ -234,5 +234,10 @@ namespace Bullseye
                 e.Handled = true;
             }
         }
+
+        private void btnAddImage_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

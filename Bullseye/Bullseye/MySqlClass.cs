@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,6 +10,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Bullseye
@@ -626,8 +628,7 @@ namespace Bullseye
 
         public int AddItem(ItemClass item)
         {
-            string addItemQuery = "Insert into item values (@name, @sku, @desciption, @category, @weight," +
-                " @caseSize,@costPrice, @retailPrice,@supplier,@active,@notes)";
+            string addItemQuery = "INSERT INTO item (name, sku, description, category, weight, caseSize, costPrice, retailPrice, supplierID, active, notes) VALUES(@name, @sku, @description, @category, @weight, @caseSize, @costPrice, @retailPrice, @supplierID, @active, @notes)";
             OpenDb();
             MySqlCommand cmd = new MySqlCommand(addItemQuery, conn);
             //cmd.Parameters.AddWithValue("@itemID", item.ItemID);
@@ -639,7 +640,7 @@ namespace Bullseye
             cmd.Parameters.AddWithValue("@caseSize", item.CaseSize);
             cmd.Parameters.AddWithValue("@costPrice", item.CostPrice);
             cmd.Parameters.AddWithValue("@retailPrice", item.RetailPrice);
-            cmd.Parameters.AddWithValue("@supplier", item.SupplierID);
+            cmd.Parameters.AddWithValue("@supplierID", item.SupplierID);
             cmd.Parameters.AddWithValue("@active", item.Active);
             cmd.Parameters.AddWithValue("@notes", item.Notes);
 
@@ -753,6 +754,121 @@ namespace Bullseye
             conn.Close();
             return null;
 
-        }//end of class
-    }
+        }
+    
+        public TransactionClass[] GetAllTransactions()
+        {
+            OpenDb();
+            string cmd = "select * from txn";
+            MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
+
+            List<TransactionClass> transactionsList = new List<TransactionClass>();
+            try
+            {
+                MySqlDataReader reader = sqlCmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader != null && reader.Read())
+                    {
+
+                        int txnID = reader.GetInt32(reader.GetOrdinal("txnID"));
+                        int siteIDTo = reader.GetInt32(reader.GetOrdinal("siteIDTo"));
+                        int siteIDFrom = reader.GetInt32(reader.GetOrdinal("siteIDFrom"));
+                        string status = reader.GetString(reader.GetOrdinal("status"));
+                        DateTime shipDate= reader.GetDateTime(reader.GetOrdinal("shipDate"));
+                        string txnType = reader.GetString(reader.GetOrdinal("txnType"));                       
+                        string barCode = reader.GetString(reader.GetOrdinal("barCode")); //is string in the DB
+                        DateTime createdDate = reader.GetDateTime(reader.GetOrdinal("createdDate"));
+                        int deliveryID = reader.IsDBNull(reader.GetOrdinal("deliveryID")) ? 0 : reader.GetInt32(reader.GetOrdinal("deliveryID"));
+                        int emergencyDelivery = reader.IsDBNull(reader.GetOrdinal("emergencyDelivery"))?0:reader.GetInt32(reader.GetOrdinal("emergencyDelivery"));
+                        string notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes")).ToString();
+
+                        TransactionClass t= new TransactionClass(txnID,siteIDTo,siteIDFrom,status, shipDate,txnType,
+                            barCode, createdDate, deliveryID, emergencyDelivery, notes);
+
+                        transactionsList.Add(t);
+                    }
+                    reader.Close();
+                }
+                TransactionClass[] transactionsArray = transactionsList.ToArray();
+                conn.Close();
+                return transactionsArray;
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not find Transactions. System Error: " + sqlEx.Message, "Error - could not find Transactions");
+            }
+            catch (Exception ex)
+            {
+                // Handle other general exceptions
+                MessageBox.Show("Exception: " + ex.Message, "Error - Cannot find Transactions");
+            }
+            conn.Close();
+            return null;
+        }
+
+        public TransactionClass[] GetTransactionsFiltered(DateTime fromDate, DateTime toDate, int eOrder)
+        {
+            OpenDb();
+            string cmd = "";
+            if (eOrder > 0)
+            {
+                cmd = "select * from txn where shipdate between @fromDate and @toDate and emergencyDelivery= @eOrder";
+            }
+                
+            else
+                cmd= "select * from txn where shipdate between @fromDate and @toDate";
+            MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
+            sqlCmd.Parameters.AddWithValue("@fromDate", fromDate);
+            sqlCmd.Parameters.AddWithValue("@toDate", toDate);
+            if (eOrder > 0)
+                sqlCmd.Parameters.AddWithValue("@eOrder", eOrder);
+            List<TransactionClass> transactionsList = new List<TransactionClass>();
+            try
+            {
+                MySqlDataReader reader = sqlCmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader != null && reader.Read())
+                    {
+
+                        int txnID = reader.GetInt32(reader.GetOrdinal("txnID"));
+                        int siteIDTo = reader.GetInt32(reader.GetOrdinal("siteIDTo"));
+                        int siteIDFrom = reader.GetInt32(reader.GetOrdinal("siteIDFrom"));
+                        string status = reader.GetString(reader.GetOrdinal("status"));
+                        DateTime shipDate = reader.GetDateTime(reader.GetOrdinal("shipDate"));
+                        string txnType = reader.GetString(reader.GetOrdinal("txnType"));
+                        string barCode = reader.GetString(reader.GetOrdinal("barCode")); //is string in the DB
+                        DateTime createdDate = reader.GetDateTime(reader.GetOrdinal("createdDate"));
+                        int deliveryID = reader.IsDBNull(reader.GetOrdinal("deliveryID")) ? 0 : reader.GetInt32(reader.GetOrdinal("deliveryID"));
+                        int emergencyDelivery = reader.IsDBNull(reader.GetOrdinal("emergencyDelivery")) ? 0 : reader.GetInt32(reader.GetOrdinal("emergencyDelivery"));
+                        string notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetString(reader.GetOrdinal("notes")).ToString();
+
+                        TransactionClass t = new TransactionClass(txnID, siteIDTo, siteIDFrom, status, shipDate, txnType,
+                            barCode, createdDate, deliveryID, emergencyDelivery, notes);
+
+                        transactionsList.Add(t);
+                    }
+                    reader.Close();
+                }
+                TransactionClass[] transactionsArray = transactionsList.ToArray();
+                conn.Close();
+                return transactionsArray;
+            }
+            catch (MySqlException sqlEx)
+            {
+                MessageBox.Show("Could not find Transactions. System Error: " + sqlEx.Message, "Error - could not find Transactions");
+            }
+            catch (Exception ex)
+            {
+                // Handle other general exceptions
+                MessageBox.Show("Exception: " + ex.Message, "Error - Cannot find Transactions");
+            }
+            conn.Close();
+            return null;
+        }
+
+    
+    
+    }//end of class
 }

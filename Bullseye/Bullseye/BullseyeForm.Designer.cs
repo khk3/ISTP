@@ -32,8 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BullseyeForm));
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtSearchOrders = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.dgvOrders = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.txtSearchInventory = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnAddItem = new System.Windows.Forms.Button();
             this.btnEditItem = new System.Windows.Forms.Button();
@@ -53,13 +56,17 @@
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.picFilterOrders = new System.Windows.Forms.PictureBox();
             this.tabMain.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrders)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventory)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picFilterOrders)).BeginInit();
             this.SuspendLayout();
             // 
             // tabMain
@@ -79,6 +86,10 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.picFilterOrders);
+            this.tabPage1.Controls.Add(this.txtSearchOrders);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.dgvOrders);
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -87,9 +98,40 @@
             this.tabPage1.Text = "Orders";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // txtSearchOrders
+            // 
+            this.txtSearchOrders.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSearchOrders.Location = new System.Drawing.Point(125, 28);
+            this.txtSearchOrders.Name = "txtSearchOrders";
+            this.txtSearchOrders.Size = new System.Drawing.Size(589, 27);
+            this.txtSearchOrders.TabIndex = 8;
+            this.txtSearchOrders.TextChanged += new System.EventHandler(this.txtSearchOrders_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(47, 35);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(72, 20);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Search: ";
+            // 
+            // dgvOrders
+            // 
+            this.dgvOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOrders.Location = new System.Drawing.Point(51, 91);
+            this.dgvOrders.MultiSelect = false;
+            this.dgvOrders.Name = "dgvOrders";
+            this.dgvOrders.ReadOnly = true;
+            this.dgvOrders.RowHeadersWidth = 51;
+            this.dgvOrders.RowTemplate.Height = 24;
+            this.dgvOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvOrders.Size = new System.Drawing.Size(851, 314);
+            this.dgvOrders.TabIndex = 6;
+            // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.txtSearch);
+            this.tabPage2.Controls.Add(this.txtSearchInventory);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.btnAddItem);
             this.tabPage2.Controls.Add(this.btnEditItem);
@@ -103,14 +145,14 @@
             this.tabPage2.Text = "Inventory";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // txtSearch
+            // txtSearchInventory
             // 
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearch.Location = new System.Drawing.Point(107, 17);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(589, 27);
-            this.txtSearch.TabIndex = 5;
-            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            this.txtSearchInventory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSearchInventory.Location = new System.Drawing.Point(107, 17);
+            this.txtSearchInventory.Name = "txtSearchInventory";
+            this.txtSearchInventory.Size = new System.Drawing.Size(589, 27);
+            this.txtSearchInventory.TabIndex = 5;
+            this.txtSearchInventory.TextChanged += new System.EventHandler(this.txtSearchInventory_TextChanged);
             // 
             // label3
             // 
@@ -294,9 +336,20 @@
             this.label2.Font = new System.Drawing.Font("Lucida Handwriting", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(313, 50);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(224, 57);
+            this.label2.Size = new System.Drawing.Size(217, 56);
             this.label2.TabIndex = 14;
             this.label2.Text = "Bullseye";
+            // 
+            // picFilterOrders
+            // 
+            this.picFilterOrders.Image = ((System.Drawing.Image)(resources.GetObject("picFilterOrders.Image")));
+            this.picFilterOrders.Location = new System.Drawing.Point(882, 69);
+            this.picFilterOrders.Name = "picFilterOrders";
+            this.picFilterOrders.Size = new System.Drawing.Size(20, 16);
+            this.picFilterOrders.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picFilterOrders.TabIndex = 9;
+            this.picFilterOrders.TabStop = false;
+            this.picFilterOrders.Click += new System.EventHandler(this.picFilterOrders_Click);
             // 
             // BullseyeForm
             // 
@@ -317,6 +370,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bullseye -";
             this.tabMain.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrders)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -326,6 +382,7 @@
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picFilterOrders)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -347,7 +404,7 @@
         private System.Windows.Forms.Button btnEditItem;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button btnAddItem;
-        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.TextBox txtSearchInventory;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblUserHeader;
@@ -355,5 +412,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtSearchOrders;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView dgvOrders;
+        private System.Windows.Forms.PictureBox picFilterOrders;
     }
 }
