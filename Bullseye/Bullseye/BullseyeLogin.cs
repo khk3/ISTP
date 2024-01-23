@@ -62,35 +62,36 @@ namespace Bullseye
 
         //Btn Login
         private void btnLogin_Click(object sender, EventArgs e)
-        {
-           
+        {          
             string userName= txtUserName.Text;
             string password= txtPassword.Text;
 
             if(CheckEmptyFields("login"))
             {
-                //HASH THE PASSWORD admin= P@ssw0rd-
-
-                // string hashedPassword = HashPassword(password);
-                //bool userExists = employees.Any(emp => emp.FirstName == fName && emp.LastName == lName);
 
                 Employee user = employees.FirstOrDefault(emp => emp.UserName == userName);
 
                 if (user!=null)
                 {      
-                   
-
+                  
                     bool access = false;
-                    if (user.Password == ConstantsClass.DefaultPassword)
+                    
+                    if (txtPassword.Text == user.Password)
                     {
-                        access = true;                      
+                        if (user.Password == ConstantsClass.DefaultPassword)
+                        
+                            access = true;
+                        
+                     
                     }
                     else
                     {
                         bool verifyPassword = Validation.VerifyPassword(password, user.Password);
                         if (verifyPassword)
-                           access = true;
+                            access = true;
+
                     }
+                 
 
                     if (access)
                     {

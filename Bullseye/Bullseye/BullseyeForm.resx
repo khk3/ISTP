@@ -121,7 +121,7 @@
   <data name="picFilterOrders.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAdgAAAHYCAYAAADu2fmZAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAS
-        cwAAEnMBjCK5BwAAN6VJREFUeF7tnXnwnlV5v5OQfW0SSICQhEBIyEb2VoWCtWiFqTiAA3aaPWQhEJaR
+        cQAAEnEB89x6jgAAN6VJREFUeF7tnXnwnlV5v5OQfW0SSICQhEBIyEb2VoWCtWiFqTiAA3aaPWQhEJaR
         2sXWtWgpdVrFalFLgGwEskIiYLVIW4WhiGgSzEIFRUDIvjfr/ft9Drw03pxAlu/y3ue9rpnrH0eyfZ9z
         ruc8y3maGAAAANQ5BBYAAKAeILAAAAD1AIEFAACoBwgsAABAPdDkf//3f817LBw8eNC2bNliL7zwgj3y
         yCP2la98xW6++Wa7/PLL7Xd/93etR48e1rFjR2vatKk1adIEERGxUVWP1CX1SZ1Sr9Qt9UsdU8/UNfXt
@@ -361,10 +361,10 @@
         K5+dg1rBt7TJm/87AAAA1CEEFgAAoB4gsAAAAPUAgQUAAKhzzP4fZxGokl0wxm8AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="pictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="pivInvImage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAOUAAAEjCAYAAADND8YLAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAS
-        cQAAEnEB89x6jgAALmZJREFUeF7tnYuPHEe1h+9fbUUWcrSKMFpdObpGylV8FYMxcWLIGhKyAYeE2CQm
+        cgAAEnIBXmVb4wAALmZJREFUeF7tnYuPHEe1h+9fbUUWcrSKMFpdObpGylV8FYMxcWLIGhKyAYeE2CQm
         DnGIgQ2YYOIQFpawmPB+P/rOt9mzrqn+VU33TPd0de850qeCeHae9XVVnXr0f3300UeV4zjl4FI6TmG4
         lI5TGC6l4xSGS+k4heFSOk5huJSOUxgupeMUhkvpOIXhUjpOYbiUjlMYLqXjFIZL6TiF4VI6TmG4lAPw
         29/+tvrTn/5U/fOf/6z+9re/VX/+85+r3//+9/KxzvHDpVwzf/3rX6v//Oc/lYp///vfB5L+8Y9/lH/r

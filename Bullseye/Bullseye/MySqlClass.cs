@@ -564,8 +564,10 @@ namespace Bullseye
                         double retailPrice = reader.GetDouble(reader.GetOrdinal("retailPrice"));
                         int supplierID = reader.GetInt32(reader.GetOrdinal("supplierID"));
                         int active = reader.GetInt32(reader.GetOrdinal("active"));
+                        byte[] image= reader.IsDBNull(reader.GetOrdinal("img")) ? null : (byte[])reader.GetValue(reader.GetOrdinal("img"));
+
                         string notes = reader.IsDBNull(reader.GetOrdinal("notes")) ? null : reader.GetValue(reader.GetOrdinal("notes")).ToString();
-                        ItemClass item = new ItemClass(siteID, name, sku, description, category, weight, caseSize, costPrice, retailPrice, supplierID, active, notes);
+                        ItemClass item = new ItemClass(siteID, name, sku, description, category, weight, caseSize, costPrice, retailPrice, supplierID, active,image, notes);
 
                         itemsList.Add(item);
                     }
@@ -628,7 +630,7 @@ namespace Bullseye
 
         public int AddItem(ItemClass item)
         {
-            string addItemQuery = "INSERT INTO item (name, sku, description, category, weight, caseSize, costPrice, retailPrice, supplierID, active, notes) VALUES(@name, @sku, @description, @category, @weight, @caseSize, @costPrice, @retailPrice, @supplierID, @active, @notes)";
+            string addItemQuery = "INSERT INTO item (name, sku, description, category, weight, caseSize, costPrice, retailPrice, supplierID, active, img, notes) VALUES(@name, @sku, @description, @category, @weight, @caseSize, @costPrice, @retailPrice, @supplierID, @active, @image, @notes)";
             OpenDb();
             MySqlCommand cmd = new MySqlCommand(addItemQuery, conn);
             //cmd.Parameters.AddWithValue("@itemID", item.ItemID);
@@ -642,6 +644,7 @@ namespace Bullseye
             cmd.Parameters.AddWithValue("@retailPrice", item.RetailPrice);
             cmd.Parameters.AddWithValue("@supplierID", item.SupplierID);
             cmd.Parameters.AddWithValue("@active", item.Active);
+            cmd.Parameters.AddWithValue("@image", item.Image);
             cmd.Parameters.AddWithValue("@notes", item.Notes);
 
 
@@ -668,7 +671,7 @@ namespace Bullseye
         public int EditItem(ItemClass item)
         {
             string addItemQuery = "Update item set name= @name, sku=@sku, description=@description, category=@category, weight=@weight," +
-                " caseSize=@caseSize,costPrice=@costPrice, retailPrice=@retailPrice,supplierID=@supplier,active=@active,notes=@notes where itemID= @itemID";
+                " caseSize=@caseSize,costPrice=@costPrice, retailPrice=@retailPrice,supplierID=@supplier,active=@active,img=@image, notes=@notes where itemID= @itemID";
             OpenDb();
             MySqlCommand cmd = new MySqlCommand(addItemQuery, conn);
             cmd.Parameters.AddWithValue("@itemID", item.ItemID);
@@ -680,8 +683,9 @@ namespace Bullseye
             cmd.Parameters.AddWithValue("@caseSize", item.CaseSize);
             cmd.Parameters.AddWithValue("@costPrice", item.CostPrice);
             cmd.Parameters.AddWithValue("@retailPrice", item.RetailPrice);
-            cmd.Parameters.AddWithValue("@supplier", item.SupplierID);
+            cmd.Parameters.AddWithValue("@supplier", item.SupplierID);      
             cmd.Parameters.AddWithValue("@active", item.Active);
+            cmd.Parameters.AddWithValue("@image", item.Image);
             cmd.Parameters.AddWithValue("@notes", item.Notes);
 
 

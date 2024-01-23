@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Bullseye
     {
         Employee user= null;
         MySqlClass m = new MySqlClass();
-      
+        MemoryStream mStream= new MemoryStream();
         private DateTime lastActivityTime;
         //public TransactionClass[] FilteredTransactions { get; set; }
         
@@ -56,15 +57,6 @@ namespace Bullseye
         private void Application_Idle(object sender, EventArgs e)
         {
 
-            TimeSpan idleTime = DateTime.Now - lastActivityTime;
-
-            if (idleTime >= ConstantsClass.TimeToAutoLogout)
-            {
-                Application.Idle -= Application_Idle;
-                this.Close();
-                MessageBox.Show("Auto Logout due to inactivity", "User Inactive");
-
-            }
         }
 
         private void ResetLastActivity()
@@ -81,7 +73,7 @@ namespace Bullseye
             {  
                 itemsArray=m.GetAllItems();
                  dgvInventory.DataSource = itemsArray;
-                //DynamicSearch(dgvInventory, txtSearchInventory);
+                dgvInventory.Columns[11].Visible = false; // will hide image in datagridview        
             }
             else if(tabMain.SelectedIndex ==0) //Orders
             {
@@ -138,10 +130,11 @@ namespace Bullseye
                     double retailPrice= Convert.ToDouble(selectedRow.Cells[8].Value);
                     int supplierID = Convert.ToInt32(selectedRow.Cells[9].Value);
                     int active= Convert.ToInt32(selectedRow.Cells[10].Value);
-                    string notes = selectedRow.Cells[11].Value == null ? null : selectedRow.Cells[10].Value.ToString();
+                    byte[] image = selectedRow.Cells[11].Value as byte[];
+                    string notes = selectedRow.Cells[12].Value == null ? null : selectedRow.Cells[10].Value.ToString();
 
                     ItemClass item = new ItemClass(itemID,name, sku, desc,
-                    categ, weight, caseSize, costPrice, retailPrice, supplierID, active, notes);
+                    categ, weight, caseSize, costPrice, retailPrice, supplierID, active, image, notes);
 
                     AddEditItemsForm itemsForm = new AddEditItemsForm("edit", item);                                  
                     itemsForm.ShowDialog();
@@ -164,9 +157,35 @@ namespace Bullseye
             ResetLastActivity();
         }
 
+        //Row selection changed dgvInventory
         private void dgvInventory_SelectionChanged(object sender, EventArgs e)
         {
             ResetLastActivity();
+            if (dgvInventory.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = dgvInventory.SelectedRows[0];
+
+                // Assuming the image column is the 12th column (index 11)
+                byte[] imageBytes = selectedRow.Cells[11].Value as byte[];
+
+                if (imageBytes != null && imageBytes.Length > 0)
+                {
+                    mStream.Position = 0; // Reset the position to the beginning
+                    mStream.Write(imageBytes, 0, imageBytes.Length);
+                    pivInvImage.Image = Image.FromStream(mStream);
+
+                }
+                else
+                {
+                    //
+                    pivInvImage.Image = Image.FromFile("ImagesItems/noImageAvailable.png");
+                }
+            }
+           // else
+           // {
+                // Clear the PictureBox if no row is selected
+            //    pivInvImage.Image = Image.FromFile("ImagesItems/noImageAvailable.png");
+           // }
         }
 
         private void btnAddItem_Click(object sender, EventArgs e)
@@ -187,7 +206,7 @@ namespace Bullseye
 
         private void picFilterOrders_Click(object sender, EventArgs e)
         {
-            if (dgvOrders.DataBindings != null)
+            if (dgvOrders.DataSource != null)
             {
                 FilterOrdersForm filterOrdersForm = new FilterOrdersForm();
                 filterOrdersForm.ShowDialog();

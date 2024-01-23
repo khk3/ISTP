@@ -160,6 +160,7 @@ CREATE TABLE `item` (
   `retailPrice` decimal(10,2) NOT NULL,
   `supplierID` int NOT NULL,
   `active` tinyint(1) NOT NULL,
+  `img` longblob DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
   FOREIGN KEY (`supplierID`) REFERENCES `supplier` (`supplierID`),
   FOREIGN KEY (`category`) REFERENCES `category` (`categoryName`)

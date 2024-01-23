@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BullseyeForm));
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.picFilterOrders = new System.Windows.Forms.PictureBox();
             this.txtSearchOrders = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.dgvOrders = new System.Windows.Forms.DataGridView();
@@ -40,7 +41,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnAddItem = new System.Windows.Forms.Button();
             this.btnEditItem = new System.Windows.Forms.Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pivInvImage = new System.Windows.Forms.PictureBox();
             this.dgvInventory = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label6 = new System.Windows.Forms.Label();
@@ -56,17 +57,16 @@
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.picFilterOrders = new System.Windows.Forms.PictureBox();
             this.tabMain.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFilterOrders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrders)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pivInvImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventory)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picFilterOrders)).BeginInit();
             this.SuspendLayout();
             // 
             // tabMain
@@ -97,6 +97,17 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Orders";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // picFilterOrders
+            // 
+            this.picFilterOrders.Image = ((System.Drawing.Image)(resources.GetObject("picFilterOrders.Image")));
+            this.picFilterOrders.Location = new System.Drawing.Point(882, 69);
+            this.picFilterOrders.Name = "picFilterOrders";
+            this.picFilterOrders.Size = new System.Drawing.Size(20, 16);
+            this.picFilterOrders.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picFilterOrders.TabIndex = 9;
+            this.picFilterOrders.TabStop = false;
+            this.picFilterOrders.Click += new System.EventHandler(this.picFilterOrders_Click);
             // 
             // txtSearchOrders
             // 
@@ -135,7 +146,7 @@
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.btnAddItem);
             this.tabPage2.Controls.Add(this.btnEditItem);
-            this.tabPage2.Controls.Add(this.pictureBox2);
+            this.tabPage2.Controls.Add(this.pivInvImage);
             this.tabPage2.Controls.Add(this.dgvInventory);
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
@@ -183,15 +194,15 @@
             this.btnEditItem.UseVisualStyleBackColor = true;
             this.btnEditItem.Click += new System.EventHandler(this.btnEditItem_Click);
             // 
-            // pictureBox2
+            // pivInvImage
             // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(899, 17);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(187, 166);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
+            this.pivInvImage.Image = ((System.Drawing.Image)(resources.GetObject("pivInvImage.Image")));
+            this.pivInvImage.Location = new System.Drawing.Point(899, 17);
+            this.pivInvImage.Name = "pivInvImage";
+            this.pivInvImage.Size = new System.Drawing.Size(187, 166);
+            this.pivInvImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pivInvImage.TabIndex = 1;
+            this.pivInvImage.TabStop = false;
             // 
             // dgvInventory
             // 
@@ -340,17 +351,6 @@
             this.label2.TabIndex = 14;
             this.label2.Text = "Bullseye";
             // 
-            // picFilterOrders
-            // 
-            this.picFilterOrders.Image = ((System.Drawing.Image)(resources.GetObject("picFilterOrders.Image")));
-            this.picFilterOrders.Location = new System.Drawing.Point(882, 69);
-            this.picFilterOrders.Name = "picFilterOrders";
-            this.picFilterOrders.Size = new System.Drawing.Size(20, 16);
-            this.picFilterOrders.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picFilterOrders.TabIndex = 9;
-            this.picFilterOrders.TabStop = false;
-            this.picFilterOrders.Click += new System.EventHandler(this.picFilterOrders_Click);
-            // 
             // BullseyeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -372,17 +372,17 @@
             this.tabMain.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picFilterOrders)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrders)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pivInvImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventory)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picFilterOrders)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -399,7 +399,7 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pivInvImage;
         private System.Windows.Forms.DataGridView dgvInventory;
         private System.Windows.Forms.Button btnEditItem;
         private System.Windows.Forms.Timer timer1;

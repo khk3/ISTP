@@ -8,12 +8,17 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using static System.Net.Mime.MediaTypeNames;
+using Image = System.Drawing.Image;
 
 namespace Bullseye
 {
     public partial class AddEditItemsForm : Form
     {
         DateTime loginTime;
+        MemoryStream mStream = new MemoryStream();
+
 
         string action = "";
         public AddEditItemsForm(string add)
@@ -65,6 +70,20 @@ namespace Bullseye
                 txtNotes.Text = itemObj.Notes;
                 cboCategory.SelectedItem = itemObj.Category.ToString();
                 ckbActive.Checked = Convert.ToBoolean(itemObj.Active);
+
+                if (itemObj.Image != null && itemObj.Image.Length > 0)
+                {
+                    MemoryStream ms = new MemoryStream(itemObj.Image);
+                    
+                    picImgEditItem.Image = Image.FromStream(ms);
+                    
+                }
+               // else
+               // {
+                    // If the image is not available, you may set a default image or handle it as needed
+               //    picImgEditItem.Image = null;
+               // }
+
             }       
             
         }
@@ -129,14 +148,20 @@ namespace Bullseye
                 int sku = Convert.ToInt32(txtSku.Text);
                 int supplierID = Convert.ToInt32(cboSuppliers.SelectedValue);
                 double weight = Convert.ToDouble(txtWeight.Text);
+                int active = Convert.ToInt32(ckbActive.Checked);
+
+                MemoryStream ms = new MemoryStream();
+                picImgEditItem.Image.Save(ms, picImgEditItem.Image.RawFormat);
+                byte[] image = ms.ToArray();
+
                 string notes = txtNotes.Text;
 
                
-                int active = Convert.ToInt32(ckbActive.Checked);
+                
 
                 if (action == "add")
                 {
-                    ItemClass item = new ItemClass(name, sku, desc, category, weight, caseSize, costPrice, retailPrice, supplierID, active, notes);
+                    ItemClass item = new ItemClass(name, sku, desc, category, weight, caseSize, costPrice, retailPrice, supplierID, active, image, notes);
                     int res = m.AddItem(item);
                     if (res == 1)
                     {
@@ -146,7 +171,7 @@ namespace Bullseye
                 }
                 else //If action == "edit"
                 {
-                    ItemClass item = new ItemClass(itemID, name, sku, desc, category, weight, caseSize, costPrice, retailPrice, supplierID, active, notes);
+                    ItemClass item = new ItemClass(itemID, name, sku, desc, category, weight, caseSize, costPrice, retailPrice, supplierID, active, image,notes);
                     int result = m.EditItem(item);
                     if (result == 1)
                     {
@@ -237,7 +262,20 @@ namespace Bullseye
 
         private void btnAddImage_Click(object sender, EventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image Files (*.png;*.jpg;*.jpeg;*.gif;*.bmp)|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Load the selected image into the PictureBox
+                picImgEditItem.Image = Image.FromFile(openFileDialog.FileName);
+                
+                
+                //byte[] imageConverted;
 
+               // picImgEditItem.Image.Save(mStream, picImgEditItem.Image.RawFormat);
+                //imageConverted = mStream.ToArray();
+
+            }
         }
     }
 }

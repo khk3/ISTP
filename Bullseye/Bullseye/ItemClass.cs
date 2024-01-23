@@ -21,11 +21,12 @@ namespace Bullseye
         public double RetailPrice { get; set; }
         public int SupplierID { get; set; }
         public int Active { get; set; }
+        public byte[] Image { get; set; }
         public string Notes { get; set; }
 
         public ItemClass(string name, int sku, string description, string category, 
             double weight, int caseSize, double costPrice, double retailPrice, int supplierID, 
-            int active, string notes) 
+            int active, byte[] image, string notes) 
         {
             //ItemID = itemID;
             Name = name;
@@ -38,12 +39,13 @@ namespace Bullseye
             RetailPrice = retailPrice;
             SupplierID = supplierID;
             Active = active;
+            Image = image;
             Notes = notes;
         }
 
         public ItemClass(int itemID,string name, int sku, string description, string category,
           double weight, int caseSize, double costPrice, double retailPrice, int supplierID,
-          int active, string notes)
+          int active, byte[] image,string notes)
         {
             ItemID = itemID;
             Name = name;
@@ -56,6 +58,7 @@ namespace Bullseye
             RetailPrice = retailPrice;
             SupplierID = supplierID;
             Active = active;
+            Image = image;
             Notes = notes;
         }
 
