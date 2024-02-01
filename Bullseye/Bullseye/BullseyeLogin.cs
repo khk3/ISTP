@@ -29,11 +29,13 @@ namespace Bullseye
 
         //Class Level of Employees
         List<Employee> employees = new List<Employee>();
+
+        //Helper Class level MySqlClass 
         MySqlClass m = new MySqlClass();
 
         private void Init()
         {
-            
+            //Open connection
             m.OpenDb();
 
             // m.RunScript();   //DEFAULT DATABASE
@@ -49,15 +51,19 @@ namespace Bullseye
             timer1.Start();
         }
 
+        //Display Datetime at the Title
         private void timer1_Tick(object sender, EventArgs e)
         {
             this.Text = " Bullseye - " + DateTime.Now.ToShortDateString() + " - " + DateTime.Now.ToLongTimeString();
 
         }
+        //Query to refresh Employees' data
         public void RefreshEmployees()
         {
             employees = m.LoadEmployees();
         }
+
+        //Global Variable to count number of errors to login.
         int errorCount = 0;
 
         //Btn Login
@@ -68,40 +74,34 @@ namespace Bullseye
 
             if(CheckEmptyFields("login"))
             {
-
                 Employee user = employees.FirstOrDefault(emp => emp.UserName == userName);
 
                 if (user!=null)
-                {      
-                  
+                {                       
                     bool access = false;
                     
                     if (txtPassword.Text == user.Password)
                     {
-                        if (user.Password == ConstantsClass.DefaultPassword)
-                        
-                            access = true;
-                        
-                     
+                        if (user.Password == ConstantsClass.DefaultPassword)                      
+                            access = true;                             
                     }
                     else
                     {
+                        //Helper Class Validation contain method to verify encrypted Password 
                         bool verifyPassword = Validation.VerifyPassword(password, user.Password);
                         if (verifyPassword)
                             access = true;
-
                     }
-                 
-
-                    if (access)
+              
+                    if (access) // if password Match
                     {
-                        if (!user.Active)
+                        if (!user.Active)//if user is not Active
                             MessageBox.Show("User is not Active. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- user not active");
-                        else
+                        else //if user Active
                         {
-                            if (user.Locked == false)  //If all correct
+                            if (user.Locked == false)  //If user not Locked
                             {                  
-                                //if firstTime login
+                                //if firstTime login. Helper class ConstantsClass stores theh Default values
                                 if(user.Password == ConstantsClass.DefaultPassword)
                                 {
                                     RecoverPasswordForm rf= new RecoverPasswordForm(user);
@@ -109,33 +109,45 @@ namespace Bullseye
                                 }
                                 else
                                 {
-                                    BullseyeForm bullseyeForm = new BullseyeForm(user);
+                                   
                                     switch (user.PositionID)
                                     {                                        
                                         case 99999999:
                                             //MessageBox.Show("Welcome " + user.FirstName, " Login Successful");
-                                            DialogResult result = MessageBox.Show("Welcome " + user.FirstName + ". Do you want to open the Admin Form?", "Login Successful", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                            DialogResult result = MessageBox.Show("Welcome " + user.FirstName + ". Do you want to open the Admin Form? Click 'yes' to be directed to Admin Form or 'no' to be directed to Bullseye Form", "Login Successful", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                                             if (result == DialogResult.Yes)
                                             {
+                                               
                                                 AdminForm adminForm = new AdminForm(user);
                                                 adminForm.ShowDialog();
+                                                Hide();
+                                                Close();
+
                                             }
                                             else
                                             {
+                                               
+                                                BullseyeForm bullseyeForm = new BullseyeForm(user);
                                                 bullseyeForm.ShowDialog();
+                                                Hide();
+                                                Close();
+
                                             }
                                             break;
-                                        default:
+                                        default: //other users
                                             MessageBox.Show("Welcome "+user.FirstName, "Login Successful");
-                                            bullseyeForm.ShowDialog();
+                                           
+                                            BullseyeForm bForm = new BullseyeForm(user);
+                                            bForm.ShowDialog();
+                                            Hide();
+                                            Close();
                                             break;
                                     }
 
                                 }
                                
                             }
-
-                            else
+                            else //if user is Locked
                                 MessageBox.Show("Account is locked. Please contact your Administrator admin@bullseye.ca for assistance.", "Error - Account Locked");
                         }
                     }
@@ -154,13 +166,12 @@ namespace Bullseye
          
                             bool isLocked=m.CheckLocked(userName);
                             if (!isLocked)
-                            {
-                                
+                            {                               
                                 int update=m.LockUser(userName);
                                 if (update > 0)
                                     MessageBox.Show("Your account has been locked because of too many incorrect login attempts. Please contact your Administrator at admin@bullseye.ca for assistance", "Error- User Locked");
                             }
-                            else
+                            else //if user already locked
                             {
                                 MessageBox.Show("Account is locked. Please contact your Administrator admin@bullseye.ca for assistance.", "Error - Account Locked");
 
@@ -168,29 +179,21 @@ namespace Bullseye
                         }
                     }
                 }
-                else
+                else //if user doe not exist in the DB
                 {
                     MessageBox.Show("This user dos not exists", "Error- User does not exists");
                 }
             }             
         }//end of login event
 
-        //Function to encrypt password
-        private string HashPassword(string input)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
-                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
-            }
-        }
+ 
 
         //Form Closing Event
         private void BullseyeLogin_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Close the connection
             conn.Close();
-            timer1.Stop();
+            //timer1.Stop();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -199,7 +202,7 @@ namespace Bullseye
         }
        
 
-
+        //Recover Password Click
         private void btnRecoverPassword_Click(object sender, EventArgs e)
         {
             lblWarnP.Visible = false;
@@ -208,9 +211,12 @@ namespace Bullseye
             MySqlClass m = new MySqlClass();
 
             if (CheckEmptyFields("recoverPassword")) //ad else to focus
-            {          
+            {
+                bool isActive = m.CheckActive(userName);
+                if (isActive)// if user Active
+                {
                     bool isLocked = m.CheckLocked(userName);
-                    if (!isLocked)
+                    if (!isLocked) // if user is NOT locked
                     {
                         Employee emp = employees.FirstOrDefault(em => em.UserName == txtUserName.Text);
 
@@ -226,13 +232,22 @@ namespace Bullseye
                             txtUserName.Focus();
                         }
                     }
+                    else //If user is locked
+                    {
+                        MessageBox.Show("Cannot recover password. User is locked. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- Recover Password ");
+                        Close();
+                    }
+                }
+                else//if user Inactive
+                {
+                    MessageBox.Show("Cannot recover password. User is inactive. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- Recover Password ");
+                    Close();
+                }
+                   
             }
             else
                 txtUserName.Focus();
-          
-          
-            
-           
+        
         }
 
         //return false if empty
@@ -271,6 +286,7 @@ namespace Bullseye
                 
         }
 
+        //txtPassword evt to display '*' instad of actual password
         private void txtPassword_TextChanged(object sender, EventArgs e)
         {
             txtPassword.PasswordChar = '*';
@@ -290,7 +306,11 @@ namespace Bullseye
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             RefreshEmployees();
+            txtUserName.Text = "";
             txtPassword.Text = "";
+            lblWarnP.Visible=false;
+            lblWarnU.Visible=false;
+            errorCount = 0;
         }
     }
 }

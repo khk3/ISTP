@@ -23,7 +23,7 @@ namespace Bullseye
         //Global arrays - TO be used in dynamic search;
         ItemClass[] itemsArray = null;
         TransactionClass[] transactionsArray= null;
-
+        Employee[] allEmployeesArray = null;
 
         public BullseyeForm(Employee emp)
         {
@@ -56,7 +56,15 @@ namespace Bullseye
 
         private void Application_Idle(object sender, EventArgs e)
         {
+            TimeSpan idleTime = DateTime.Now - lastActivityTime;
 
+            if (idleTime >= ConstantsClass.TimeToAutoLogout)
+            {
+                Application.Idle -= Application_Idle;
+                this.Close();
+                MessageBox.Show("Auto Logout due to inactivity", "Bullseye Form - User Inactive");
+
+            }
         }
 
         private void ResetLastActivity()
@@ -81,6 +89,13 @@ namespace Bullseye
                 dgvOrders.DataSource= transactionsArray;
                //DynamicSearch(dgvOrders, txtSearchOrders);
             }
+            else if(tabMain.SelectedIndex ==4) //Employess
+            {
+                DataTable dt = m.GetAllEmployeesForUsers();
+                dgvEmployees.DataSource = dt;
+               
+
+            }
         }
 
         //Event for synamic research
@@ -101,11 +116,20 @@ namespace Bullseye
                 else if(dataGridView== dgvOrders)
                 {
                     TransactionClass[] filteredTransactions =transactionsArray.Where(txn =>
-                      txn.TxnID.ToString().Contains(searchText)).ToArray();
+                      txn.TxnID.ToString().Contains(searchText) || txn.Status.ToString().Contains(searchText)).ToArray();
 
                     dataGridView.DataSource = filteredTransactions;
                 }
-              
+                else if (dataGridView == dgvEmployees)
+                {
+                    string filterExpression = $"CONVERT(EmployeeID, 'System.String') LIKE '%{searchText}%' OR FirstName LIKE '%{searchText}%' OR LastName LIKE '%{searchText}%' OR Email LIKE '%{searchText}%'";
+
+                    if (dataGridView.DataSource is DataTable dataTable)
+                    {
+                        dataTable.DefaultView.RowFilter = filterExpression;
+                    }
+                }
+
             }
         }
 
@@ -136,8 +160,10 @@ namespace Bullseye
                     ItemClass item = new ItemClass(itemID,name, sku, desc,
                     categ, weight, caseSize, costPrice, retailPrice, supplierID, active, image, notes);
 
-                    AddEditItemsForm itemsForm = new AddEditItemsForm("edit", item);                                  
+                    AddEditItemsForm itemsForm = new AddEditItemsForm("edit", item, user);
+                    
                     itemsForm.ShowDialog();
+                    CloseForm();
                 }
                
             }
@@ -170,30 +196,37 @@ namespace Bullseye
 
                 if (imageBytes != null && imageBytes.Length > 0)
                 {
-                    mStream.Position = 0; // Reset the position to the beginning
+                    mStream.Position = 0; // Reset the position
                     mStream.Write(imageBytes, 0, imageBytes.Length);
-                    pivInvImage.Image = Image.FromStream(mStream);
+                    picInvImage.Image = Image.FromStream(mStream);
 
                 }
                 else
                 {
                     //
-                    pivInvImage.Image = Image.FromFile("ImagesItems/noImageAvailable.png");
+                    picInvImage.Image = Image.FromFile("ImagesItems/noImageAvailable.png");
                 }
             }
            // else
            // {
                 // Clear the PictureBox if no row is selected
-            //    pivInvImage.Image = Image.FromFile("ImagesItems/noImageAvailable.png");
+            //    picInvImage.Image = Image.FromFile("ImagesItems/noImageAvailable.png");
            // }
         }
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
-            AddEditItemsForm addEditItemsForm = new AddEditItemsForm("add");
+            CloseForm();
+            AddEditItemsForm addEditItemsForm = new AddEditItemsForm("add", user);
             addEditItemsForm.ShowDialog();
+           
         }
 
+        private void CloseForm()
+        {
+            Hide();
+            Close();
+        }
         private void txtSearchOrders_TextChanged(object sender, EventArgs e)
         {
             DynamicSearch(dgvOrders, txtSearchOrders);
@@ -206,11 +239,14 @@ namespace Bullseye
 
         private void picFilterOrders_Click(object sender, EventArgs e)
         {
+            ResetLastActivity();
+            Application.Idle -= Application_Idle;
             if (dgvOrders.DataSource != null)
             {
                 FilterOrdersForm filterOrdersForm = new FilterOrdersForm();
                 filterOrdersForm.ShowDialog();
-
+                
+                //After closing the Filter Form, grab the values from its properties.
                 DateTime fromDate = filterOrdersForm.FromDate;
                 DateTime toDate = filterOrdersForm.ToDate;
                 int eOrders = filterOrdersForm.EmergencyOrder;
@@ -219,6 +255,22 @@ namespace Bullseye
                 dgvOrders.DataSource = filteredArray;
             }
             
+        }
+    
+        private void txtSearchEmployees_TextChanged(object sender, EventArgs e)
+        {
+            DynamicSearch(dgvEmployees, txtSearchEmployees);
+        }
+
+        private void BullseyeForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Idle -= Application_Idle;
+        }
+
+
+        private void dgvOrders_Scroll(object sender, ScrollEventArgs e)
+        {
+            ResetLastActivity();
         }
     }
 }

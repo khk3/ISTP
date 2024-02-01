@@ -15,7 +15,7 @@ namespace Bullseye
 
         //public static string[] UserPermissions = { "Create Back Order","Create Loss", "Create Report", "Create Store Order","Create Supplier Order"};
 
-        public static readonly TimeSpan TimeToAutoLogout = TimeSpan.FromMinutes(20);
+        public static readonly TimeSpan TimeToAutoLogout = TimeSpan.FromMinutes(25);
         public static bool Active = true;
         public static bool Locked = false;
     

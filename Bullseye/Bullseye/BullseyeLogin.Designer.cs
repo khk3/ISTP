@@ -52,10 +52,9 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Lucida Handwriting", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(131, 15);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(98, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(238, 61);
+            this.label1.Size = new System.Drawing.Size(193, 49);
             this.label1.TabIndex = 0;
             this.label1.Text = "Bullseye";
             // 
@@ -68,10 +67,9 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(97, 93);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(73, 76);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(113, 25);
+            this.label4.Size = new System.Drawing.Size(91, 20);
             this.label4.TabIndex = 6;
             this.label4.Text = "Username: ";
             // 
@@ -79,10 +77,9 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(110, 128);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(82, 104);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(104, 25);
+            this.label5.Size = new System.Drawing.Size(82, 20);
             this.label5.TabIndex = 7;
             this.label5.Text = "Password:";
             // 
@@ -90,40 +87,36 @@
             // 
             this.txtUserName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUserName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUserName.Location = new System.Drawing.Point(218, 93);
-            this.txtUserName.Margin = new System.Windows.Forms.Padding(4);
+            this.txtUserName.Location = new System.Drawing.Point(164, 76);
             this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(173, 27);
+            this.txtUserName.Size = new System.Drawing.Size(130, 23);
             this.txtUserName.TabIndex = 0;
             // 
             // txtPassword
             // 
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.Location = new System.Drawing.Point(219, 128);
-            this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPassword.Location = new System.Drawing.Point(164, 104);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(173, 27);
+            this.txtPassword.Size = new System.Drawing.Size(130, 23);
             this.txtPassword.TabIndex = 2;
             this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(33, 15);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.Location = new System.Drawing.Point(25, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(69, 55);
+            this.pictureBox1.Size = new System.Drawing.Size(52, 45);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(332, 181);
-            this.btnLogin.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLogin.Location = new System.Drawing.Point(249, 147);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(87, 34);
+            this.btnLogin.Size = new System.Drawing.Size(65, 28);
             this.btnLogin.TabIndex = 3;
             this.btnLogin.Text = "&Login";
             this.btnLogin.UseVisualStyleBackColor = true;
@@ -131,10 +124,9 @@
             // 
             // btnRecoverPassword
             // 
-            this.btnRecoverPassword.Location = new System.Drawing.Point(33, 226);
-            this.btnRecoverPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRecoverPassword.Location = new System.Drawing.Point(25, 184);
             this.btnRecoverPassword.Name = "btnRecoverPassword";
-            this.btnRecoverPassword.Size = new System.Drawing.Size(160, 33);
+            this.btnRecoverPassword.Size = new System.Drawing.Size(120, 27);
             this.btnRecoverPassword.TabIndex = 5;
             this.btnRecoverPassword.Text = "&Recover Password";
             this.btnRecoverPassword.UseVisualStyleBackColor = true;
@@ -143,10 +135,9 @@
             // btnExit
             // 
             this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnExit.Location = new System.Drawing.Point(332, 223);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(4);
+            this.btnExit.Location = new System.Drawing.Point(249, 181);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(87, 37);
+            this.btnExit.Size = new System.Drawing.Size(65, 30);
             this.btnExit.TabIndex = 4;
             this.btnExit.Text = "&Exit";
             this.btnExit.UseVisualStyleBackColor = true;
@@ -157,10 +148,9 @@
             this.lblWarnU.AutoSize = true;
             this.lblWarnU.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWarnU.ForeColor = System.Drawing.Color.Red;
-            this.lblWarnU.Location = new System.Drawing.Point(399, 93);
-            this.lblWarnU.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblWarnU.Location = new System.Drawing.Point(299, 76);
             this.lblWarnU.Name = "lblWarnU";
-            this.lblWarnU.Size = new System.Drawing.Size(12, 17);
+            this.lblWarnU.Size = new System.Drawing.Size(11, 13);
             this.lblWarnU.TabIndex = 11;
             this.lblWarnU.Text = "!";
             this.lblWarnU.Visible = false;
@@ -170,10 +160,9 @@
             this.lblWarnP.AutoSize = true;
             this.lblWarnP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWarnP.ForeColor = System.Drawing.Color.Red;
-            this.lblWarnP.Location = new System.Drawing.Point(399, 126);
-            this.lblWarnP.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblWarnP.Location = new System.Drawing.Point(299, 102);
             this.lblWarnP.Name = "lblWarnP";
-            this.lblWarnP.Size = new System.Drawing.Size(12, 17);
+            this.lblWarnP.Size = new System.Drawing.Size(11, 13);
             this.lblWarnP.TabIndex = 12;
             this.lblWarnP.Text = "!";
             this.lblWarnP.Visible = false;
@@ -181,9 +170,10 @@
             // picEye
             // 
             this.picEye.Image = ((System.Drawing.Image)(resources.GetObject("picEye.Image")));
-            this.picEye.Location = new System.Drawing.Point(361, 131);
+            this.picEye.Location = new System.Drawing.Point(271, 106);
+            this.picEye.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.picEye.Name = "picEye";
-            this.picEye.Size = new System.Drawing.Size(30, 19);
+            this.picEye.Size = new System.Drawing.Size(22, 15);
             this.picEye.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picEye.TabIndex = 13;
             this.picEye.TabStop = false;
@@ -192,10 +182,9 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(389, 13);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRefresh.Location = new System.Drawing.Point(326, 12);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(87, 34);
+            this.btnRefresh.Size = new System.Drawing.Size(65, 28);
             this.btnRefresh.TabIndex = 14;
             this.btnRefresh.Text = "Re&fresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -204,10 +193,10 @@
             // BullseyeLogin
             // 
             this.AcceptButton = this.btnLogin;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(489, 288);
+            this.ClientSize = new System.Drawing.Size(403, 239);
             this.ControlBox = false;
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.picEye);
@@ -222,7 +211,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "BullseyeLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bullseye";

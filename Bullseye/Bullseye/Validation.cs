@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Bullseye
 {
@@ -15,20 +16,46 @@ namespace Bullseye
         public bool ValidadePassword(string password)
         {
             string pattern = @"^(?=.*[A-Z])(?=.*[!@#$%^&*()-_+=])[a-zA-Z0-9!@#$%^&*()-_+=/\\]{8,}$";
-            return Regex.IsMatch(password, pattern);           
+            bool isMatch=false;
+            try
+            {
+                isMatch= Regex.IsMatch(password, pattern);
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("Validate Password Failed. Error: "+e.Message, "Error- Validate Password");
+            }
+            return isMatch;
+                     
         }
         public static string HashPassword(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
-                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                byte[] hashedBytes=null;
+                try 
+                { 
+                   hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show("Error password encryption. Error: " + e.Message, "Error- Password Encryption");
+                }
                 return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
             }
         }
 
         public static bool VerifyPassword(string enteredPassword, string HashedPassword)
-        {
-            string enteredPasswordHash = HashPassword(enteredPassword);      
+        {               
+            string enteredPasswordHash = null;
+            try
+            {
+                enteredPasswordHash = HashPassword(enteredPassword);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error password encryption. Error: " + e.Message, "Error- Password Encryption");
+            }
             return string.Equals(enteredPasswordHash, HashedPassword, StringComparison.OrdinalIgnoreCase);
         }
     }

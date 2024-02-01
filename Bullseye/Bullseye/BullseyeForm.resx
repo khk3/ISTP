@@ -361,10 +361,10 @@
         K5+dg1rBt7TJm/87AAAA1CEEFgAAoB4gsAAAAPUAgQUAAKhzzP4fZxGokl0wxm8AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="pivInvImage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="picInvImage.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAOUAAAEjCAYAAADND8YLAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAS
-        cgAAEnIBXmVb4wAALmZJREFUeF7tnYuPHEe1h+9fbUUWcrSKMFpdObpGylV8FYMxcWLIGhKyAYeE2CQm
+        cwAAEnMBjCK5BwAALmZJREFUeF7tnYuPHEe1h+9fbUUWcrSKMFpdObpGylV8FYMxcWLIGhKyAYeE2CQm
         DnGIgQ2YYOIQFpawmPB+P/rOt9mzrqn+VU33TPd0de850qeCeHae9XVVnXr0f3300UeV4zjl4FI6TmG4
         lI5TGC6l4xSGS+k4heFSOk5huJSOUxgupeMUhkvpOIXhUjpOYbiUjlMYLqXjFIZL6TiF4VI6TmG4lAPw
         29/+tvrTn/5U/fOf/6z+9re/VX/+85+r3//+9/KxzvHDpVwzf/3rX6v//Oc/lYp///vfB5L+8Y9/lH/r
@@ -1797,4 +1797,7 @@
         6KEltPyfX4D/H7nu1+a9DCieAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>75</value>
+  </metadata>
 </root>

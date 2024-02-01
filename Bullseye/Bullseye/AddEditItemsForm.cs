@@ -9,33 +9,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using static System.Net.Mime.MediaTypeNames;
+//using static System.Net.Mime.MediaTypeNames;
 using Image = System.Drawing.Image;
 
 namespace Bullseye
 {
     public partial class AddEditItemsForm : Form
     {
-        DateTime loginTime;
+        
         MemoryStream mStream = new MemoryStream();
+        private DateTime lastActivityTime;
 
+        Employee emp=null;
 
         string action = "";
-        public AddEditItemsForm(string add)
+
+        public AddEditItemsForm(string add, Employee user)
         {
             InitializeComponent();
             txtItemID.Text = "Auto Generated";
             action = add;
             PopulateForm(add);
-            Init();
+            Init(user);
+
         }
 
-        public AddEditItemsForm(string edit, ItemClass item)
+        public AddEditItemsForm(string edit, ItemClass item,Employee user)
         {
             InitializeComponent();
             action = edit;
             itemObj = item;
-            Init();
+            Init(user);
            
             PopulateForm(edit);
            
@@ -43,10 +47,10 @@ namespace Bullseye
 
         ItemClass itemObj = null;
         MySqlClass m = new MySqlClass();
-        private void Init()
+        private void Init(Employee user)
         {          
             btnResetItem.PerformClick();
-            loginTime = DateTime.Now;
+            emp = user;
             timer1 = new Timer();
             timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
@@ -68,7 +72,12 @@ namespace Bullseye
                 //txtSupplierID.Text = itemObj.SupplierID.ToString();
                 txtWeight.Text = itemObj.Weight.ToString();
                 txtNotes.Text = itemObj.Notes;
+
                 cboCategory.SelectedItem = itemObj.Category.ToString();
+                
+                cboSuppliers.SelectedValue= itemObj.SupplierID;
+                //cboSuppliers.DisplayMember = "name";
+
                 ckbActive.Checked = Convert.ToBoolean(itemObj.Active);
 
                 if (itemObj.Image != null && itemObj.Image.Length > 0)
@@ -99,9 +108,20 @@ namespace Bullseye
             cboSuppliers.ValueMember= "SupplierID";
             cboSuppliers.SelectedIndex = -1;
         }
-        
-           
-        
+
+        private void Application_Idle(object sender, EventArgs e)
+        {
+            TimeSpan idleTime = DateTime.Now - lastActivityTime;
+
+            if (idleTime >= ConstantsClass.TimeToAutoLogout)
+            {
+                System.Windows.Forms.Application.Idle -= Application_Idle;
+                
+                MessageBox.Show("Auto Logout due to inactivity", "Bullseye Form - User Inactive");
+                CloseForm();
+            }
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             DateTime now = DateTime.Now;         
@@ -126,7 +146,7 @@ namespace Bullseye
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            CloseForm();
         }
 
         private void btnSaveItem_Click(object sender, EventArgs e)
@@ -134,7 +154,6 @@ namespace Bullseye
             //check empty fields
             if (CheckEmptyFields())
             {
-
                 int itemID=0;
                 if(!(action=="add"))
                     itemID = Convert.ToInt32(txtItemID.Text);
@@ -155,10 +174,7 @@ namespace Bullseye
                 byte[] image = ms.ToArray();
 
                 string notes = txtNotes.Text;
-
-               
-                
-
+              
                 if (action == "add")
                 {
                     ItemClass item = new ItemClass(name, sku, desc, category, weight, caseSize, costPrice, retailPrice, supplierID, active, image, notes);
@@ -166,7 +182,7 @@ namespace Bullseye
                     if (res == 1)
                     {
                         MessageBox.Show("Item Added Successfully", "Add Item");
-                        this.Close();
+                       CloseForm();
                     }
                 }
                 else //If action == "edit"
@@ -176,18 +192,14 @@ namespace Bullseye
                     if (result == 1)
                     {
                         MessageBox.Show("Item Updated Successfully", "Update Item");
-                        this.Close();
+                        CloseForm();
                     }
-
                 }
             }
             else //if fields empty
             {
                 MessageBox.Show("There are empty fields. All fields with '*' must be filled.", "Error - Empty Fields");
             }
-
-
-
         }//end of function
 
         private bool CheckEmptyFields()
@@ -206,8 +218,13 @@ namespace Bullseye
             char ch=e.KeyChar;
            
             if(!Char.IsDigit(ch)&& ch!=8)            
-                e.Handled = true;
-            
+                e.Handled = true;           
+        }
+
+        private void CloseForm()
+        {
+            Hide();
+            Close();
         }
 
         private void txtCaseSize_KeyPress(object sender, KeyPressEventArgs e)
@@ -276,6 +293,13 @@ namespace Bullseye
                 //imageConverted = mStream.ToArray();
 
             }
+        }
+
+        //When closing should open Bullseyeform again
+        private void AddEditItemsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            BullseyeForm bForm= new BullseyeForm(emp);
+            bForm.ShowDialog();
         }
     }
 }

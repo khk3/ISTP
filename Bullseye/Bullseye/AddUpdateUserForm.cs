@@ -16,24 +16,24 @@ namespace Bullseye
     {
         LocationClass[] locationsArray = null;
         //PositionClass[] positionArray = null;
-        DateTime loginTime;
+        Employee adminLogged=null;
+        private DateTime lastActivityTime;
         public AddUpdateUserForm() { }
 
         string addOrDelete = "";
-        public AddUpdateUserForm(string action, Employee emp)
+        public AddUpdateUserForm(string action, Employee emp, Employee adm)
         {
             InitializeComponent();
             ClearWarnings();
+            //adminLogged = iAdminLogged;
 
-            //Time of login
-            loginTime = DateTime.Now;
             timer1 = new Timer();
             timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
             timer1.Start();
 
             lblUserName.Text = emp.UserName;
-
+            adminLogged = adm;
             MySqlClass m=new MySqlClass();
 
             locationsArray = m.GetAllLocations();
@@ -52,14 +52,18 @@ namespace Bullseye
                 txtFName.Text = emp.FirstName.ToString();
                 txtLName.Text = emp.LastName.ToString();
                 lblUser.Text = emp.UserName;
-                txtPassword.Text = emp.Password.ToString();
-                txtConfirmPassword.Text = emp.Password.ToString();
+                //txtPassword.Text = emp.Password.ToString();
+                txtPassword.Text = "";
+                //txtConfirmPassword.Text = emp.Password.ToString();
+                txtConfirmPassword.Text = "";
                 lblEmail.Text = emp.Email;
 
                 cboPosn.SelectedValue= emp.PositionID;
                 cboLocation.SelectedIndex = emp.SiteID;
                 ckbActive.Checked = emp.Active;
                 ckbActive.Enabled = true;
+                ckbLocked.Checked = emp.Locked;
+                ckbLocked.Enabled = true;
             }
             else //if add
             {
@@ -72,9 +76,14 @@ namespace Bullseye
 
 
         }
+        private void ResetLastActivity()
+        {
+            lastActivityTime = DateTime.Now;
+        }
 
         private void LoadComboboxes(PositionClass[] positionArray)
         {
+           
             try
             {
                 cboPosn.DataSource = new BindingSource(positionArray, null);
@@ -103,113 +112,126 @@ namespace Bullseye
 
         private void btnExit_Click(object sender, EventArgs e)
         {
+            this.Hide();
             this.Close();
         }
 
+        private void Application_Idle(object sender, EventArgs e)
+        {
+            TimeSpan idleTime = DateTime.Now - lastActivityTime;
+
+            if (idleTime >= ConstantsClass.TimeToAutoLogout)
+            {
+                Application.Idle -= Application_Idle;
+                this.Close();
+                MessageBox.Show("Auto Logout due to inactivity", "Admin Form- User Inactive");
+
+            }
+        }
+
+
         private void btnReset_Click(object sender, EventArgs e)
         {
+            ResetLastActivity();
             ClearWarnings();
             txtFName.Text = "";
             txtFName.Text = "";
             txtLName.Text = "";
             txtPassword.Text = "";
             txtConfirmPassword.Text = "";
-            ckbActive.Checked = false;
+            //ckbActive.Checked = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (CheckEmptyFields())//if any field empty
             {
-
                 MessageBox.Show("All fields must be filled to add new user", "Error - Empty Field(s)");
             }
             else //all fields filled
             {
                 Validation v = new Validation();
                 
-                if (!v.ValidadePassword(txtPassword.Text))
+                bool isPasswordEqual = txtPassword.Text.Equals(txtConfirmPassword.Text);
+                if (!isPasswordEqual)
                 {
-                    MessageBox.Show("Password invalid. Must contain at least 8 characters, 1 uppercase letter and 1 special character.", "Error - Invalid Password");
-                    //txtPassword.Text = "";
+                    MessageBox.Show("Password does not match with the confirm password", "Error Confirm Password");
                     //txtConfirmPassword.Text = "";
-                    txtPassword.Focus();
+                    txtConfirmPassword.Focus();
                 }
-                else
-                {
-                    bool isPasswordEqual = txtPassword.Text.Equals(txtConfirmPassword.Text);
-                    if (!isPasswordEqual)
-                    {
-                        MessageBox.Show("Password does not match with the confirm password", "Error Confirm Password");
-                        //txtConfirmPassword.Text = "";
-                        txtConfirmPassword.Focus();
-                    }
-                    else //Password VALID AND SAME
-                    {                     
-                        string password ="";
+                else //Password VALID AND SAME
+                {                     
+                    string password ="";
                         
-                        string firstName = txtFName.Text.ToLower();
-                        string lastName = txtLName.Text.ToLower();
-                        bool active = ckbActive.Checked;
-                        int position = cboPosn.SelectedIndex + 1;
-                        int location = cboLocation.SelectedIndex + 1;
-                        string notes = txtAreaNotes.Text;
+                    string firstName = txtFName.Text.ToLower();
+                    string lastName = txtLName.Text.ToLower();
+                    bool active = ckbActive.Checked;
+                    int position = Convert.ToInt32(cboPosn.SelectedValue);
+                    int location = cboLocation.SelectedIndex + 1;
+                    string notes = txtAreaNotes.Text;
+                    bool locked= ckbLocked.Checked;
+                    MySqlClass m = new MySqlClass();
 
-                        MySqlClass m = new MySqlClass();
+                    if (addOrDelete == "add")
+                    {
+                        txtPassword.Text = ConstantsClass.DefaultPassword;
+                        password = ConstantsClass.DefaultPassword;             
+                        string userNameForm = firstName.Substring(0, 1) + lastName;
+                        //string userNameDuplicate = userNameForm;
+                        int count = 1;
+                        string finalUserName = userNameForm;
 
-                        if (addOrDelete == "add")
+                        while (m.isUserNameDuplicated(finalUserName))
                         {
-                            txtPassword.Text = ConstantsClass.DefaultPassword;
-                            password = ConstantsClass.DefaultPassword;             
-                            string userNameForm = firstName.Substring(0, 1) + lastName;
-                            //string userNameDuplicate = userNameForm;
-                            int count = 1;
-                            string finalUserName = userNameForm;
-
-                            while (m.isUserNameDuplicated(finalUserName))
-                            {
-                                finalUserName = userNameForm + count;
-                                count++;
-                            }
-                            string email = finalUserName + "@bullseye.ca";
-
-                            Employee emp = new Employee(0, password, firstName, lastName, email, ConstantsClass.Active, position, location, ConstantsClass.Locked, finalUserName, notes);
-                            bool confirmAddUser = MessageBox.Show("Confirm Add User?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes;
-                            if (confirmAddUser)
-                            {
-                                int added = m.AddUser(emp);
-                                if (added == 1)
-                                    MessageBox.Show("Your Username is: " + finalUserName + " , your email is : " + email, "SAVE YOUR USERNAME PASSWORD AND EMAIL");
-                            }
+                            finalUserName = userNameForm + count;
+                            count++;
                         }
-                        else //update
-                        {
-                            password= txtPassword.Text;
-                            string hashedPassword = Validation.HashPassword(password);
-                            int empID = Convert.ToInt32(lblEmpID.Text);
-                            string email = lblEmail.Text;
-                            string userName = lblUser.Text;
-                            Employee emp = new Employee(empID, hashedPassword, firstName, lastName, email, active, position, location, active, userName, notes);
+                        string email = finalUserName + "@bullseye.ca";
 
-                            int success = m.UpdateUser(emp);
-                            if (success == 1)
-                            {
-                                MessageBox.Show("User: " + userName + " updated successfully", "User Updated");
+                        Employee emp = new Employee(0, password, firstName, lastName, email, ConstantsClass.Active, position, location, ConstantsClass.Locked, finalUserName, notes);
+                        bool confirmAddUser = MessageBox.Show("Confirm Add User?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes;
+                        if (confirmAddUser)
+                        {
+                            int added = m.AddUser(emp);
+                            if (added == 1)
+                            {                                
+                                MessageBox.Show("Your Username is: " + finalUserName + " , your email is : " + email, "SAVE YOUR USERNAME PASSWORD AND EMAIL");
                                 this.Close();
                             }
-
-                        }//end of else update                            
+                            else
+                            {                               
+                                MessageBox.Show("Could not Add User. Please contact the administration: admin@bullseye.ca  ", "Error- Could not Add User");
+                                this.Close();
+                            }
+                        }
                     }
+                    else //update
+                    {
+                        password= txtPassword.Text;
+                        string hashedPassword = Validation.HashPassword(password);
+                        int empID = Convert.ToInt32(lblEmpID.Text);
+                        string email = lblEmail.Text;
+                        string userName = lblUser.Text;
+                        Employee emp = new Employee(empID, hashedPassword, firstName, lastName, email, active, position, location, locked, userName, notes);
+
+                        int success = m.UpdateUser(emp);
+                        if (success == 1)
+                        {
+                            Close();
+                            MessageBox.Show("User: " + userName + " updated successfully", "User Updated");
+                            
+                        }
+
+                    }//end of else update                            
+                
 
                 }
-                BullseyeLogin bullseyeLogin = new BullseyeLogin();
-               // bullseyeLogin.Cont
-                this.Close();
+                //BullseyeLogin bullseyeLogin = new BullseyeLogin();
+               
 
             }
         }
 
-     
 
 
         private bool CheckEmptyFields()
@@ -251,23 +273,34 @@ namespace Bullseye
 
         private void lblQuestion_MouseEnter(object sender, EventArgs e)
         {
+            ResetLastActivity();
             string tooltopStr = "Password must have:\n1-minimun 8 characters\n2-One capital letter\n3-One special character";
             toolTip1.Show(tooltopStr, lblQuestion);
         }
 
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             DateTime now = DateTime.Now;
-            TimeSpan elapsed = now - loginTime;
-            TimeSpan remainingTime = ConstantsClass.TimeToAutoLogout - elapsed;
+            this.Text = "Bullseye - " + now.ToShortDateString() + " - " + now.ToLongTimeString();
+        }
 
-            if (remainingTime <= TimeSpan.Zero)
-            {
-               btnExit.PerformClick();
-                return;
-            }
+        //When closing reopen admin form
+        private void AddUpdateUserForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+         
+            AdminForm aForm= new AdminForm(adminLogged);
+            aForm.ShowDialog();
+        }
 
-            this.Text = "Bullseye - " + now.ToShortDateString() + " - " + now.ToLongTimeString() + " | Time to Auto Logout: " + remainingTime.ToString(@"hh\:mm\:ss");
+        private void AddUpdateUserForm_MouseEnter(object sender, EventArgs e)
+        {
+            ResetLastActivity();
+        }
+
+        private void AddUpdateUserForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ResetLastActivity();
         }
     }
 }

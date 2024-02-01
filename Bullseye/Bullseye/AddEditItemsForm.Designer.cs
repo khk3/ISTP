@@ -104,7 +104,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(97, 247);
+            this.label6.Location = new System.Drawing.Point(126, 384);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(68, 20);
             this.label6.TabIndex = 6;
@@ -114,7 +114,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(102, 280);
+            this.label7.Location = new System.Drawing.Point(131, 417);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(63, 20);
             this.label7.TabIndex = 7;
@@ -124,7 +124,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(327, 247);
+            this.label8.Location = new System.Drawing.Point(356, 384);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(53, 20);
             this.label8.TabIndex = 8;
@@ -134,7 +134,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(60, 305);
+            this.label9.Location = new System.Drawing.Point(89, 442);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(105, 20);
             this.label9.TabIndex = 9;
@@ -144,7 +144,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(70, 338);
+            this.label12.Location = new System.Drawing.Point(99, 475);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(81, 20);
             this.label12.TabIndex = 12;
@@ -154,7 +154,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(89, 397);
+            this.label13.Location = new System.Drawing.Point(118, 534);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(71, 20);
             this.label13.TabIndex = 13;
@@ -164,7 +164,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(60, 369);
+            this.label14.Location = new System.Drawing.Point(89, 506);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(96, 20);
             this.label14.TabIndex = 14;
@@ -174,7 +174,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(355, 364);
+            this.label15.Location = new System.Drawing.Point(384, 501);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(98, 20);
             this.label15.TabIndex = 15;
@@ -184,7 +184,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(349, 338);
+            this.label16.Location = new System.Drawing.Point(378, 475);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(106, 20);
             this.label16.TabIndex = 16;
@@ -194,7 +194,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(355, 394);
+            this.label17.Location = new System.Drawing.Point(384, 531);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(102, 20);
             this.label17.TabIndex = 17;
@@ -204,7 +204,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(83, 436);
+            this.label19.Location = new System.Drawing.Point(112, 573);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(68, 20);
             this.label19.TabIndex = 19;
@@ -213,7 +213,7 @@
             // ckbActive
             // 
             this.ckbActive.AutoSize = true;
-            this.ckbActive.Location = new System.Drawing.Point(532, 245);
+            this.ckbActive.Location = new System.Drawing.Point(561, 382);
             this.ckbActive.Name = "ckbActive";
             this.ckbActive.Size = new System.Drawing.Size(66, 20);
             this.ckbActive.TabIndex = 2;
@@ -224,7 +224,7 @@
             // 
             this.txtItemID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtItemID.Enabled = false;
-            this.txtItemID.Location = new System.Drawing.Point(166, 247);
+            this.txtItemID.Location = new System.Drawing.Point(195, 384);
             this.txtItemID.Name = "txtItemID";
             this.txtItemID.Size = new System.Drawing.Size(123, 22);
             this.txtItemID.TabIndex = 0;
@@ -233,7 +233,7 @@
             // txtName
             // 
             this.txtName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtName.Location = new System.Drawing.Point(166, 275);
+            this.txtName.Location = new System.Drawing.Point(195, 412);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(432, 22);
             this.txtName.TabIndex = 3;
@@ -241,7 +241,7 @@
             // txtSku
             // 
             this.txtSku.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSku.Location = new System.Drawing.Point(375, 245);
+            this.txtSku.Location = new System.Drawing.Point(404, 382);
             this.txtSku.Name = "txtSku";
             this.txtSku.Size = new System.Drawing.Size(123, 22);
             this.txtSku.TabIndex = 1;
@@ -250,7 +250,7 @@
             // txtDescription
             // 
             this.txtDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDescription.Location = new System.Drawing.Point(166, 303);
+            this.txtDescription.Location = new System.Drawing.Point(195, 440);
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(432, 22);
             this.txtDescription.TabIndex = 4;
@@ -259,7 +259,7 @@
             // 
             this.cboCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCategory.FormattingEnabled = true;
-            this.cboCategory.Location = new System.Drawing.Point(166, 334);
+            this.cboCategory.Location = new System.Drawing.Point(195, 471);
             this.cboCategory.Name = "cboCategory";
             this.cboCategory.Size = new System.Drawing.Size(159, 24);
             this.cboCategory.TabIndex = 5;
@@ -267,7 +267,7 @@
             // txtWeight
             // 
             this.txtWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtWeight.Location = new System.Drawing.Point(166, 397);
+            this.txtWeight.Location = new System.Drawing.Point(195, 534);
             this.txtWeight.Name = "txtWeight";
             this.txtWeight.Size = new System.Drawing.Size(93, 22);
             this.txtWeight.TabIndex = 9;
@@ -276,7 +276,7 @@
             // txtCostPrice
             // 
             this.txtCostPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCostPrice.Location = new System.Drawing.Point(448, 362);
+            this.txtCostPrice.Location = new System.Drawing.Point(477, 499);
             this.txtCostPrice.Name = "txtCostPrice";
             this.txtCostPrice.Size = new System.Drawing.Size(93, 22);
             this.txtCostPrice.TabIndex = 8;
@@ -285,7 +285,7 @@
             // txtRetailPrice
             // 
             this.txtRetailPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtRetailPrice.Location = new System.Drawing.Point(448, 334);
+            this.txtRetailPrice.Location = new System.Drawing.Point(477, 471);
             this.txtRetailPrice.Name = "txtRetailPrice";
             this.txtRetailPrice.Size = new System.Drawing.Size(93, 22);
             this.txtRetailPrice.TabIndex = 6;
@@ -293,7 +293,7 @@
             // 
             // txtNotes
             // 
-            this.txtNotes.Location = new System.Drawing.Point(166, 436);
+            this.txtNotes.Location = new System.Drawing.Point(195, 573);
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.Size = new System.Drawing.Size(447, 96);
             this.txtNotes.TabIndex = 11;
@@ -302,7 +302,7 @@
             // btnResetItem
             // 
             this.btnResetItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnResetItem.Location = new System.Drawing.Point(331, 538);
+            this.btnResetItem.Location = new System.Drawing.Point(360, 696);
             this.btnResetItem.Name = "btnResetItem";
             this.btnResetItem.Size = new System.Drawing.Size(103, 40);
             this.btnResetItem.TabIndex = 13;
@@ -313,7 +313,7 @@
             // btnSaveItem
             // 
             this.btnSaveItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSaveItem.Location = new System.Drawing.Point(510, 538);
+            this.btnSaveItem.Location = new System.Drawing.Point(539, 696);
             this.btnSaveItem.Name = "btnSaveItem";
             this.btnSaveItem.Size = new System.Drawing.Size(103, 40);
             this.btnSaveItem.TabIndex = 14;
@@ -325,7 +325,7 @@
             // 
             this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExit.Location = new System.Drawing.Point(166, 538);
+            this.btnExit.Location = new System.Drawing.Point(195, 696);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(103, 40);
             this.btnExit.TabIndex = 12;
@@ -336,7 +336,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(295, 251);
+            this.label10.Location = new System.Drawing.Point(324, 388);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(12, 16);
             this.label10.TabIndex = 35;
@@ -346,7 +346,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(504, 246);
+            this.label11.Location = new System.Drawing.Point(533, 383);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(12, 16);
             this.label11.TabIndex = 36;
@@ -356,7 +356,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(604, 278);
+            this.label18.Location = new System.Drawing.Point(633, 415);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(12, 16);
             this.label18.TabIndex = 37;
@@ -366,7 +366,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(604, 310);
+            this.label20.Location = new System.Drawing.Point(633, 447);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(12, 16);
             this.label20.TabIndex = 38;
@@ -376,7 +376,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(331, 341);
+            this.label21.Location = new System.Drawing.Point(360, 478);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(12, 16);
             this.label21.TabIndex = 39;
@@ -386,7 +386,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(547, 339);
+            this.label22.Location = new System.Drawing.Point(576, 476);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(12, 16);
             this.label22.TabIndex = 40;
@@ -396,7 +396,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(547, 365);
+            this.label23.Location = new System.Drawing.Point(576, 502);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(12, 16);
             this.label23.TabIndex = 41;
@@ -406,7 +406,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(547, 395);
+            this.label24.Location = new System.Drawing.Point(576, 532);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(12, 16);
             this.label24.TabIndex = 42;
@@ -416,7 +416,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(619, 394);
+            this.label25.Location = new System.Drawing.Point(648, 531);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(12, 16);
             this.label25.TabIndex = 43;
@@ -426,7 +426,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(265, 398);
+            this.label26.Location = new System.Drawing.Point(294, 535);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(12, 16);
             this.label26.TabIndex = 44;
@@ -437,7 +437,7 @@
             // 
             this.cboSuppliers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSuppliers.FormattingEnabled = true;
-            this.cboSuppliers.Location = new System.Drawing.Point(454, 390);
+            this.cboSuppliers.Location = new System.Drawing.Point(483, 527);
             this.cboSuppliers.Name = "cboSuppliers";
             this.cboSuppliers.Size = new System.Drawing.Size(159, 24);
             this.cboSuppliers.TabIndex = 10;
@@ -445,7 +445,7 @@
             // txtCaseSize
             // 
             this.txtCaseSize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCaseSize.Location = new System.Drawing.Point(166, 369);
+            this.txtCaseSize.Location = new System.Drawing.Point(195, 506);
             this.txtCaseSize.Name = "txtCaseSize";
             this.txtCaseSize.Size = new System.Drawing.Size(93, 22);
             this.txtCaseSize.TabIndex = 7;
@@ -455,7 +455,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(87, 201);
+            this.label2.Location = new System.Drawing.Point(603, 59);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 20);
             this.label2.TabIndex = 45;
@@ -464,9 +464,9 @@
             // picImgEditItem
             // 
             this.picImgEditItem.Image = ((System.Drawing.Image)(resources.GetObject("picImgEditItem.Image")));
-            this.picImgEditItem.Location = new System.Drawing.Point(162, 141);
+            this.picImgEditItem.Location = new System.Drawing.Point(334, 141);
             this.picImgEditItem.Name = "picImgEditItem";
-            this.picImgEditItem.Size = new System.Drawing.Size(80, 80);
+            this.picImgEditItem.Size = new System.Drawing.Size(205, 191);
             this.picImgEditItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picImgEditItem.TabIndex = 46;
             this.picImgEditItem.TabStop = false;
@@ -474,11 +474,11 @@
             // btnAddImage
             // 
             this.btnAddImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddImage.Location = new System.Drawing.Point(249, 192);
+            this.btnAddImage.Location = new System.Drawing.Point(561, 229);
             this.btnAddImage.Name = "btnAddImage";
-            this.btnAddImage.Size = new System.Drawing.Size(112, 29);
+            this.btnAddImage.Size = new System.Drawing.Size(151, 29);
             this.btnAddImage.TabIndex = 47;
-            this.btnAddImage.Text = "&Add Image";
+            this.btnAddImage.Text = "&Add/Change Image";
             this.btnAddImage.UseVisualStyleBackColor = true;
             this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
             // 
@@ -488,7 +488,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(824, 611);
+            this.ClientSize = new System.Drawing.Size(824, 794);
             this.Controls.Add(this.btnAddImage);
             this.Controls.Add(this.picImgEditItem);
             this.Controls.Add(this.label2);
@@ -531,7 +531,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Name = "AddEditItemsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bullseye ";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AddEditItemsForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picImgEditItem)).EndInit();
             this.ResumeLayout(false);

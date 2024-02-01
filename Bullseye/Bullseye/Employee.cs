@@ -35,10 +35,10 @@ namespace Bullseye
             UserName = userName;
             Notes = notes;
         }
-        /*
-        public Employee(string pw, string fn, string ln, string email, bool active, int posn, int site, bool locked, string userName, string notes)
+        
+        public Employee(int empID, string fn, string ln, string email, bool active, int posn, int site, bool locked, string userName, string notes)
         {            
-            Password= pw;
+            
             FirstName= fn;
             LastName= ln;
             Email = email;
@@ -49,7 +49,7 @@ namespace Bullseye
             UserName = userName;
             Notes = notes;
         }
-        */
+        
      
 
       

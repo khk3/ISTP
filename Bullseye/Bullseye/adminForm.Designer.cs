@@ -32,13 +32,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminForm));
             this.label1 = new System.Windows.Forms.Label();
             this.lblUser = new System.Windows.Forms.Label();
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.btnLogOut = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tabAdmin = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnInactivateUser = new System.Windows.Forms.Button();
             this.btnEditUser = new System.Windows.Forms.Button();
             this.btnAddUser = new System.Windows.Forms.Button();
             this.dgvEmployees = new System.Windows.Forms.DataGridView();
@@ -53,7 +52,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(48, 122);
+            this.label1.Location = new System.Drawing.Point(59, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(57, 20);
             this.label1.TabIndex = 0;
@@ -63,16 +62,16 @@
             // 
             this.lblUser.AutoSize = true;
             this.lblUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUser.Location = new System.Drawing.Point(99, 122);
+            this.lblUser.Location = new System.Drawing.Point(109, 28);
             this.lblUser.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUser.Name = "lblUser";
             this.lblUser.Size = new System.Drawing.Size(53, 20);
             this.lblUser.TabIndex = 1;
             this.lblUser.Text = "label2";
             // 
-            // timer2
+            // timer1
             // 
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // btnLogOut
             // 
@@ -90,7 +89,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(48, 15);
+            this.pictureBox1.Location = new System.Drawing.Point(265, 63);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(101, 76);
@@ -102,7 +101,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Lucida Handwriting", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(207, 20);
+            this.label4.Location = new System.Drawing.Point(375, 63);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(304, 78);
@@ -122,7 +121,6 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.btnInactivateUser);
             this.tabPage1.Controls.Add(this.btnEditUser);
             this.tabPage1.Controls.Add(this.btnAddUser);
             this.tabPage1.Controls.Add(this.dgvEmployees);
@@ -134,18 +132,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Users";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // btnInactivateUser
-            // 
-            this.btnInactivateUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInactivateUser.Location = new System.Drawing.Point(804, 129);
-            this.btnInactivateUser.Margin = new System.Windows.Forms.Padding(4);
-            this.btnInactivateUser.Name = "btnInactivateUser";
-            this.btnInactivateUser.Size = new System.Drawing.Size(116, 32);
-            this.btnInactivateUser.TabIndex = 20;
-            this.btnInactivateUser.Text = "&Inactivate User";
-            this.btnInactivateUser.UseVisualStyleBackColor = true;
-            this.btnInactivateUser.Click += new System.EventHandler(this.btnInactivateUser_Click);
             // 
             // btnEditUser
             // 
@@ -178,18 +164,18 @@
             this.dgvEmployees.Margin = new System.Windows.Forms.Padding(4);
             this.dgvEmployees.MultiSelect = false;
             this.dgvEmployees.Name = "dgvEmployees";
+            this.dgvEmployees.ReadOnly = true;
             this.dgvEmployees.RowHeadersWidth = 51;
             this.dgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvEmployees.Size = new System.Drawing.Size(796, 246);
             this.dgvEmployees.TabIndex = 0;
-            this.dgvEmployees.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvEmployees_CellFormatting);
             this.dgvEmployees.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvEmployees_Scroll);
             this.dgvEmployees.SelectionChanged += new System.EventHandler(this.dgvEmployees_SelectionChanged);
             // 
             // btnRefresh
             // 
             this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRefresh.Location = new System.Drawing.Point(752, 147);
+            this.btnRefresh.Location = new System.Drawing.Point(752, 146);
             this.btnRefresh.Margin = new System.Windows.Forms.Padding(4);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(100, 32);
@@ -215,6 +201,7 @@
             this.Name = "AdminForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AdminForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AdminForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabAdmin.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -228,7 +215,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblUser;
-        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button btnLogOut;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label4;
@@ -236,7 +223,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.DataGridView dgvEmployees;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Button btnInactivateUser;
         private System.Windows.Forms.Button btnEditUser;
         private System.Windows.Forms.Button btnAddUser;
     }

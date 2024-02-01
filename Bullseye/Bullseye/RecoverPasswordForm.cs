@@ -17,43 +17,24 @@ namespace Bullseye
     {
         public RecoverPasswordForm() { }
 
+        //Global Helper Class instance
         MySqlClass m= new MySqlClass();
+
+        //Global Emp 
         Employee user = null;
 
         public RecoverPasswordForm(Employee emp)
         {
             InitializeComponent();
             user = emp;
-           // OpenDb();
             lblUserName.Text = user.UserName;
         }
-        //class=level config to connection string
-        //static string connStr = ConfigurationManager.ConnectionStrings[Con].ConnectionString;
-
-        //create connection
-        //MySqlConnection conn = new MySqlConnection(connStr);
-
-        /*private void OpenDb()
-        {
-            //open the connection - needs a try catch
-            try
-            {
-                conn.Open();
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error - Closing form");
-                Close();
-            }
-
-        }//end of OpenDB
-        */
+       
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
+        //Tooltip
         private void lblQuestion_MouseEnter(object sender, EventArgs e)
         {
             string tooltopStr = "Password must have:\n1-minimun 8 characters\n2-One capital letter\n3-One special character";
@@ -91,25 +72,24 @@ namespace Bullseye
                 string password = txtNewPassWord.Text;
 
                 if(password != ConstantsClass.DefaultPassword)
-                {
+                {   //instance of the Helper Class Validation
                     Validation v = new Validation();
-                    if (v.ValidadePassword(password))
+                    //Validate the password using Regex
+                    if (v.ValidadePassword(password)) 
                     { //password valid
 
                         string confirmPassword = txtConfirmPassword.Text;
-                        if (password == confirmPassword)
+                        if (password == confirmPassword) //if match
                         {
+                            //Call Helper class Validation to hash password
                             string hashedPassword = Validation.HashPassword(password);
-                            //string cmd = "update employee set password='" + password + "' where username='" + lblUserName.Text + "'";
-                            // MySqlCommand sqlCommand = new MySqlCommand(cmd, conn);
                             try
-                            {
-                                
+                            {                              
                                 int update = m.UpdatePassword(hashedPassword, user.UserName);
                                 if (update > 0)
                                 {
                                     MessageBox.Show("Password updated Successfully", "Update Password");
-                                    btnExit.PerformClick(); //close the form after updating the password
+                                    Close(); // close the form after update password
                                 }
                             }
                             catch (MySqlException sqlEx)

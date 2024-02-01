@@ -70,16 +70,17 @@
             this.label13 = new System.Windows.Forms.Label();
             this.lblEmail = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.ckbLocked = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Lucida Handwriting", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(242, 58);
+            this.label1.Font = new System.Drawing.Font("Lucida Handwriting", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(252, 51);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(217, 56);
+            this.label1.Size = new System.Drawing.Size(304, 78);
             this.label1.TabIndex = 0;
             this.label1.Text = "Bullseye";
             // 
@@ -276,7 +277,7 @@
             this.ckbActive.AutoSize = true;
             this.ckbActive.Location = new System.Drawing.Point(255, 482);
             this.ckbActive.Name = "ckbActive";
-            this.ckbActive.Size = new System.Drawing.Size(66, 20);
+            this.ckbActive.Size = new System.Drawing.Size(77, 24);
             this.ckbActive.TabIndex = 6;
             this.ckbActive.Text = "Active";
             this.ckbActive.UseVisualStyleBackColor = true;
@@ -473,6 +474,17 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // ckbLocked
+            // 
+            this.ckbLocked.AutoSize = true;
+            this.ckbLocked.Enabled = false;
+            this.ckbLocked.Location = new System.Drawing.Point(416, 482);
+            this.ckbLocked.Name = "ckbLocked";
+            this.ckbLocked.Size = new System.Drawing.Size(79, 24);
+            this.ckbLocked.TabIndex = 43;
+            this.ckbLocked.Text = "locked";
+            this.ckbLocked.UseVisualStyleBackColor = true;
+            // 
             // AddUpdateUserForm
             // 
             this.AcceptButton = this.btnSave;
@@ -480,6 +492,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(708, 707);
+            this.Controls.Add(this.ckbLocked);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txtAreaNotes);
             this.Controls.Add(this.warnLoc);
@@ -518,9 +531,13 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.Name = "AddUpdateUserForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "`";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AddUpdateUserForm_FormClosing);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AddUpdateUserForm_KeyPress);
+            this.MouseEnter += new System.EventHandler(this.AddUpdateUserForm_MouseEnter);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -569,5 +586,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.CheckBox ckbLocked;
     }
 }

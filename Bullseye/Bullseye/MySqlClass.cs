@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -110,10 +111,38 @@ namespace Bullseye
             return new List<Employee>();
         }
 
+        public bool CheckActive(string userName)
+        {
+            OpenDb();
+            string cmd = "Select active from employee where username ='" + userName + "'";
+            MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
+            try
+            {
+                MySqlDataReader reader = sqlCmd.ExecuteReader();
+                reader.Read();
+
+                bool isActive = reader.GetBoolean(reader.GetOrdinal("active"));
+                reader.Close();
+
+                conn.Close();
+                return isActive;
+            }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show("Could not Check if user is Active. Error: " + sqlEx.Message, "Error- SQL Check Active user");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not Check if user is locked. Error: " + ex.Message, "Error- Check Active User user");
+            }
+            conn.Close();
+            return false;
+        }
+
         public bool CheckLocked(string userName)
         {
             OpenDb();
-            string cmd = "Select locked from employee where username ='" + userName + "';";
+            string cmd = "Select locked from employee where username ='" + userName + "'";
             MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
             try
             {
@@ -132,7 +161,7 @@ namespace Bullseye
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Could not Check uf user is locked. Error: " + ex.Message, "Error- Lock user");
+                MessageBox.Show("Could not Check if user is locked. Error: " + ex.Message, "Error- Lock user");
             }
             conn.Close();
             return false;
@@ -194,22 +223,7 @@ namespace Bullseye
                         employeesList.Add(emp);
                     }
                 }
-                //MySqlDataAdapter adapter = new MySqlDataAdapter(sqlCmd);
-                //DataTable dt = new DataTable();
-                // adapter.Fill(dt);
 
-
-
-
-                /*foreach (DataRow row in dt.Rows)
-                {
-                    if (dt.Columns.Contains("password"))
-                    {
-                        string password = row["password"].ToString();
-                        int passwordLength = password.Length;
-                        row["password"] = new string('*', passwordLength);
-                    }
-                }*/
                 Employee[] empArray = employeesList.ToArray();
                 conn.Close();
                 return empArray;
@@ -225,6 +239,55 @@ namespace Bullseye
             conn.Close();
             return null;
         }
+
+        public DataTable GetAllEmployeesForAdmin()
+        {
+            string query= "select e.employeeid, e.firstname, e.lastname, e.email, e.active, e.positionid, p.permissionlevel as 'Position', s.siteid, s.name as 'Location' ,e.locked, e.username, e.notes from employee e inner join site s using (siteid) inner join posn p using (positionid)";
+            try
+            {
+                DataTable dataTable = new DataTable();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+
+                adapter.Fill(dataTable);
+                return dataTable;
+            }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show("Could not retrieve employees for admin. Error: " + sqlEx.Message, "Error - SQL Exception");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Could not retrieve employees for admin. Error: " + ex.Message, "Error");
+            }
+            return null;
+            
+        }
+
+        public DataTable GetAllEmployeesForUsers()
+        {
+            string query = "select e.employeeid, e.firstname, e.lastname, e.email, p.permissionlevel as 'Position', s.name as 'Location' , e.username, e.notes from employee e inner join site s using (siteid) inner join posn p using (positionid)";
+            try
+            {
+                DataTable dataTable = new DataTable();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+
+                adapter.Fill(dataTable);
+                return dataTable;
+            }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show("Could not retrieve employees for Users. Error: " + sqlEx.Message, "Error - SQL Exception");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not retrieve employees for Users. Error: " + ex.Message, "Error");
+            }
+            return null;
+
+        }
+
 
         public bool isUserNameDuplicated(string userName)
         {
