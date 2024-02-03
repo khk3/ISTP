@@ -22,10 +22,9 @@ namespace Bullseye
         }
 
         //class=level config to connection string
-        static string connStr = ConfigurationManager.ConnectionStrings[ConstantsClass.DatabaseName].ConnectionString;
-
+        //static string connStr = ConfigurationManager.ConnectionStrings[ConstantsClass.DatabaseName].ConnectionString;
         //create connection
-        MySqlConnection conn = new MySqlConnection(connStr);
+        //MySqlConnection conn = new MySqlConnection(connStr);
 
         //Class Level of Employees
         List<Employee> employees = new List<Employee>();
@@ -36,7 +35,7 @@ namespace Bullseye
         private void Init()
         {
             //Open connection
-            m.OpenDb();
+           // m.OpenDb();
 
             // m.RunScript();   //DEFAULT DATABASE
 
@@ -77,107 +76,122 @@ namespace Bullseye
                 Employee user = employees.FirstOrDefault(emp => emp.UserName == userName);
 
                 if (user!=null)
-                {                       
-                    bool access = false;
-                    
-                    if (txtPassword.Text == user.Password)
-                    {
-                        if (user.Password == ConstantsClass.DefaultPassword)                      
-                            access = true;                             
-                    }
+                {
+                    bool isUserLocked = false;
+                    isUserLocked = m.CheckLocked(user.UserName);
+                    if (isUserLocked)
+                        MessageBox.Show("User is Locked. Please contact the administrator: admin@bullseye.ca", "Cannot Login -User is Locked.");
                     else
                     {
-                        //Helper Class Validation contain method to verify encrypted Password 
-                        bool verifyPassword = Validation.VerifyPassword(password, user.Password);
-                        if (verifyPassword)
-                            access = true;
-                    }
-              
-                    if (access) // if password Match
-                    {
-                        if (!user.Active)//if user is not Active
-                            MessageBox.Show("User is not Active. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- user not active");
-                        else //if user Active
+                        bool access = false;
+
+                        if (txtPassword.Text == user.Password)
                         {
-                            if (user.Locked == false)  //If user not Locked
-                            {                  
-                                //if firstTime login. Helper class ConstantsClass stores theh Default values
-                                if(user.Password == ConstantsClass.DefaultPassword)
-                                {                                  
-                                    RecoverPasswordForm rf= new RecoverPasswordForm(user);
-                                    rf.ShowDialog();
-                                    CloseForm();
-                                }
-                                else
+                            if (user.Password == ConstantsClass.DefaultPassword)
+                                access = true;
+                        }
+                        else
+                        {
+                            //Helper Class Validation contain method to verify encrypted Password 
+                            bool verifyPassword = Validation.VerifyPassword(password, user.Password);
+                            if (verifyPassword)
+                                access = true;
+                        }
+
+                        if (access) // if password Match
+                        {
+                            if (!user.Active)//if user is not Active
+                                MessageBox.Show("User is not Active. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- user not active");
+                            else //if user Active
+                            {
+                                if (user.Locked == false)  //If user not Locked
                                 {
-                                   
-                                    switch (user.PositionID)
-                                    {                                        
-                                        case 99999999:
-                                            //MessageBox.Show("Welcome " + user.FirstName, " Login Successful");
-                                            DialogResult result = MessageBox.Show("Welcome " + user.FirstName + ". Do you want to open the Admin Form? Click 'yes' to be directed to Admin Form or 'no' to be directed to Bullseye Form", "Login Successful", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                                            if (result == DialogResult.Yes)
-                                            {                                            
-                                                AdminForm adminForm = new AdminForm(user);
-                                                adminForm.ShowDialog();
+                                    //if firstTime login. Helper class ConstantsClass stores theh Default values
+                                    if (user.Password == ConstantsClass.DefaultPassword)
+                                    {
+                                        RecoverPasswordForm rf = new RecoverPasswordForm(user);
+                                        rf.ShowDialog();
+                                        CloseForm();
+                                    }
+                                    else
+                                    {
+
+                                        switch (user.PositionID)
+                                        {
+                                            case 99999999:
+                                                //MessageBox.Show("Welcome " + user.FirstName, " Login Successful");
+                                                DialogResult result = MessageBox.Show("Welcome " + user.FirstName + ". Do you want to open the Admin Form? Click 'yes' to be directed to Admin Form or 'no' to be directed to Bullseye Form", "Login Successful", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                                                if (result == DialogResult.Yes)
+                                                {
+                                                    AdminForm adminForm = new AdminForm(user);
+                                                    adminForm.ShowDialog();
+                                                    CloseForm();
+
+                                                }
+                                                else if(result== DialogResult.No)
+                                                {
+                                                    BullseyeForm bullseyeForm = new BullseyeForm(user);
+                                                    bullseyeForm.ShowDialog();
+                                                    CloseForm();
+
+                                                }
+                                                else
+                                                {
+                                                   //CloseForm();
+                                                }
+                                                break;
+
+                                            case 5: //Delivery Acadia
+                                                MessageBox.Show("To be implemented. Acadia dont have access to WMS", "Access Denied");
+                                                break;
+                                            default: //other users
+                                                MessageBox.Show("Welcome " + user.FirstName, "Login Successful");
+
+                                                BullseyeForm bForm = new BullseyeForm(user);
+                                                bForm.ShowDialog();
                                                 CloseForm();
+                                                break;
+                                        }
 
-                                            }
-                                            else
-                                            {                                             
-                                                BullseyeForm bullseyeForm = new BullseyeForm(user);
-                                                bullseyeForm.ShowDialog();
-                                                CloseForm();
-
-                                            }
-                                            break;
-
-                                        case 5: //Delivery Acadia
-                                            MessageBox.Show("To be implemented. Acadia dont have access to WMS", "Access Denied");
-                                            break;
-                                        default: //other users
-                                            MessageBox.Show("Welcome "+user.FirstName, "Login Successful");
-                                           
-                                            BullseyeForm bForm = new BullseyeForm(user);
-                                            bForm.ShowDialog();
-                                            CloseForm();
-                                            break;
                                     }
 
                                 }
-                               
+                                else //if user is Locked
+                                    MessageBox.Show("Account is locked. Please contact your Administrator admin@bullseye.ca for assistance.", "Error - Account Locked");
                             }
-                            else //if user is Locked
-                                MessageBox.Show("Account is locked. Please contact your Administrator admin@bullseye.ca for assistance.", "Error - Account Locked");
                         }
-                    }
-                    else //if password does NOT match
-                    {
-                        if (errorCount < 2)
+                        else //if password does NOT match
                         {
-                            MessageBox.Show("Password Invalid", "Error- Password");
-                            errorCount++;
-                            txtPassword.Text = "";
-                            txtPassword.Focus();
-                        }
-                        else //change locked to 1
-                        {
-                            MySqlClass m= new MySqlClass();
-         
-                            bool isLocked=m.CheckLocked(userName);
-                            if (!isLocked)
-                            {                               
-                                int update=m.LockUser(userName);
-                                if (update > 0)
-                                    MessageBox.Show("Your account has been locked because of too many incorrect login attempts. Please contact your Administrator at admin@bullseye.ca for assistance", "Error- User Locked");
-                            }
-                            else //if user already locked
+                            if (errorCount < 2)
                             {
-                                MessageBox.Show("Account is locked. Please contact your Administrator admin@bullseye.ca for assistance.", "Error - Account Locked");
+                                MessageBox.Show("Password Invalid", "Error- Password");
+                                errorCount++;
+                                txtPassword.Text = "";
+                                txtPassword.Focus();
+                            }
+                            else //change locked to 1
+                            {
+                                //MySqlClass m = new MySqlClass();
 
+                                bool isLocked = m.CheckLocked(userName);
+                                if (!isLocked)
+                                {
+                                    int update = m.LockUser(userName);
+                                    if (update > 0)
+                                        MessageBox.Show("Your account has been locked because of too many incorrect login attempts. Please contact your Administrator at admin@bullseye.ca for assistance", "Error- User Locked");
+                                }
+                                else //if user already locked
+                                {
+                                    MessageBox.Show("Account is locked. Please contact your Administrator admin@bullseye.ca for assistance.", "Error - Account Locked");
+
+                                }
                             }
                         }
+
                     }
+
+
+                  
                 }
                 else //if user doe not exist in the DB
                 {
@@ -193,13 +207,7 @@ namespace Bullseye
             Close();
         }
 
-        //Form Closing Event
-        private void BullseyeLogin_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //Close the connection
-            conn.Close();
-            //timer1.Stop();
-        }
+ 
 
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -213,7 +221,7 @@ namespace Bullseye
             lblWarnP.Visible = false;
             string userName= txtUserName.Text;
 
-            MySqlClass m = new MySqlClass();
+            //MySqlClass m = new MySqlClass();
 
             if (CheckEmptyFields("recoverPassword")) //ad else to focus
             {
@@ -249,7 +257,7 @@ namespace Bullseye
                     }
                     else//if user Inactive
                     {
-                        if (isActive == null)
+                        if (isActive == false)
                         {
                             MessageBox.Show("Cannot recover password. User not found. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- Recover Password ");
                         }

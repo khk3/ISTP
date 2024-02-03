@@ -97,7 +97,9 @@ namespace Bullseye
                                 if (update > 0)
                                 {
                                     MessageBox.Show("Password updated Successfully", "Update Password");
-                                    Close(); // close the form after update password
+                                    CloseForm(); // close the form after update password
+                                    BullseyeLogin bl= new BullseyeLogin();
+                                    bl.ShowDialog();
                                 }
                             }
                             catch (MySqlException sqlEx)
@@ -131,6 +133,13 @@ namespace Bullseye
                
             }
         }
+        private void CloseForm()
+        {
+            Application.Idle -= Application_Idle;
+            Hide();
+            Close();
+        }
+
         private void Application_Idle(object sender, EventArgs e)
         {
             TimeSpan idleTime = DateTime.Now - lastActivityTime;
@@ -139,7 +148,7 @@ namespace Bullseye
             {
                 Application.Idle -= Application_Idle;
                 this.Close();
-                MessageBox.Show("Auto Logout due to inactivity", "Bullseye Form - User Inactive");
+                MessageBox.Show("Auto Logout due to inactivity", "Recover Password Form - Closed for Inactivity");
 
             }
         }

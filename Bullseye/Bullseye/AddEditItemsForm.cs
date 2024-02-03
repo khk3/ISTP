@@ -17,7 +17,7 @@ namespace Bullseye
     public partial class AddEditItemsForm : Form
     {
         
-        MemoryStream mStream = new MemoryStream();
+     
         private DateTime lastActivityTime;
 
         Employee emp=null;

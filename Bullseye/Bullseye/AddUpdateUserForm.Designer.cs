@@ -71,6 +71,7 @@
             this.lblEmail = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.ckbLocked = new System.Windows.Forms.CheckBox();
+            this.btnDefaultPassword = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -490,6 +491,17 @@
             this.ckbLocked.Text = "Locked";
             this.ckbLocked.UseVisualStyleBackColor = true;
             // 
+            // btnDefaultPassword
+            // 
+            this.btnDefaultPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDefaultPassword.Location = new System.Drawing.Point(583, 231);
+            this.btnDefaultPassword.Name = "btnDefaultPassword";
+            this.btnDefaultPassword.Size = new System.Drawing.Size(90, 49);
+            this.btnDefaultPassword.TabIndex = 44;
+            this.btnDefaultPassword.Text = "Set Default Password";
+            this.btnDefaultPassword.UseVisualStyleBackColor = true;
+            this.btnDefaultPassword.Click += new System.EventHandler(this.btnDefaultPassword_Click);
+            // 
             // AddUpdateUserForm
             // 
             this.AcceptButton = this.btnSave;
@@ -497,6 +509,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(708, 707);
+            this.Controls.Add(this.btnDefaultPassword);
             this.Controls.Add(this.ckbLocked);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txtAreaNotes);
@@ -590,5 +603,6 @@
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.CheckBox ckbLocked;
+        private System.Windows.Forms.Button btnDefaultPassword;
     }
 }

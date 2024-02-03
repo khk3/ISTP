@@ -63,6 +63,7 @@ namespace Bullseye
 
         public List<Employee> LoadEmployees()
         {
+            OpenDb();
             //create script and command
             string cmd = "select * from employee ";
             MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
@@ -97,6 +98,7 @@ namespace Bullseye
                     reader.Close();
 
                 }
+                conn.Close();
                 return employees;
             }
             catch (MySqlException sqlEx)
@@ -108,6 +110,7 @@ namespace Bullseye
                 // Handle other general exceptions
                 MessageBox.Show("Exception: " + ex.Message, "Error - Cannot run script");
             }
+            conn.Close();
             return new List<Employee>();
         }
 
@@ -140,7 +143,7 @@ namespace Bullseye
                 MessageBox.Show("Could not Check if user exists. Error: " + ex.Message, "Error- Check if user Exists");
             }
             conn.Close();
-            return false;
+            return false ;
         }
 
         public bool CheckActive(string userName)

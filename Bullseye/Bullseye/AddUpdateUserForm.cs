@@ -28,15 +28,13 @@ namespace Bullseye
             InitializeComponent();
             ClearWarnings();
             //adminLogged = iAdminLogged;
-
+            Application.Idle += Application_Idle;
+            ResetLastActivity();
             timer1 = new Timer();
             timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
             timer1.Enabled = true;
             timer1.Start();
-
-            Application.Idle += Application_Idle;
-            ResetLastActivity();
 
             lblUserName.Text = emp.UserName;
             adminLogged = adm;
@@ -79,8 +77,6 @@ namespace Bullseye
                 ckbActive.Enabled = false;
 
             }
-
-
         }
         private void ResetLastActivity()
         {
@@ -88,8 +84,7 @@ namespace Bullseye
         }
 
         private void LoadComboboxes(PositionClass[] positionArray)
-        {
-           
+        {         
             try
             {
                 cboPosn.DataSource = new BindingSource(positionArray, null);
@@ -121,18 +116,7 @@ namespace Bullseye
            CloseForm();
         }
 
-        private void Application_Idle(object sender, EventArgs e)
-        {
-
-            TimeSpan idleTime = DateTime.Now - lastActivityTime;
-
-            if (idleTime >= ConstantsClass.TimeToAutoLogout)
-            {
-                Application.Idle -= Application_Idle;                
-                MessageBox.Show("Auto Logout due to inactivity", "Add Edit User Form- User Inactive");
-                CloseForm();
-            }
-        }
+       
 
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -208,8 +192,7 @@ namespace Bullseye
                                 CloseForm();
                             }
                             else
-                            {
-                               
+                            {                        
                                 MessageBox.Show("Could not Add User. Please contact the administration: admin@bullseye.ca  ", "Error- Could not Add User");
                                 CloseForm();
                             }
@@ -292,12 +275,27 @@ namespace Bullseye
             string tooltopStr = "Password must have:\n1-minimun 8 characters\n2-One capital letter\n3-One special character";
             toolTip1.Show(tooltopStr, lblQuestion);
         }
+        private void Application_Idle(object sender, EventArgs e)
+        {
 
+            TimeSpan idleTime = DateTime.Now - lastActivityTime;
+
+            if (idleTime >= ConstantsClass.TimeToAutoLogout)
+            {
+                Application.Idle -= Application_Idle;
+                MessageBox.Show("Auto Logout due to inactivity", "Add Edit User Form- User Inactive");
+                CloseForm();
+
+
+            }
+        }
         private void CloseForm()
         {
+
             Application.Idle -= Application_Idle;
             Hide();
             Close();
+
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -309,7 +307,6 @@ namespace Bullseye
         //When closing reopen admin form
         private void AddUpdateUserForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //CloseForm();
             AdminForm aForm= new AdminForm(adminLogged);
             aForm.ShowDialog();
         }
@@ -333,6 +330,13 @@ namespace Bullseye
         private void txtAreaNotes_TextChanged(object sender, EventArgs e)
         {
             ResetLastActivity();
+        }
+
+        private void btnDefaultPassword_Click(object sender, EventArgs e)
+        {
+            string defaultPass= ConstantsClass.DefaultPassword;
+            txtConfirmPassword.Text=defaultPass;
+            txtPassword.Text=defaultPass;
         }
     }
 }
