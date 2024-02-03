@@ -193,6 +193,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(242, 27);
             this.txtPassword.TabIndex = 0;
+            this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             // 
             // txtFName
             // 
@@ -202,6 +203,7 @@
             this.txtFName.Name = "txtFName";
             this.txtFName.Size = new System.Drawing.Size(242, 27);
             this.txtFName.TabIndex = 2;
+            this.txtFName.TextChanged += new System.EventHandler(this.txtFName_TextChanged);
             // 
             // txtLName
             // 
@@ -211,6 +213,7 @@
             this.txtLName.Name = "txtLName";
             this.txtLName.Size = new System.Drawing.Size(242, 27);
             this.txtLName.TabIndex = 3;
+            this.txtLName.TextChanged += new System.EventHandler(this.txtLName_TextChanged);
             // 
             // label10
             // 
@@ -448,6 +451,7 @@
             this.txtAreaNotes.Size = new System.Drawing.Size(346, 96);
             this.txtAreaNotes.TabIndex = 7;
             this.txtAreaNotes.Text = "";
+            this.txtAreaNotes.TextChanged += new System.EventHandler(this.txtAreaNotes_TextChanged);
             // 
             // label13
             // 
@@ -472,6 +476,7 @@
             // 
             // timer1
             // 
+            this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // ckbLocked
@@ -480,9 +485,9 @@
             this.ckbLocked.Enabled = false;
             this.ckbLocked.Location = new System.Drawing.Point(416, 482);
             this.ckbLocked.Name = "ckbLocked";
-            this.ckbLocked.Size = new System.Drawing.Size(79, 24);
+            this.ckbLocked.Size = new System.Drawing.Size(85, 24);
             this.ckbLocked.TabIndex = 43;
-            this.ckbLocked.Text = "locked";
+            this.ckbLocked.Text = "Locked";
             this.ckbLocked.UseVisualStyleBackColor = true;
             // 
             // AddUpdateUserForm
@@ -536,8 +541,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "`";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AddUpdateUserForm_FormClosing);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AddUpdateUserForm_KeyPress);
-            this.MouseEnter += new System.EventHandler(this.AddUpdateUserForm_MouseEnter);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

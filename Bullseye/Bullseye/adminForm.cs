@@ -44,6 +44,7 @@ namespace Bullseye
 
             lastActivityTime = DateTime.Now;
             Application.Idle += Application_Idle;
+            ResetLastActivity();
 
             timer1 = new Timer();
             timer1.Interval = 1000;
@@ -68,11 +69,18 @@ namespace Bullseye
 
             if (idleTime >= ConstantsClass.TimeToAutoLogout)
             {
-                Application.Idle -= Application_Idle;
-                this.Close();
+                //Application.Idle -= Application_Idle;
+                CloseForm();
                 MessageBox.Show("Auto Logout due to inactivity","Admin Form- User Inactive");
                 
             }
+        }
+
+        private void CloseForm()
+        {
+            Application.Idle -= Application_Idle; 
+            Hide();
+            Close();
         }
 
         private void ResetLastActivity()
@@ -86,13 +94,7 @@ namespace Bullseye
             this.Text = "Bullseye - "+ now.ToShortDateString() +" - " + now.ToLongTimeString();
         }
 
-        private void tabAdmin_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (tabAdmin.SelectedIndex == 0)
-            {
-
-            }
-        }
+  
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
@@ -115,10 +117,10 @@ namespace Bullseye
         {//Add new user
             ResetLastActivity();
             dgvEmployees.DataSource = null;
-            Hide();
-            Close();
-            
-            //Application.Idle -= Application_Idle; //Stop Autologout
+
+
+            Application.Idle -= Application_Idle; //Stop Autologout
+            CloseForm();
             AddUpdateUserForm au = new AddUpdateUserForm("add",userLogged,userLogged);           
             au.ShowDialog();
            
@@ -148,10 +150,9 @@ namespace Bullseye
                     Employee empl = new Employee(empId,fn,ln,email,active,posn,site,locked,userName,notes); //
 
                     dgvEmployees.DataSource = null;
-                    Hide();
-                    Close();
+                    CloseForm();
 
-                    //Application.Idle -= Application_Idle; //Stop Autologout 
+                   
                     AddUpdateUserForm au = new AddUpdateUserForm("edit",empl, userLogged);
                     au.ShowDialog();
                     

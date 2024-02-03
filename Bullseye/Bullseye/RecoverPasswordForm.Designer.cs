@@ -47,6 +47,7 @@
             this.lblWarnNP = new System.Windows.Forms.Label();
             this.lblWarnC = new System.Windows.Forms.Label();
             this.picEye = new System.Windows.Forms.PictureBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEye)).BeginInit();
             this.SuspendLayout();
@@ -236,6 +237,11 @@
             this.picEye.MouseEnter += new System.EventHandler(this.picEye_MouseEnter);
             this.picEye.MouseLeave += new System.EventHandler(this.picEye_MouseLeave);
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // RecoverPasswordForm
             // 
             this.AcceptButton = this.btnConfirm;
@@ -263,7 +269,6 @@
             this.Name = "RecoverPasswordForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bullseye- Reset Password";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RecoverPasswordForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEye)).EndInit();
             this.ResumeLayout(false);
@@ -290,5 +295,6 @@
         private System.Windows.Forms.Label lblWarnNP;
         private System.Windows.Forms.Label lblWarnC;
         private System.Windows.Forms.PictureBox picEye;
+        private System.Windows.Forms.Timer timer1;
     }
 }

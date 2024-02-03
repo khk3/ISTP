@@ -48,15 +48,18 @@ namespace Bullseye
         public static bool VerifyPassword(string enteredPassword, string HashedPassword)
         {               
             string enteredPasswordHash = null;
+            bool isVerified = false;
             try
             {
                 enteredPasswordHash = HashPassword(enteredPassword);
+
+                isVerified= string.Equals(enteredPasswordHash, HashedPassword, StringComparison.OrdinalIgnoreCase);
             }
             catch (Exception e)
             {
                 MessageBox.Show("Error password encryption. Error: " + e.Message, "Error- Password Encryption");
             }
-            return string.Equals(enteredPasswordHash, HashedPassword, StringComparison.OrdinalIgnoreCase);
+            return isVerified;
         }
     }
 }

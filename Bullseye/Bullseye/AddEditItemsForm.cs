@@ -55,6 +55,8 @@ namespace Bullseye
             timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
             timer1.Start();
+            Application.Idle += Application_Idle;
+            ResetLastActivity();
         }
         private void PopulateForm(string action)
         {
@@ -87,11 +89,6 @@ namespace Bullseye
                     picImgEditItem.Image = Image.FromStream(ms);
                     
                 }
-               // else
-               // {
-                    // If the image is not available, you may set a default image or handle it as needed
-               //    picImgEditItem.Image = null;
-               // }
 
             }       
             
@@ -116,12 +113,15 @@ namespace Bullseye
             if (idleTime >= ConstantsClass.TimeToAutoLogout)
             {
                 System.Windows.Forms.Application.Idle -= Application_Idle;
-                
-                MessageBox.Show("Auto Logout due to inactivity", "Bullseye Form - User Inactive");
+                MessageBox.Show("Auto Logout due to inactivity", "Add Edit Item Form - User Inactive");
                 CloseForm();
             }
         }
 
+        private void ResetLastActivity()
+        {
+            lastActivityTime = DateTime.Now;
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
             DateTime now = DateTime.Now;         
@@ -141,7 +141,8 @@ namespace Bullseye
             txtCostPrice.Text = "";
             txtNotes.Text = "";
             ckbActive.Checked = false;
-            
+            ResetWarns(); //Remove all warnings 
+            ResetLastActivity();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -159,7 +160,6 @@ namespace Bullseye
                     itemID = Convert.ToInt32(txtItemID.Text);
                 string name = txtName.Text;
                 string desc = txtDescription.Text;
-                //string itemCat = cboCategory.Text;
                 string category = cboCategory.SelectedItem.ToString();
                 int caseSize = Convert.ToInt32(txtCaseSize.Text);
                 double costPrice = Convert.ToDouble(txtCostPrice.Text);
@@ -198,21 +198,85 @@ namespace Bullseye
             }
             else //if fields empty
             {
-                MessageBox.Show("There are empty fields. All fields with '*' must be filled.", "Error - Empty Fields");
+                MessageBox.Show("There are empty fields. All fields with '!' must be filled.", "Error - Empty Fields");
             }
         }//end of function
 
         private bool CheckEmptyFields()
         {
             bool ok = true;
-            if (txtName.Text == "" || txtDescription.Text == "" || txtSku.Text == "" || cboSuppliers.SelectedIndex== -1 
-                || txtRetailPrice.Text == "" || txtWeight.Text == "" || txtCostPrice.Text == "" || txtCaseSize.Text == "")
+
+            if (txtSku.Text == "")
             {
+                warnSku.Visible = true;
                 ok = false;
             }
+
+            if (txtName.Text == "")
+            {
+                warnName.Visible = true;
+                ok = false;
+            }
+
+            if (txtDescription.Text == "")
+            {
+                warnDesc.Visible = true;
+                ok = false;
+            }
+
+            if (cboCategory.SelectedIndex == -1)
+            {
+                warnCat.Visible = true;
+                ok = false;
+            }
+
+            if (txtRetailPrice.Text == "")
+            {
+                warnRetail.Visible = true;
+                ok = false;
+            }
+
+            if (txtCostPrice.Text == "")
+            {
+                warnCost.Visible = true;
+                ok = false;
+            }
+
+            if (txtCaseSize.Text == "")
+            {
+                warnCase.Visible = true;
+                ok = false;
+            }
+
+            if (txtWeight.Text == "")
+            {
+                warnWeight.Visible = true;
+                ok = false;
+            }
+
+            if (cboSuppliers.SelectedIndex == -1)
+            {
+                warnSupp.Visible = true;
+                ok = false;
+            }
+
             return ok;
         }
 
+        private void ResetWarns()
+        {
+            warnSku.Visible = false;
+            warnName.Visible = false;
+            warnDesc.Visible = false;
+            warnCat.Visible = false;
+            warnRetail.Visible = false;
+            warnCost.Visible = false;
+            warnCase.Visible = false;
+            warnWeight.Visible = false;
+            warnSupp.Visible = false;
+        }
+
+        //Accept only numbers
         private void txtSku_KeyPress(object sender, KeyPressEventArgs e)
         {
             char ch=e.KeyChar;
@@ -223,6 +287,7 @@ namespace Bullseye
 
         private void CloseForm()
         {
+            Application.Idle -= Application_Idle;
             Hide();
             Close();
         }
@@ -279,6 +344,7 @@ namespace Bullseye
 
         private void btnAddImage_Click(object sender, EventArgs e)
         {
+            ResetLastActivity();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image Files (*.png;*.jpg;*.jpeg;*.gif;*.bmp)|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -300,6 +366,42 @@ namespace Bullseye
         {
             BullseyeForm bForm= new BullseyeForm(emp);
             bForm.ShowDialog();
+        }
+
+
+        private void txtItemID_TextChanged(object sender, EventArgs e)
+        {
+            ResetLastActivity();
+        }
+
+        private void txtSku_TextChanged(object sender, EventArgs e)
+        {
+            ResetLastActivity();
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            ResetLastActivity();
+        }
+
+        private void txtDescription_TextChanged(object sender, EventArgs e)
+        {
+            ResetLastActivity();
+        }
+
+        private void txtNotes_TextChanged(object sender, EventArgs e)
+        {
+            ResetLastActivity();
+        }
+
+        private void txtWeight_TextChanged(object sender, EventArgs e)
+        {
+            ResetLastActivity();
+        }
+
+        private void txtCaseSize_TextChanged(object sender, EventArgs e)
+        {
+            ResetLastActivity();
         }
     }
 }

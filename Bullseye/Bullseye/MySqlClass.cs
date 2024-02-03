@@ -111,6 +111,38 @@ namespace Bullseye
             return new List<Employee>();
         }
 
+        public bool CheckUserExists(string userName)
+        {
+            OpenDb();
+            string cmd = "Select * from employee where username ='" + userName + "'";
+            MySqlCommand sqlCmd = new MySqlCommand(cmd, conn);
+
+            bool userExists = false;
+            try
+            {
+                MySqlDataReader reader = sqlCmd.ExecuteReader();
+                if(reader.HasRows)
+                    userExists = true;
+                else
+                    userExists = false;
+                
+                reader.Close();
+
+                conn.Close();
+                return userExists;
+            }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show("Could not Check if user exists. Error: " + sqlEx.Message, "Error- SQL Check if User Exists");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not Check if user exists. Error: " + ex.Message, "Error- Check if user Exists");
+            }
+            conn.Close();
+            return false;
+        }
+
         public bool CheckActive(string userName)
         {
             OpenDb();
@@ -133,7 +165,7 @@ namespace Bullseye
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Could not Check if user is locked. Error: " + ex.Message, "Error- Check Active User user");
+                MessageBox.Show("Could not Check if user is locked. Error: " + ex.Message, "Error- Check Active User");
             }
             conn.Close();
             return false;
@@ -242,7 +274,7 @@ namespace Bullseye
 
         public DataTable GetAllEmployeesForAdmin()
         {
-            string query= "select e.employeeid, e.firstname, e.lastname, e.email, e.active, e.positionid, p.permissionlevel as 'Position', s.siteid, s.name as 'Location' ,e.locked, e.username, e.notes from employee e inner join site s using (siteid) inner join posn p using (positionid)";
+            string query= "select e.employeeid, e.firstname, e.lastname, e.email, e.active, e.positionid, p.permissionlevel as 'Position', s.siteid, s.name as 'Location' ,e.locked, e.username, e.notes from employee e inner join site s using (siteid) inner join posn p using (positionid) order by e.employeeid";
             try
             {
                 DataTable dataTable = new DataTable();
@@ -266,7 +298,7 @@ namespace Bullseye
 
         public DataTable GetAllEmployeesForUsers()
         {
-            string query = "select e.employeeid, e.firstname, e.lastname, e.email, p.permissionlevel as 'Position', s.name as 'Location' , e.username, e.notes from employee e inner join site s using (siteid) inner join posn p using (positionid)";
+            string query = "select e.employeeid as 'Employee ID', e.firstname as 'First Name', e.lastname as 'Last Name', e.email as 'Email', p.permissionlevel as 'Position', s.name as 'Location' , e.notes as 'Notes' from employee e inner join site s using (siteid) inner join posn p using (positionid)";
             try
             {
                 DataTable dataTable = new DataTable();
@@ -289,7 +321,7 @@ namespace Bullseye
         }
 
 
-        public bool isUserNameDuplicated(string userName)
+        public bool IsUserNameDuplicated(string userName)
         {
             OpenDb();
             string cmd = "select * from employee where username='" + userName + "'";

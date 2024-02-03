@@ -57,27 +57,28 @@
             this.btnResetItem = new System.Windows.Forms.Button();
             this.btnSaveItem = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
+            this.warnItemID = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
             this.cboSuppliers = new System.Windows.Forms.ComboBox();
             this.txtCaseSize = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.picImgEditItem = new System.Windows.Forms.PictureBox();
             this.btnAddImage = new System.Windows.Forms.Button();
+            this.warnSku = new System.Windows.Forms.Label();
+            this.warnName = new System.Windows.Forms.Label();
+            this.warnDesc = new System.Windows.Forms.Label();
+            this.warnCat = new System.Windows.Forms.Label();
+            this.warnRetail = new System.Windows.Forms.Label();
+            this.warnCost = new System.Windows.Forms.Label();
+            this.warnCase = new System.Windows.Forms.Label();
+            this.warnWeight = new System.Windows.Forms.Label();
+            this.warnSupp = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picImgEditItem)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
             // 
+            this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // label1
@@ -229,6 +230,7 @@
             this.txtItemID.Size = new System.Drawing.Size(123, 22);
             this.txtItemID.TabIndex = 0;
             this.txtItemID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtItemID.TextChanged += new System.EventHandler(this.txtItemID_TextChanged);
             // 
             // txtName
             // 
@@ -237,6 +239,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(432, 22);
             this.txtName.TabIndex = 3;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
             // 
             // txtSku
             // 
@@ -245,6 +248,7 @@
             this.txtSku.Name = "txtSku";
             this.txtSku.Size = new System.Drawing.Size(123, 22);
             this.txtSku.TabIndex = 1;
+            this.txtSku.TextChanged += new System.EventHandler(this.txtSku_TextChanged);
             this.txtSku.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSku_KeyPress);
             // 
             // txtDescription
@@ -254,6 +258,7 @@
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(432, 22);
             this.txtDescription.TabIndex = 4;
+            this.txtDescription.TextChanged += new System.EventHandler(this.txtDescription_TextChanged);
             // 
             // cboCategory
             // 
@@ -271,6 +276,7 @@
             this.txtWeight.Name = "txtWeight";
             this.txtWeight.Size = new System.Drawing.Size(93, 22);
             this.txtWeight.TabIndex = 9;
+            this.txtWeight.TextChanged += new System.EventHandler(this.txtWeight_TextChanged);
             this.txtWeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtWeight_KeyPress);
             // 
             // txtCostPrice
@@ -298,6 +304,7 @@
             this.txtNotes.Size = new System.Drawing.Size(447, 96);
             this.txtNotes.TabIndex = 11;
             this.txtNotes.Text = "";
+            this.txtNotes.TextChanged += new System.EventHandler(this.txtNotes_TextChanged);
             // 
             // btnResetItem
             // 
@@ -333,75 +340,18 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // label10
+            // warnItemID
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(324, 388);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(12, 16);
-            this.label10.TabIndex = 35;
-            this.label10.Text = "*";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(533, 383);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(12, 16);
-            this.label11.TabIndex = 36;
-            this.label11.Text = "*";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(633, 415);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(12, 16);
-            this.label18.TabIndex = 37;
-            this.label18.Text = "*";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(633, 447);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(12, 16);
-            this.label20.TabIndex = 38;
-            this.label20.Text = "*";
-            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(360, 478);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(12, 16);
-            this.label21.TabIndex = 39;
-            this.label21.Text = "*";
-            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(576, 476);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(12, 16);
-            this.label22.TabIndex = 40;
-            this.label22.Text = "*";
-            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(576, 502);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(12, 16);
-            this.label23.TabIndex = 41;
-            this.label23.Text = "*";
-            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.warnItemID.AutoSize = true;
+            this.warnItemID.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.warnItemID.ForeColor = System.Drawing.Color.Red;
+            this.warnItemID.Location = new System.Drawing.Point(324, 386);
+            this.warnItemID.Name = "warnItemID";
+            this.warnItemID.Size = new System.Drawing.Size(11, 16);
+            this.warnItemID.TabIndex = 35;
+            this.warnItemID.Text = "!";
+            this.warnItemID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.warnItemID.Visible = false;
             // 
             // label24
             // 
@@ -412,26 +362,6 @@
             this.label24.TabIndex = 42;
             this.label24.Text = "*";
             this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(648, 531);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(12, 16);
-            this.label25.TabIndex = 43;
-            this.label25.Text = "*";
-            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(294, 535);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(12, 16);
-            this.label26.TabIndex = 44;
-            this.label26.Text = "*";
-            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // cboSuppliers
             // 
@@ -449,17 +379,8 @@
             this.txtCaseSize.Name = "txtCaseSize";
             this.txtCaseSize.Size = new System.Drawing.Size(93, 22);
             this.txtCaseSize.TabIndex = 7;
+            this.txtCaseSize.TextChanged += new System.EventHandler(this.txtCaseSize_TextChanged);
             this.txtCaseSize.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCaseSize_KeyPress);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(603, 59);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 20);
-            this.label2.TabIndex = 45;
-            this.label2.Text = "Image:  ";
             // 
             // picImgEditItem
             // 
@@ -482,6 +403,123 @@
             this.btnAddImage.UseVisualStyleBackColor = true;
             this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
             // 
+            // warnSku
+            // 
+            this.warnSku.AutoSize = true;
+            this.warnSku.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.warnSku.ForeColor = System.Drawing.Color.Red;
+            this.warnSku.Location = new System.Drawing.Point(533, 384);
+            this.warnSku.Name = "warnSku";
+            this.warnSku.Size = new System.Drawing.Size(11, 16);
+            this.warnSku.TabIndex = 48;
+            this.warnSku.Text = "!";
+            this.warnSku.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.warnSku.Visible = false;
+            // 
+            // warnName
+            // 
+            this.warnName.AutoSize = true;
+            this.warnName.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.warnName.ForeColor = System.Drawing.Color.Red;
+            this.warnName.Location = new System.Drawing.Point(631, 412);
+            this.warnName.Name = "warnName";
+            this.warnName.Size = new System.Drawing.Size(11, 16);
+            this.warnName.TabIndex = 49;
+            this.warnName.Text = "!";
+            this.warnName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.warnName.Visible = false;
+            // 
+            // warnDesc
+            // 
+            this.warnDesc.AutoSize = true;
+            this.warnDesc.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.warnDesc.ForeColor = System.Drawing.Color.Red;
+            this.warnDesc.Location = new System.Drawing.Point(631, 442);
+            this.warnDesc.Name = "warnDesc";
+            this.warnDesc.Size = new System.Drawing.Size(11, 16);
+            this.warnDesc.TabIndex = 50;
+            this.warnDesc.Text = "!";
+            this.warnDesc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.warnDesc.Visible = false;
+            // 
+            // warnCat
+            // 
+            this.warnCat.AutoSize = true;
+            this.warnCat.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.warnCat.ForeColor = System.Drawing.Color.Red;
+            this.warnCat.Location = new System.Drawing.Point(357, 475);
+            this.warnCat.Name = "warnCat";
+            this.warnCat.Size = new System.Drawing.Size(11, 16);
+            this.warnCat.TabIndex = 51;
+            this.warnCat.Text = "!";
+            this.warnCat.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.warnCat.Visible = false;
+            // 
+            // warnRetail
+            // 
+            this.warnRetail.AutoSize = true;
+            this.warnRetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.warnRetail.ForeColor = System.Drawing.Color.Red;
+            this.warnRetail.Location = new System.Drawing.Point(576, 471);
+            this.warnRetail.Name = "warnRetail";
+            this.warnRetail.Size = new System.Drawing.Size(11, 16);
+            this.warnRetail.TabIndex = 52;
+            this.warnRetail.Text = "!";
+            this.warnRetail.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.warnRetail.Visible = false;
+            // 
+            // warnCost
+            // 
+            this.warnCost.AutoSize = true;
+            this.warnCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.warnCost.ForeColor = System.Drawing.Color.Red;
+            this.warnCost.Location = new System.Drawing.Point(576, 501);
+            this.warnCost.Name = "warnCost";
+            this.warnCost.Size = new System.Drawing.Size(11, 16);
+            this.warnCost.TabIndex = 53;
+            this.warnCost.Text = "!";
+            this.warnCost.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.warnCost.Visible = false;
+            // 
+            // warnCase
+            // 
+            this.warnCase.AutoSize = true;
+            this.warnCase.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.warnCase.ForeColor = System.Drawing.Color.Red;
+            this.warnCase.Location = new System.Drawing.Point(294, 506);
+            this.warnCase.Name = "warnCase";
+            this.warnCase.Size = new System.Drawing.Size(11, 16);
+            this.warnCase.TabIndex = 54;
+            this.warnCase.Text = "!";
+            this.warnCase.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.warnCase.Visible = false;
+            // 
+            // warnWeight
+            // 
+            this.warnWeight.AutoSize = true;
+            this.warnWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.warnWeight.ForeColor = System.Drawing.Color.Red;
+            this.warnWeight.Location = new System.Drawing.Point(294, 536);
+            this.warnWeight.Name = "warnWeight";
+            this.warnWeight.Size = new System.Drawing.Size(11, 16);
+            this.warnWeight.TabIndex = 55;
+            this.warnWeight.Text = "!";
+            this.warnWeight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.warnWeight.Visible = false;
+            // 
+            // warnSupp
+            // 
+            this.warnSupp.AutoSize = true;
+            this.warnSupp.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.warnSupp.ForeColor = System.Drawing.Color.Red;
+            this.warnSupp.Location = new System.Drawing.Point(648, 530);
+            this.warnSupp.Name = "warnSupp";
+            this.warnSupp.Size = new System.Drawing.Size(11, 16);
+            this.warnSupp.TabIndex = 56;
+            this.warnSupp.Text = "!";
+            this.warnSupp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.warnSupp.Visible = false;
+            // 
             // AddEditItemsForm
             // 
             this.AcceptButton = this.btnSaveItem;
@@ -489,20 +527,20 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(824, 794);
+            this.Controls.Add(this.warnSupp);
+            this.Controls.Add(this.warnWeight);
+            this.Controls.Add(this.warnCase);
+            this.Controls.Add(this.warnCost);
+            this.Controls.Add(this.warnRetail);
+            this.Controls.Add(this.warnCat);
+            this.Controls.Add(this.warnDesc);
+            this.Controls.Add(this.warnName);
+            this.Controls.Add(this.warnSku);
             this.Controls.Add(this.btnAddImage);
             this.Controls.Add(this.picImgEditItem);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.cboSuppliers);
-            this.Controls.Add(this.label26);
-            this.Controls.Add(this.label25);
             this.Controls.Add(this.label24);
-            this.Controls.Add(this.label23);
-            this.Controls.Add(this.label22);
-            this.Controls.Add(this.label21);
-            this.Controls.Add(this.label20);
-            this.Controls.Add(this.label18);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
+            this.Controls.Add(this.warnItemID);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnSaveItem);
             this.Controls.Add(this.btnResetItem);
@@ -570,20 +608,20 @@
         private System.Windows.Forms.Button btnResetItem;
         private System.Windows.Forms.Button btnSaveItem;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label warnItemID;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label26;
         private System.Windows.Forms.ComboBox cboSuppliers;
         private System.Windows.Forms.TextBox txtCaseSize;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox picImgEditItem;
         private System.Windows.Forms.Button btnAddImage;
+        private System.Windows.Forms.Label warnSku;
+        private System.Windows.Forms.Label warnName;
+        private System.Windows.Forms.Label warnDesc;
+        private System.Windows.Forms.Label warnCat;
+        private System.Windows.Forms.Label warnRetail;
+        private System.Windows.Forms.Label warnCost;
+        private System.Windows.Forms.Label warnCase;
+        private System.Windows.Forms.Label warnWeight;
+        private System.Windows.Forms.Label warnSupp;
     }
 }

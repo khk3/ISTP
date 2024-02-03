@@ -36,7 +36,7 @@ namespace Bullseye
         {
             lastActivityTime = DateTime.Now;
             Application.Idle += Application_Idle;
-
+            ResetLastActivity();
             lblUserHeader.Text = user.FirstName;
             lblLocationHeader.Text = m.GetLocation(user.SiteID);
            
@@ -93,6 +93,7 @@ namespace Bullseye
             {
                 DataTable dt = m.GetAllEmployeesForUsers();
                 dgvEmployees.DataSource = dt;
+                dgvEmployees.ClearSelection();
                
 
             }
@@ -122,14 +123,15 @@ namespace Bullseye
                 }
                 else if (dataGridView == dgvEmployees)
                 {
-                    string filterExpression = $"CONVERT(EmployeeID, 'System.String') LIKE '%{searchText}%' OR FirstName LIKE '%{searchText}%' OR LastName LIKE '%{searchText}%' OR Email LIKE '%{searchText}%'";
+                    DataTable dt = (DataTable)dataGridView.DataSource; //Explicitly cast 
+                    DataView dgvEmp = dt.DefaultView;
 
-                    if (dataGridView.DataSource is DataTable dataTable)
-                    {
-                        dataTable.DefaultView.RowFilter = filterExpression;
-                    }
+                    //String to filter custom queries
+                    dgvEmp.RowFilter = "Convert(EmployeeID, 'System.String') Like '%" + searchText + "%' OR FirstName LIKE '%" +searchText + "%' OR LastName LIKE '%"+searchText+"%' OR Email LIKE '%"+searchText+"%'";
+                     
+
+         
                 }
-
             }
         }
 
@@ -161,9 +163,13 @@ namespace Bullseye
                     categ, weight, caseSize, costPrice, retailPrice, supplierID, active, image, notes);
 
                     AddEditItemsForm itemsForm = new AddEditItemsForm("edit", item, user);
-                    
-                    itemsForm.ShowDialog();
                     CloseForm();
+                    itemsForm.ShowDialog();
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Please click on the Refresh Button first and then select the item to update.", "No Item selection");
                 }
                
             }
@@ -224,6 +230,7 @@ namespace Bullseye
 
         private void CloseForm()
         {
+            Application.Idle -= Application_Idle;
             Hide();
             Close();
         }
@@ -240,7 +247,7 @@ namespace Bullseye
         private void picFilterOrders_Click(object sender, EventArgs e)
         {
             ResetLastActivity();
-            Application.Idle -= Application_Idle;
+            //Application.Idle -= Application_Idle;
             if (dgvOrders.DataSource != null)
             {
                 FilterOrdersForm filterOrdersForm = new FilterOrdersForm();
@@ -264,7 +271,7 @@ namespace Bullseye
 
         private void BullseyeForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Idle -= Application_Idle;
+          //  Application.Idle -= Application_Idle;
         }
 
 

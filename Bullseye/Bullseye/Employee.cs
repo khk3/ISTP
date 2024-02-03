@@ -38,7 +38,7 @@ namespace Bullseye
         
         public Employee(int empID, string fn, string ln, string email, bool active, int posn, int site, bool locked, string userName, string notes)
         {            
-            
+            EmployeeID=empID;
             FirstName= fn;
             LastName= ln;
             Email = email;

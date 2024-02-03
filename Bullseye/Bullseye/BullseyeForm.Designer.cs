@@ -120,7 +120,7 @@
             // txtSearchOrders
             // 
             this.txtSearchOrders.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearchOrders.Location = new System.Drawing.Point(125, 28);
+            this.txtSearchOrders.Location = new System.Drawing.Point(136, 32);
             this.txtSearchOrders.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSearchOrders.Name = "txtSearchOrders";
             this.txtSearchOrders.Size = new System.Drawing.Size(589, 27);
@@ -130,7 +130,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(47, 34);
+            this.label5.Location = new System.Drawing.Point(58, 38);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(72, 20);
             this.label5.TabIndex = 7;
@@ -138,6 +138,8 @@
             // 
             // dgvOrders
             // 
+            this.dgvOrders.AllowUserToAddRows = false;
+            this.dgvOrders.AllowUserToDeleteRows = false;
             this.dgvOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrders.Location = new System.Drawing.Point(51, 91);
             this.dgvOrders.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -171,7 +173,7 @@
             // txtSearchInventory
             // 
             this.txtSearchInventory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearchInventory.Location = new System.Drawing.Point(107, 17);
+            this.txtSearchInventory.Location = new System.Drawing.Point(134, 26);
             this.txtSearchInventory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSearchInventory.Name = "txtSearchInventory";
             this.txtSearchInventory.Size = new System.Drawing.Size(589, 27);
@@ -181,7 +183,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(29, 25);
+            this.label3.Location = new System.Drawing.Point(56, 33);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 20);
             this.label3.TabIndex = 4;
@@ -189,23 +191,23 @@
             // 
             // btnAddItem
             // 
-            this.btnAddItem.Location = new System.Drawing.Point(939, 190);
+            this.btnAddItem.Location = new System.Drawing.Point(939, 201);
             this.btnAddItem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAddItem.Name = "btnAddItem";
             this.btnAddItem.Size = new System.Drawing.Size(117, 34);
             this.btnAddItem.TabIndex = 3;
-            this.btnAddItem.Text = "Add ItemClass";
+            this.btnAddItem.Text = "Add Item";
             this.btnAddItem.UseVisualStyleBackColor = true;
             this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
             // 
             // btnEditItem
             // 
-            this.btnEditItem.Location = new System.Drawing.Point(939, 239);
+            this.btnEditItem.Location = new System.Drawing.Point(939, 265);
             this.btnEditItem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEditItem.Name = "btnEditItem";
             this.btnEditItem.Size = new System.Drawing.Size(117, 34);
             this.btnEditItem.TabIndex = 2;
-            this.btnEditItem.Text = "Edit ItemClass";
+            this.btnEditItem.Text = "Edit Item";
             this.btnEditItem.UseVisualStyleBackColor = true;
             this.btnEditItem.Click += new System.EventHandler(this.btnEditItem_Click);
             // 
@@ -222,8 +224,10 @@
             // 
             // dgvInventory
             // 
+            this.dgvInventory.AllowUserToAddRows = false;
+            this.dgvInventory.AllowUserToDeleteRows = false;
             this.dgvInventory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvInventory.Location = new System.Drawing.Point(28, 70);
+            this.dgvInventory.Location = new System.Drawing.Point(60, 79);
             this.dgvInventory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvInventory.MultiSelect = false;
             this.dgvInventory.Name = "dgvInventory";
@@ -231,7 +235,7 @@
             this.dgvInventory.RowHeadersWidth = 51;
             this.dgvInventory.RowTemplate.Height = 24;
             this.dgvInventory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvInventory.Size = new System.Drawing.Size(851, 314);
+            this.dgvInventory.Size = new System.Drawing.Size(807, 314);
             this.dgvInventory.TabIndex = 0;
             this.dgvInventory.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dgvInventory_Scroll);
             this.dgvInventory.SelectionChanged += new System.EventHandler(this.dgvInventory_SelectionChanged);
@@ -291,19 +295,22 @@
             // 
             // dgvEmployees
             // 
+            this.dgvEmployees.AllowUserToAddRows = false;
+            this.dgvEmployees.AllowUserToDeleteRows = false;
             this.dgvEmployees.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvEmployees.Location = new System.Drawing.Point(104, 95);
-            this.dgvEmployees.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvEmployees.Location = new System.Drawing.Point(62, 91);
+            this.dgvEmployees.Margin = new System.Windows.Forms.Padding(4);
             this.dgvEmployees.MultiSelect = false;
             this.dgvEmployees.Name = "dgvEmployees";
             this.dgvEmployees.RowHeadersWidth = 51;
-            this.dgvEmployees.Size = new System.Drawing.Size(914, 318);
+            this.dgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvEmployees.Size = new System.Drawing.Size(914, 295);
             this.dgvEmployees.TabIndex = 3;
             // 
             // txtSearchEmployees
             // 
             this.txtSearchEmployees.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearchEmployees.Location = new System.Drawing.Point(104, 28);
+            this.txtSearchEmployees.Location = new System.Drawing.Point(135, 38);
             this.txtSearchEmployees.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSearchEmployees.Name = "txtSearchEmployees";
             this.txtSearchEmployees.Size = new System.Drawing.Size(670, 27);
@@ -313,7 +320,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(27, 31);
+            this.label8.Location = new System.Drawing.Point(58, 41);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(72, 20);
             this.label8.TabIndex = 1;
@@ -371,7 +378,7 @@
             // 
             this.lblLocationHeader.AutoSize = true;
             this.lblLocationHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLocationHeader.Location = new System.Drawing.Point(772, 9);
+            this.lblLocationHeader.Location = new System.Drawing.Point(760, 9);
             this.lblLocationHeader.Name = "lblLocationHeader";
             this.lblLocationHeader.Size = new System.Drawing.Size(53, 20);
             this.lblLocationHeader.TabIndex = 12;
@@ -381,7 +388,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(689, 9);
+            this.label4.Location = new System.Drawing.Point(677, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 20);
             this.label4.TabIndex = 11;

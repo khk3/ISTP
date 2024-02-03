@@ -103,9 +103,10 @@ namespace Bullseye
                             {                  
                                 //if firstTime login. Helper class ConstantsClass stores theh Default values
                                 if(user.Password == ConstantsClass.DefaultPassword)
-                                {
+                                {                                  
                                     RecoverPasswordForm rf= new RecoverPasswordForm(user);
                                     rf.ShowDialog();
+                                    CloseForm();
                                 }
                                 else
                                 {
@@ -116,31 +117,30 @@ namespace Bullseye
                                             //MessageBox.Show("Welcome " + user.FirstName, " Login Successful");
                                             DialogResult result = MessageBox.Show("Welcome " + user.FirstName + ". Do you want to open the Admin Form? Click 'yes' to be directed to Admin Form or 'no' to be directed to Bullseye Form", "Login Successful", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                                             if (result == DialogResult.Yes)
-                                            {
-                                               
+                                            {                                            
                                                 AdminForm adminForm = new AdminForm(user);
                                                 adminForm.ShowDialog();
-                                                Hide();
-                                                Close();
+                                                CloseForm();
 
                                             }
                                             else
-                                            {
-                                               
+                                            {                                             
                                                 BullseyeForm bullseyeForm = new BullseyeForm(user);
                                                 bullseyeForm.ShowDialog();
-                                                Hide();
-                                                Close();
+                                                CloseForm();
 
                                             }
+                                            break;
+
+                                        case 5: //Delivery Acadia
+                                            MessageBox.Show("To be implemented. Acadia dont have access to WMS", "Access Denied");
                                             break;
                                         default: //other users
                                             MessageBox.Show("Welcome "+user.FirstName, "Login Successful");
                                            
                                             BullseyeForm bForm = new BullseyeForm(user);
                                             bForm.ShowDialog();
-                                            Hide();
-                                            Close();
+                                            CloseForm();
                                             break;
                                     }
 
@@ -181,12 +181,17 @@ namespace Bullseye
                 }
                 else //if user doe not exist in the DB
                 {
-                    MessageBox.Show("This user dos not exists", "Error- User does not exists");
+                    MessageBox.Show("This user dos not exists", "Error- User does not exists in our System");
+                    CloseForm();
                 }
             }             
         }//end of login event
 
- 
+        private void CloseForm()
+        {
+            Hide();
+            Close();
+        }
 
         //Form Closing Event
         private void BullseyeLogin_FormClosing(object sender, FormClosingEventArgs e)
@@ -212,41 +217,66 @@ namespace Bullseye
 
             if (CheckEmptyFields("recoverPassword")) //ad else to focus
             {
-                bool isActive = m.CheckActive(userName);
-                if (isActive)// if user Active
+                bool userExists = m.CheckUserExists(userName);
+                if (userExists)
                 {
-                    bool isLocked = m.CheckLocked(userName);
-                    if (!isLocked) // if user is NOT locked
+                    bool isActive = m.CheckActive(userName);
+                    if (isActive)// if user Active
                     {
-                        Employee emp = employees.FirstOrDefault(em => em.UserName == txtUserName.Text);
-
-                        if (emp != null)
+                        bool isLocked = m.CheckLocked(userName);
+                        if (!isLocked) // if user is NOT locked
                         {
-                            RecoverPasswordForm rPassForm = new RecoverPasswordForm(emp);
-                            rPassForm.ShowDialog();
+                            Employee emp = employees.FirstOrDefault(em => em.UserName == txtUserName.Text);
+
+                            if (emp != null)
+                            {
+                                RecoverPasswordForm rPassForm = new RecoverPasswordForm(emp);
+                                rPassForm.ShowDialog();
+                                CloseForm();
+                            }
+                            else
+                            {
+                                MessageBox.Show("User not found", " Error - Invalid User");
+                                txtUserName.Text = "";
+                                txtUserName.Focus();
+                            }
+                        }
+                        else //If user is locked
+                        {
+                            MessageBox.Show("Cannot recover password. User is locked. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- Recover Password ");
+                            Close();
+                        }
+                    }
+                    else//if user Inactive
+                    {
+                        if (isActive == null)
+                        {
+                            MessageBox.Show("Cannot recover password. User not found. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- Recover Password ");
                         }
                         else
                         {
-                            MessageBox.Show("User not found", " Error - Invalid User");
-                            txtUserName.Text = "";
-                            txtUserName.Focus();
+                            MessageBox.Show("Cannot recover password. User is inactive. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- Recover Password ");
+
                         }
-                    }
-                    else //If user is locked
-                    {
-                        MessageBox.Show("Cannot recover password. User is locked. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- Recover Password ");
                         Close();
                     }
+
                 }
-                else//if user Inactive
+                else // else if user does not exists
                 {
-                    MessageBox.Show("Cannot recover password. User is inactive. Please contact your Administrator admin@bullseye.ca for assistance.", "Error- Recover Password ");
-                    Close();
+                  
+                    MessageBox.Show("User does not exists in our System", "Error- Recovery Password");
+                    txtUserName.Focus();
+                    CloseForm() ;
                 }
                    
-            }
-            else
+            }//
+            else//else of check emptyfields
+            {
                 txtUserName.Focus();
+            }
+
+              
         
         }
 

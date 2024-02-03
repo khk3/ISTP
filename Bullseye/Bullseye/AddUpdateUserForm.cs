@@ -17,7 +17,9 @@ namespace Bullseye
         LocationClass[] locationsArray = null;
         //PositionClass[] positionArray = null;
         Employee adminLogged=null;
+
         private DateTime lastActivityTime;
+
         public AddUpdateUserForm() { }
 
         string addOrDelete = "";
@@ -30,7 +32,11 @@ namespace Bullseye
             timer1 = new Timer();
             timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
+            timer1.Enabled = true;
             timer1.Start();
+
+            Application.Idle += Application_Idle;
+            ResetLastActivity();
 
             lblUserName.Text = emp.UserName;
             adminLogged = adm;
@@ -112,20 +118,19 @@ namespace Bullseye
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            this.Close();
+           CloseForm();
         }
 
         private void Application_Idle(object sender, EventArgs e)
         {
+
             TimeSpan idleTime = DateTime.Now - lastActivityTime;
 
             if (idleTime >= ConstantsClass.TimeToAutoLogout)
             {
-                Application.Idle -= Application_Idle;
-                this.Close();
-                MessageBox.Show("Auto Logout due to inactivity", "Admin Form- User Inactive");
-
+                Application.Idle -= Application_Idle;                
+                MessageBox.Show("Auto Logout due to inactivity", "Add Edit User Form- User Inactive");
+                CloseForm();
             }
         }
 
@@ -139,6 +144,9 @@ namespace Bullseye
             txtLName.Text = "";
             txtPassword.Text = "";
             txtConfirmPassword.Text = "";
+            txtAreaNotes.Text = "";
+            cboLocation.SelectedIndex = -1;
+            cboPosn.SelectedIndex = -1;
             //ckbActive.Checked = false;
         }
 
@@ -181,7 +189,7 @@ namespace Bullseye
                         int count = 1;
                         string finalUserName = userNameForm;
 
-                        while (m.isUserNameDuplicated(finalUserName))
+                        while (m.IsUserNameDuplicated(finalUserName))
                         {
                             finalUserName = userNameForm + count;
                             count++;
@@ -194,14 +202,16 @@ namespace Bullseye
                         {
                             int added = m.AddUser(emp);
                             if (added == 1)
-                            {                                
+                            {
+                                
                                 MessageBox.Show("Your Username is: " + finalUserName + " , your email is : " + email, "SAVE YOUR USERNAME PASSWORD AND EMAIL");
-                                this.Close();
+                                CloseForm();
                             }
                             else
-                            {                               
+                            {
+                               
                                 MessageBox.Show("Could not Add User. Please contact the administration: admin@bullseye.ca  ", "Error- Could not Add User");
-                                this.Close();
+                                CloseForm();
                             }
                         }
                     }
@@ -217,9 +227,9 @@ namespace Bullseye
                         int success = m.UpdateUser(emp);
                         if (success == 1)
                         {
-                            Close();
-                            MessageBox.Show("User: " + userName + " updated successfully", "User Updated");
                             
+                            MessageBox.Show("User: " + userName + " updated successfully", "User Updated");
+                            CloseForm();
                         }
 
                     }//end of else update                            
@@ -237,11 +247,16 @@ namespace Bullseye
         private bool CheckEmptyFields()
         {
             bool isEmpty = false;
+            if (!ckbActive.Checked)
+            {
+                txtPassword.Text = ConstantsClass.DefaultPassword;
+                txtConfirmPassword.Text = ConstantsClass.DefaultPassword;
+            }
+ 
+
             if (txtFName.Text == "" || txtLName.Text == "" || txtPassword.Text == "" || txtConfirmPassword.Text == "" || cboPosn.SelectedIndex == -1 || cboLocation.SelectedIndex == -1)
             {
                 ClearWarnings();
-
-
                 if (txtPassword.Text == "")
                     warnPw.Visible = true;
                 if (txtFName.Text == "")
@@ -278,9 +293,15 @@ namespace Bullseye
             toolTip1.Show(tooltopStr, lblQuestion);
         }
 
-
+        private void CloseForm()
+        {
+            Application.Idle -= Application_Idle;
+            Hide();
+            Close();
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
+        
             DateTime now = DateTime.Now;
             this.Text = "Bullseye - " + now.ToShortDateString() + " - " + now.ToLongTimeString();
         }
@@ -288,17 +309,28 @@ namespace Bullseye
         //When closing reopen admin form
         private void AddUpdateUserForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-         
+            //CloseForm();
             AdminForm aForm= new AdminForm(adminLogged);
             aForm.ShowDialog();
         }
 
-        private void AddUpdateUserForm_MouseEnter(object sender, EventArgs e)
+        private void txtPassword_TextChanged(object sender, EventArgs e)
         {
             ResetLastActivity();
         }
 
-        private void AddUpdateUserForm_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtFName_TextChanged(object sender, EventArgs e)
+        {
+            ResetLastActivity();
+        }
+
+        private void txtLName_TextChanged(object sender, EventArgs e)
+        {
+            ResetLastActivity();
+
+        }
+
+        private void txtAreaNotes_TextChanged(object sender, EventArgs e)
         {
             ResetLastActivity();
         }

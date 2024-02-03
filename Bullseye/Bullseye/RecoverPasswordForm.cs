@@ -20,6 +20,7 @@ namespace Bullseye
         //Global Helper Class instance
         MySqlClass m= new MySqlClass();
 
+        private DateTime lastActivityTime;
         //Global Emp 
         Employee user = null;
 
@@ -28,6 +29,13 @@ namespace Bullseye
             InitializeComponent();
             user = emp;
             lblUserName.Text = user.UserName;
+
+            Application.Idle += Application_Idle;
+            ResetLastActivity();
+            timer1 = new Timer();
+            timer1.Interval = 1000;
+            timer1.Tick += timer1_Tick;
+            timer1.Start();
         }
        
         private void btnExit_Click(object sender, EventArgs e)
@@ -123,7 +131,18 @@ namespace Bullseye
                
             }
         }
+        private void Application_Idle(object sender, EventArgs e)
+        {
+            TimeSpan idleTime = DateTime.Now - lastActivityTime;
 
+            if (idleTime >= ConstantsClass.TimeToAutoLogout)
+            {
+                Application.Idle -= Application_Idle;
+                this.Close();
+                MessageBox.Show("Auto Logout due to inactivity", "Bullseye Form - User Inactive");
+
+            }
+        }
         private void ClearFields()
         {
             txtNewPassWord.Text = "";
@@ -145,21 +164,35 @@ namespace Bullseye
         private void txtNewPassWord_TextChanged(object sender, EventArgs e)
         {
             txtNewPassWord.PasswordChar = '*';
+            ResetLastActivity();
         }
 
         private void picEye_MouseEnter(object sender, EventArgs e)
         {
             txtNewPassWord.PasswordChar = '\0';
+            ResetLastActivity();
         }
 
         private void picEye_MouseLeave(object sender, EventArgs e)
         {
             txtNewPassWord.PasswordChar = '*';
+            ResetLastActivity();
         }
 
         private void txtConfirmPassword_TextChanged(object sender, EventArgs e)
         {
             txtConfirmPassword.PasswordChar = '*';
+            ResetLastActivity();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            this.Text = "Bullseye - " + now.ToShortDateString() + " - " + now.ToLongTimeString();
+        }
+        private void ResetLastActivity()
+        {
+            lastActivityTime = DateTime.Now;
         }
     }
 }
